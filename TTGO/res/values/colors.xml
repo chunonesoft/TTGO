@@ -346,4 +346,6 @@
     <color name="header">#58567D</color>
     <color name="grgray">#686868</color>
 
+    <!-- 首页颜色 -->
+    <color name="title">#d3052b</color>
 </resources>

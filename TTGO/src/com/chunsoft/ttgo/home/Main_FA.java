@@ -6,6 +6,7 @@ import com.chunsoft.ttgo.cart.Cart_F;
 import com.chunsoft.ttgo.group.Group_F;
 import com.chunsoft.ttgo.myself.Myself_F;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,9 +18,9 @@ import android.widget.ImageView;
 public class Main_FA extends FragmentActivity implements OnClickListener{
 
 	//底面菜单按钮
-	private ImageView[] bt_menu = new ImageView[5];
+	private ImageView[] bt_menu = new ImageView[4];
 	//地面菜单按钮id
-	private int[] bt_menu_id = {R.id.iv_menu_0,R.id.iv_menu_0,R.id.iv_menu_1,R.id.iv_menu_2,R.id.iv_menu_3};
+	private int[] bt_menu_id = {R.id.iv_menu_0,R.id.iv_menu_1,R.id.iv_menu_2,R.id.iv_menu_3};
 	
 	// 界面底部的选中菜单按钮资源
 	private int[] select_on = { R.drawable.guide_home_on, R.drawable.guide_tfaccount_on, R.drawable.guide_cart_on, R.drawable.guide_account_on};
@@ -38,7 +39,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		setContentView(R.layout.mainfa);
+		setContentView(R.layout.main_fa);
 		initView();
 	}
 	
@@ -65,12 +66,86 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 				showFragment(home_F);
 			}
 		}
-		
+		//设置默认首页点击的图片
+		bt_menu[0].setImageResource(select_on[0]);
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+		switch (v.getId()) {
+		//主页界面
+		case R.id.iv_menu_0:
+			if(home_F == null)
+			{
+				home_F = new Home_F();
+				addFragment(home_F);
+				showFragment(home_F);
+			}
+			else
+			{
+				if(home_F.isHidden())
+				{
+					showFragment(home_F);
+				}
+			}
+			break;
+		//社区界面
+		case R.id.iv_menu_1:
+			if(group_F == null)
+			{
+				group_F = new Group_F();
+				addFragment(group_F);
+				showFragment(group_F);
+			}
+			else
+			{
+				if(group_F.isHidden())
+				{
+					showFragment(group_F);
+				}
+			}
+			break;
+		//购物车界面
+		case R.id.iv_menu_2:
+			if(cart_F == null)
+			{
+				cart_F = new Cart_F();
+				addFragment(cart_F);
+				showFragment(cart_F);
+			}
+			else
+			{
+				if (cart_F.isHidden()) {
+					showFragment(cart_F);
+				}
+			}
+			break;
+		//我界面
+		case R.id.iv_menu_3:
+			if(myself_F == null)
+			{
+				myself_F = new Myself_F();
+				addFragment(myself_F);
+				showFragment(myself_F);
+			}
+			else
+			{
+				if(myself_F.isHidden())
+				{
+					showFragment(myself_F);
+				}
+			}
+			break;
+		}
+		//设置按钮的选中和未选中资源
+		for(int i = 0;i < bt_menu.length;i++)
+		{
+			bt_menu[i].setImageResource(select_off[i]);
+			if(v.getId() == bt_menu_id[i])
+			{
+				bt_menu[i].setImageResource(select_on[i]);
+			}
+		}
 	}
 	
 	/** 添加Fragment **/
@@ -103,5 +178,14 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 		ft.show(fragment);
 		ft.commitAllowingStateLoss();
 
+	}
+	/** 返回按钮的监听 */
+	@Override
+	public void onBackPressed() 
+	{
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		startActivity(intent);
 	}
 }
