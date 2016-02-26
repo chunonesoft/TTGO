@@ -13,6 +13,8 @@ public final class R {
         public static final int cu_push_left_out=0x7f040001;
         public static final int cu_push_right_in=0x7f040002;
         public static final int cu_push_right_out=0x7f040003;
+        public static final int reverse_anim=0x7f040004;
+        public static final int rotating=0x7f040005;
     }
     public static final class attr {
     }
@@ -239,6 +241,7 @@ public final class R {
         /**  花白色 
          */
         public static final int lemonchiffon=0x7f05000e;
+        public static final int light_blue=0x7f0500b6;
         /**  黄绿色 
          */
         public static final int lightblue=0x7f050055;
@@ -511,57 +514,93 @@ public final class R {
         public static final int yellow=0x7f05000b;
     }
     public static final class drawable {
-        public static final int bt_menu_0_select=0x7f020000;
-        public static final int bt_menu_1_select=0x7f020001;
-        public static final int bt_menu_2_select=0x7f020002;
-        public static final int bt_menu_3_select=0x7f020003;
-        public static final int guide_account_nm=0x7f020004;
-        public static final int guide_account_on=0x7f020005;
-        public static final int guide_cart_nm=0x7f020006;
-        public static final int guide_cart_on=0x7f020007;
-        public static final int guide_discover_nm=0x7f020008;
-        public static final int guide_discover_on=0x7f020009;
-        public static final int guide_home_nm=0x7f02000a;
-        public static final int guide_home_on=0x7f02000b;
-        public static final int guide_tfaccount_nm=0x7f02000c;
-        public static final int guide_tfaccount_on=0x7f02000d;
-        public static final int ic_launcher=0x7f02000e;
-        public static final int jshop_searchbar_search=0x7f02000f;
-        public static final int menu_viewpager_1=0x7f020010;
-        public static final int menu_viewpager_2=0x7f020011;
-        public static final int menu_viewpager_3=0x7f020012;
-        public static final int menu_viewpager_4=0x7f020013;
-        public static final int menu_viewpager_5=0x7f020014;
-        public static final int search=0x7f020015;
-        public static final int search_box=0x7f020016;
+        public static final int allview_load_failed=0x7f020000;
+        public static final int allview_load_succeed=0x7f020001;
+        public static final int allview_loading=0x7f020002;
+        public static final int allview_pull_icon_big=0x7f020003;
+        public static final int allview_pullup_icon_big=0x7f020004;
+        public static final int allview_refresh_failed=0x7f020005;
+        public static final int allview_refresh_succeed=0x7f020006;
+        public static final int allview_refreshing=0x7f020007;
+        public static final int bt_menu_0_select=0x7f020008;
+        public static final int bt_menu_1_select=0x7f020009;
+        public static final int bt_menu_2_select=0x7f02000a;
+        public static final int bt_menu_3_select=0x7f02000b;
+        public static final int guide_account_nm=0x7f02000c;
+        public static final int guide_account_on=0x7f02000d;
+        public static final int guide_cart_nm=0x7f02000e;
+        public static final int guide_cart_on=0x7f02000f;
+        public static final int guide_discover_nm=0x7f020010;
+        public static final int guide_discover_on=0x7f020011;
+        public static final int guide_home_nm=0x7f020012;
+        public static final int guide_home_on=0x7f020013;
+        public static final int guide_tfaccount_nm=0x7f020014;
+        public static final int guide_tfaccount_on=0x7f020015;
+        public static final int ic_launcher=0x7f020016;
+        public static final int jshop_searchbar_search=0x7f020017;
+        public static final int menu_viewpager_1=0x7f020018;
+        public static final int menu_viewpager_2=0x7f020019;
+        public static final int menu_viewpager_3=0x7f02001a;
+        public static final int menu_viewpager_4=0x7f02001b;
+        public static final int menu_viewpager_5=0x7f02001c;
+        public static final int search=0x7f02001d;
+        public static final int search_box=0x7f02001e;
     }
     public static final class id {
-        public static final int iv_menu_0=0x7f080004;
-        public static final int iv_menu_1=0x7f080005;
-        public static final int iv_menu_2=0x7f080006;
-        public static final int iv_menu_3=0x7f080007;
-        public static final int iv_search=0x7f080009;
-        public static final int menu_bottom=0x7f080003;
-        public static final int menu_line=0x7f080002;
-        public static final int pic_item=0x7f080008;
-        public static final int search_edit=0x7f08000a;
-        public static final int show_layout=0x7f080001;
-        public static final int viewPager_menu=0x7f080000;
+        public static final int content_view=0x7f08000c;
+        public static final int head_view=0x7f080005;
+        public static final int iv_menu_0=0x7f080011;
+        public static final int iv_menu_1=0x7f080012;
+        public static final int iv_menu_2=0x7f080013;
+        public static final int iv_menu_3=0x7f080014;
+        public static final int iv_search=0x7f080016;
+        public static final int loading_icon=0x7f080002;
+        public static final int loadmore_view=0x7f080000;
+        public static final int loadstate_iv=0x7f080004;
+        public static final int loadstate_tv=0x7f080003;
+        public static final int menu_bottom=0x7f080010;
+        public static final int menu_line=0x7f08000f;
+        public static final int pic_item=0x7f080015;
+        public static final int pull_icon=0x7f080006;
+        public static final int pullup_icon=0x7f080001;
+        public static final int refresh_view=0x7f08000b;
+        public static final int refreshing_icon=0x7f080007;
+        public static final int search_edit=0x7f080017;
+        public static final int show_layout=0x7f08000e;
+        public static final int state_iv=0x7f080009;
+        public static final int state_tv=0x7f080008;
+        public static final int tv=0x7f08000d;
+        public static final int viewPager_menu=0x7f08000a;
     }
     public static final class layout {
-        public static final int cart_f=0x7f030000;
-        public static final int group_f=0x7f030001;
-        public static final int home_f=0x7f030002;
-        public static final int main_fa=0x7f030003;
-        public static final int myself_f=0x7f030004;
-        public static final int pic_item=0x7f030005;
-        public static final int productdetail_a=0x7f030006;
-        public static final int search_a=0x7f030007;
-        public static final int top_menu=0x7f030008;
-        public static final int top_menu_search=0x7f030009;
+        public static final int allview_load_more=0x7f030000;
+        public static final int allview_refresh_head=0x7f030001;
+        public static final int cart_f=0x7f030002;
+        public static final int group_f=0x7f030003;
+        public static final int home_f=0x7f030004;
+        public static final int list_item_layout=0x7f030005;
+        public static final int main_fa=0x7f030006;
+        public static final int myself_f=0x7f030007;
+        public static final int pic_item=0x7f030008;
+        public static final int productdetail_a=0x7f030009;
+        public static final int search_a=0x7f03000a;
+        public static final int top_menu=0x7f03000b;
+        public static final int top_menu_search=0x7f03000c;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
+        public static final int load_fail=0x7f06000a;
+        public static final int load_succeed=0x7f060009;
+        public static final int loading=0x7f060008;
+        /**  上拉加载更多，下拉刷新 
+         */
+        public static final int pull_to_refresh=0x7f060001;
+        public static final int pullup_to_load=0x7f060006;
+        public static final int refresh_fail=0x7f060005;
+        public static final int refresh_succeed=0x7f060004;
+        public static final int refreshing=0x7f060003;
+        public static final int release_to_load=0x7f060007;
+        public static final int release_to_refresh=0x7f060002;
     }
     public static final class style {
         public static final int AppBaseTheme=0x7f070000;

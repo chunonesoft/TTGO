@@ -348,4 +348,5 @@
 
     <!-- 首页颜色 -->
     <color name="title">#d3052b</color>
+    <color name="light_blue">#6593cb</color>
 </resources>
