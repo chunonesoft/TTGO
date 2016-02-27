@@ -6,23 +6,28 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View.MeasureSpec;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class PullableListView extends ListView implements Pullable
 {
 
+	private Context mContext;
 	public PullableListView(Context context)
 	{
 		super(context);
+		mContext = context;
 	}
 
 	public PullableListView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
+		mContext = context;
 	}
 
 	public PullableListView(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
+		mContext = context;
 	}
 
 	@Override
@@ -55,6 +60,7 @@ public class PullableListView extends ListView implements Pullable
 					&& getChildAt(
 							getLastVisiblePosition()
 									- getFirstVisiblePosition()).getBottom() <= getMeasuredHeight())
+				Toast.makeText(mContext, "»¬µ½µ×²¿ÁË", Toast.LENGTH_SHORT).show();
 				return true;
 		}
 		return false;
@@ -62,7 +68,7 @@ public class PullableListView extends ListView implements Pullable
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST) + 1000;
 
 		super.onMeasure(widthMeasureSpec, expandSpec);
 	}

@@ -5,6 +5,7 @@ import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.cart.Cart_F;
 import com.chunsoft.ttgo.group.Group_F;
 import com.chunsoft.ttgo.myself.Myself_F;
+import com.chunsoft.ttgo.util.IBtnCallListener;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
-public class Main_FA extends FragmentActivity implements OnClickListener{
+public class Main_FA extends FragmentActivity implements OnClickListener,IBtnCallListener{
 
 	//底面菜单按钮
 	private ImageView[] bt_menu = new ImageView[4];
@@ -94,8 +95,12 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 			if(group_F == null)
 			{
 				group_F = new Group_F();
-				addFragment(group_F);
-				showFragment(group_F);
+				if(!group_F.isHidden())
+				{
+					addFragment(group_F);
+					showFragment(group_F);
+				}
+				
 			}
 			else
 			{
@@ -107,26 +112,27 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 			break;
 		//购物车界面
 		case R.id.iv_menu_2:
-			if(cart_F == null)
+			if(cart_F != null)
 			{
-				cart_F = new Cart_F();
-				addFragment(cart_F);
-				showFragment(cart_F);
+				removeFragment(cart_F);
+				cart_F = null;
 			}
-			else
-			{
-				if (cart_F.isHidden()) {
-					showFragment(cart_F);
-				}
-			}
+			cart_F = new Cart_F();
+			// 判断当前界面是否隐藏，如果隐藏就进行添加显示，false表示显示，true表示当前界面隐藏
+			addFragment(cart_F);
+			showFragment(cart_F);
 			break;
 		//我界面
 		case R.id.iv_menu_3:
 			if(myself_F == null)
 			{
 				myself_F = new Myself_F();
-				addFragment(myself_F);
-				showFragment(myself_F);
+				if(!myself_F.isHidden())
+				{
+					addFragment(myself_F);
+					showFragment(myself_F);
+				}
+				
 			}
 			else
 			{
@@ -179,6 +185,12 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 		ft.commitAllowingStateLoss();
 
 	}
+	/** 删除Fragment **/
+	public void removeFragment(Fragment fragment) {
+		FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+		ft.remove(fragment);
+		ft.commit();
+	}
 	/** 返回按钮的监听 */
 	@Override
 	public void onBackPressed() 
@@ -187,5 +199,35 @@ public class Main_FA extends FragmentActivity implements OnClickListener{
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addCategory(Intent.CATEGORY_HOME);
 		startActivity(intent);
+	}
+	/** Fragment的回调函数 */
+	@SuppressWarnings("unused")
+	private IBtnCallListener btnCallListener;
+
+	@Override
+	public void onAttachFragment(Fragment fragment) {
+		try {
+			btnCallListener = (IBtnCallListener) fragment;
+		} catch (Exception e) {
+		}
+		super.onAttachFragment(fragment);
+	}
+
+	/**
+	 * 响应从Fragment中传过来的消息
+	 */
+	@Override
+	public void transferMsg() {
+		if (home_F == null) {
+			home_F = new Home_F();
+			addFragment(home_F);
+			showFragment(home_F);
+		} else {
+			showFragment(home_F);
+		}
+		bt_menu[2].setImageResource(select_off[2]);
+		bt_menu[0].setImageResource(select_on[0]);
+
+		System.out.println("由Fragment中传送来的消息");
 	}
 }

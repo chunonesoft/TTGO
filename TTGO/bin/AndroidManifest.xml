@@ -20,7 +20,8 @@
         </activity>
         
         <activity android:name="com.chunsoft.ttgo.home.Search_A"/>
-        <activity android:name="com.chunsoft.ttgo.home.ProductDetail_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.home.ProductDetail_A"/>
+        <activity android:name="com.chunsoft.ttgo.home.ShowBigPictrue"/>
     </application>
     
 </manifest>

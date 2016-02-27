@@ -20,12 +20,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 public class Home_F extends Fragment implements OnClickListener{
 	private ImageView iv_search;
+	private ScrollView sv;
 	/**首页轮播*/
 	private AbSlidingPlayView viewPager;
 	/**存储首页轮播的界面*/
@@ -39,6 +41,7 @@ public class Home_F extends Fragment implements OnClickListener{
 			Bundle savedInstanceState) {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_f, null);
 		findView(view);
+		sv.smoothScrollTo(0, 0);
 		onClick();
 		initView();
 		initListView();
@@ -47,7 +50,9 @@ public class Home_F extends Fragment implements OnClickListener{
 	/**对象实例化*/
 	private void findView(View view)
 	{
+		sv = (ScrollView) view.findViewById(R.id.sv);
 		iv_search = (ImageView) view.findViewById(R.id.iv_search);
+		listView = (ListView) view.findViewById(R.id.content_view);
 		viewPager = (AbSlidingPlayView) view.findViewById(R.id.viewPager_menu);
 		((PullToRefreshLayout) view.findViewById(R.id.refresh_view))
 		.setOnRefreshListener(new MyListener());
@@ -66,8 +71,6 @@ public class Home_F extends Fragment implements OnClickListener{
 		//设置播放间隔时间
 		viewPager.setSleepTime(3000);
 		initViewPager();
-		
-		
 	}
 	@Override
 	public void onClick(View v) {

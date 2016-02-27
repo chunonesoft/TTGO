@@ -3,6 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp" 
+        android:background="@color/gold"
+        ></RelativeLayout>
+    <TextView
+        android:id="@+id/tv_myorder"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:text="我的订单" 
+        />
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/grey" />
+	<TextView
+        android:id="@+id/tv_myphorder"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:text="我的铺货订单" 
+        />
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/grey" />
+	<TextView
+        android:id="@+id/tv_mycashorder"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:text="现付款订单" 
+        />
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/grey" />
+	<TextView
+        android:id="@+id/tv_myreturnorder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:text="退换货订单" 
+        />
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/grey" />
 
 </LinearLayout>
