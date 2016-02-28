@@ -4,26 +4,23 @@
     android:layout_height="wrap_content"
      >
     <LinearLayout 
-     	android:layout_height="50dp"
+     	android:layout_height="wrap_content"
      	android:layout_width="match_parent"
-    	android:background="@color/title">
-    <TextView
-        android:layout_width="0dip"
+     	android:orientation="horizontal"
+    	>
+    <ImageView
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:text="TTGO店招"
-        android:textStyle="bold"
-        android:layout_weight="1" 
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:src="@drawable/home_title"
         />
 <ImageView
     android:id="@+id/iv_search"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:src="@drawable/search" 
-    android:layout_marginRight="10dp"
+    android:src="@drawable/home_search" 
     />
 </LinearLayout>
 </RelativeLayout>

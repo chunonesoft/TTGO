@@ -8,14 +8,17 @@ import com.chunsoft.ab.view.AbSlidingPlayView;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.util.MyAdapter;
 import com.chunsoft.ttgo.util.MyListener;
+import com.chunsoft.view.MyListView;
 import com.chunsoft.view.PullToRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -35,16 +38,30 @@ public class Home_F extends Fragment implements OnClickListener{
 	/**首页轮播的界面的资源*/
 	private int[] resId = {R.drawable.menu_viewpager_1, R.drawable.menu_viewpager_2, R.drawable.menu_viewpager_3, R.drawable.menu_viewpager_4, R.drawable.menu_viewpager_5 };
 	
-	ListView listView;
+	MyListView listView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_f, null);
 		findView(view);
 		sv.smoothScrollTo(0, 0);
+		
 		onClick();
 		initView();
 		initListView();
+		sv.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+		        if (event.getAction() == MotionEvent.ACTION_UP) {
+		          View view = ((ScrollView) v).getChildAt(0);
+		          if (view.getMeasuredHeight() <= v.getScrollY()+ v.getHeight()) {
+		        	  Toast.makeText(getActivity(), "滑到底部了", Toast.LENGTH_SHORT).show();
+		          }
+		        }
+				return false;
+			}
+		});
 		return view;
 	}
 	/**对象实例化*/
@@ -52,10 +69,10 @@ public class Home_F extends Fragment implements OnClickListener{
 	{
 		sv = (ScrollView) view.findViewById(R.id.sv);
 		iv_search = (ImageView) view.findViewById(R.id.iv_search);
-		listView = (ListView) view.findViewById(R.id.content_view);
+		listView = (MyListView) view.findViewById(R.id.mylistview);
 		viewPager = (AbSlidingPlayView) view.findViewById(R.id.viewPager_menu);
-		((PullToRefreshLayout) view.findViewById(R.id.refresh_view))
-		.setOnRefreshListener(new MyListener());
+		//((PullToRefreshLayout) view.findViewById(R.id.refresh_view))
+		//.setOnRefreshListener(new MyListener());
 	}
 	/**事件监听*/
 	private void onClick()
@@ -69,7 +86,7 @@ public class Home_F extends Fragment implements OnClickListener{
 		//设置播放方式为顺序播放
 		viewPager.setPlayType(1);
 		//设置播放间隔时间
-		viewPager.setSleepTime(3000);
+		viewPager.setSleepTime(2000);
 		initViewPager();
 	}
 	@Override
@@ -80,6 +97,7 @@ public class Home_F extends Fragment implements OnClickListener{
 			startActivity(intent);
 			break;
 		}
+		
 	}
 	
 	private void initViewPager() {
@@ -117,7 +135,7 @@ public class Home_F extends Fragment implements OnClickListener{
 	private void initListView()
 	{
 		List<String> items = new ArrayList<String>();
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			items.add("这里是item " + i);
 		}
@@ -151,4 +169,5 @@ public class Home_F extends Fragment implements OnClickListener{
 			}
 		});
 	}
+	
 }

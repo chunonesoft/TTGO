@@ -22,6 +22,8 @@
         <activity android:name="com.chunsoft.ttgo.home.Search_A"/>
         <activity android:name="com.chunsoft.ttgo.home.ProductDetail_A"/>
         <activity android:name="com.chunsoft.ttgo.home.ShowBigPictrue"/>
+        <activity android:name="com.chunsoft.ttgo.home.Test_A"/>
+        <activity android:name="com.chunsoft.ttgo.myself.Ph_A"></activity>
     </application>
     
 </manifest>

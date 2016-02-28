@@ -19,14 +19,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                  android:background="#00000000" 
-                 android:layout_marginBottom="10dp"/>
-    <com.chunsoft.view.PullToRefreshLayout
+                 />
+            <com.chunsoft.view.MyListView 
+                android:id="@+id/mylistview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                ></com.chunsoft.view.MyListView>
+    <!-- <com.chunsoft.view.PullToRefreshLayout
     android:id="@+id/refresh_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 	
     <include layout="@layout/allview_refresh_head" />
-    <!-- 支持所有实现Pullable接口的View -->
+    支持所有实现Pullable接口的View
 
     <com.chunsoft.view.PullableListView
         android:id="@+id/content_view"
@@ -38,7 +43,7 @@
 
     <include layout="@layout/allview_load_more" />
     
-</com.chunsoft.view.PullToRefreshLayout>
+</com.chunsoft.view.PullToRefreshLayout> -->
         </LinearLayout>
     </ScrollView>
 

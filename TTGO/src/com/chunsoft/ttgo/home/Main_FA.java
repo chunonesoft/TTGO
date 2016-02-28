@@ -24,7 +24,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,IBtnCal
 	private int[] bt_menu_id = {R.id.iv_menu_0,R.id.iv_menu_1,R.id.iv_menu_2,R.id.iv_menu_3};
 	
 	// 界面底部的选中菜单按钮资源
-	private int[] select_on = { R.drawable.guide_home_on, R.drawable.guide_tfaccount_on, R.drawable.guide_cart_on, R.drawable.guide_account_on};
+	private int[] select_on = { R.drawable.home_guide_11, R.drawable.home_guide_12, R.drawable.home_guide_13, R.drawable.home_guide_14};
 	// 界面底部的未选中菜单按钮资源
 	private int[] select_off = { R.drawable.bt_menu_0_select, R.drawable.bt_menu_1_select, R.drawable.bt_menu_2_select, R.drawable.bt_menu_3_select};
 	
@@ -201,7 +201,6 @@ public class Main_FA extends FragmentActivity implements OnClickListener,IBtnCal
 		startActivity(intent);
 	}
 	/** Fragment的回调函数 */
-	@SuppressWarnings("unused")
 	private IBtnCallListener btnCallListener;
 
 	@Override

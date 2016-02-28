@@ -59,8 +59,7 @@ public class PullableListView extends ListView implements Pullable
 			if (getChildAt(getLastVisiblePosition() - getFirstVisiblePosition()) != null
 					&& getChildAt(
 							getLastVisiblePosition()
-									- getFirstVisiblePosition()).getBottom() <= getMeasuredHeight())
-				Toast.makeText(mContext, "»¬µ½µ×²¿ÁË", Toast.LENGTH_SHORT).show();
+									- getFirstVisiblePosition()).getBottom() <= getMeasuredHeight());
 				return true;
 		}
 		return false;
@@ -68,7 +67,7 @@ public class PullableListView extends ListView implements Pullable
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST) + 1000;
+		int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
 
 		super.onMeasure(widthMeasureSpec, expandSpec);
 	}
