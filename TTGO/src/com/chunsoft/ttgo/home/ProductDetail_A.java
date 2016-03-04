@@ -8,11 +8,13 @@ import com.chunsoft.view.ScaleView.HackyViewPager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -29,6 +31,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 	private ImageView iv_back;
 	private ImageView put_in;
 	private ImageView buy_now;
+	private ImageView iv_kf;
 	/** 用于设置背景暗淡 */
 	private LinearLayout all_choice_layout = null;
 	
@@ -61,6 +64,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 	{
 		all_choice_layout = (LinearLayout) findViewById(R.id.all_choice_layout);
 		iv_back = (ImageView) findViewById(R.id.iv_back);
+		iv_kf = (ImageView) findViewById(R.id.iv_kf);
 		put_in = (ImageView) findViewById(R.id.put_in);
 		buy_now = (ImageView) findViewById(R.id.buy_now);
 		iv_baby_collection=(ImageView) findViewById(R.id.iv_baby_collection);
@@ -150,6 +154,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 		iv_baby_collection.setOnClickListener(this);
 		put_in.setOnClickListener(this);
 		buy_now.setOnClickListener(this);
+		iv_kf.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
@@ -182,7 +187,29 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 			setBackgroundBlack(all_choice_layout, 0);
 			popWindow.showAsDropDown(v);
 			break;
-		
+		case R.id.iv_kf:
+			//联系客服
+			AlertDialog.Builder builder = new Builder(ProductDetail_A.this);
+			//builder.setMessage("联系客服");
+			builder.setTitle("18868448198");
+			builder.setPositiveButton("联系客服", new android.content.DialogInterface.OnClickListener() {	
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					 dialog.dismiss();
+					 Intent intent = new Intent
+							 (Intent.ACTION_CALL, Uri.parse("tel:"+ "18868448198"));
+					 startActivity(intent);
+				}
+			});
+			builder.setNegativeButton("取消",new android.content.DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			builder.create().show();
+			break;
 		default:
 			break;
 		}

@@ -45,10 +45,17 @@ public class Home_F extends Fragment implements OnClickListener{
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_f, null);
 		findView(view);
 		sv.smoothScrollTo(0, 0);
-		
+		Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
 		onClick();
 		initView();
 		initListView();
+		sv.post(new Runnable() {
+			
+			@Override
+			public void run() {
+				sv.scrollTo(0, 0);
+			}
+		});
 		sv.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -64,6 +71,7 @@ public class Home_F extends Fragment implements OnClickListener{
 		});
 		return view;
 	}
+	
 	/**对象实例化*/
 	private void findView(View view)
 	{
@@ -135,7 +143,7 @@ public class Home_F extends Fragment implements OnClickListener{
 	private void initListView()
 	{
 		List<String> items = new ArrayList<String>();
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 15; i++)
 		{
 			items.add("这里是item " + i);
 		}
