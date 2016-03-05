@@ -1,6 +1,13 @@
 package com.chunsoft.ttgo.home;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.chunsoft.adapter.OrderAdapter;
 import com.chunsoft.ttgo.R;
+import com.chunsoft.ttgo.bean.OrderBean;
+import com.chunsoft.view.MyListView;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -18,12 +26,16 @@ import android.widget.PopupWindow.OnDismissListener;
 public class Popwindow implements OnDismissListener, OnClickListener{
 
 	private Context context;
-	private TextView pop_choice_16g,pop_choice_32g,pop_choice_16m,pop_choice_32m,pop_choice_black,pop_choice_white,pop_add,pop_reduce,pop_num,pop_ok;
+	private TextView all_money,all_num,tv_all;
+	
+	private TextView pop_ok;
 	private ImageView pop_del;
+	private MyListView mylv;
+	OrderAdapter adapter;
+	OrderBean bean ;
+	private List<OrderBean> datas = new ArrayList<OrderBean>();
 	
 	private PopupWindow popupWindow;
-	//衣服增加每次递增
-	private final int ADDORREDUCE=1;
 	private OnItemClickListener listener;
 	public Popwindow (Context context)
 	{
@@ -36,27 +48,15 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		popupWindow.setOnDismissListener(this);// 当popWindow消失时的监听
 		Click();
+		adapter = new OrderAdapter(context, datas, R.layout.cart_popview_item);
+		mylv.setAdapter(adapter);
+		mylv.setFocusable(false);
 	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.pop_add:
-			if (!pop_num.getText().toString().equals("750")) {
-				
-				String num_add=Integer.valueOf(pop_num.getText().toString())+ADDORREDUCE+"";
-				pop_num.setText(num_add);
-			}else {
-				Toast.makeText(context, "不能超过最大产品数量", Toast.LENGTH_SHORT).show();
-			}
-			break;
-
-		case R.id.pop_reduce:
-			if (!pop_num.getText().toString().equals("1")) {
-				String num_reduce=Integer.valueOf(pop_num.getText().toString())-ADDORREDUCE+"";
-				pop_num.setText(num_reduce);
-			}else {
-				Toast.makeText(context, "购买数量不能低于1件", Toast.LENGTH_SHORT).show();
-			}
+		case R.id.tv_all:
+			
 			break;
 		case R.id.pop_del:
 			listener.onClickOKPop();
@@ -116,7 +116,7 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 	
 	public void findView(View view)
 	{
-		pop_choice_16g=(TextView) view.findViewById(R.id.pop_choice_16g);
+		/*pop_choice_16g=(TextView) view.findViewById(R.id.pop_choice_16g);
 		pop_choice_32g=(TextView) view.findViewById(R.id.pop_choice_32g);
 		pop_choice_16m=(TextView) view.findViewById(R.id.pop_choice_16m);
 		pop_choice_32m=(TextView) view.findViewById(R.id.pop_choice_32m);
@@ -124,22 +124,33 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		pop_choice_white=(TextView) view.findViewById(R.id.pop_choice_white);
 		pop_add=(TextView) view.findViewById(R.id.pop_add);
 		pop_reduce=(TextView) view.findViewById(R.id.pop_reduce);
-		pop_num=(TextView) view.findViewById(R.id.pop_num);
+		pop_num=(TextView) view.findViewById(R.id.pop_num);*/
+		mylv = (MyListView) view.findViewById(R.id.mylv);
 		pop_ok=(TextView) view.findViewById(R.id.pop_ok);
 		pop_del=(ImageView) view.findViewById(R.id.pop_del);
+		all_money = (TextView) view.findViewById(R.id.all_money);
+		all_num = (TextView) view.findViewById(R.id.all_num);
+		tv_all = (TextView) view.findViewById(R.id.tv_all);
 	}
 	public void Click()
 	{
-		pop_choice_16g.setOnClickListener(this);
+		/*pop_choice_16g.setOnClickListener(this);
 		pop_choice_32g.setOnClickListener(this);
 		pop_choice_16m.setOnClickListener(this);
 		pop_choice_32m.setOnClickListener(this);
 		pop_choice_black.setOnClickListener(this);
-		pop_choice_white.setOnClickListener(this);
-		pop_add.setOnClickListener(this);
-		pop_reduce.setOnClickListener(this);
+		pop_choice_white.setOnClickListener(this);*/
+		/*pop_add.setOnClickListener(this);
+		pop_reduce.setOnClickListener(this);*/
+		for(int i = 0;i < 9;i++)
+		{
+			bean = new OrderBean();
+			bean.Color_Size = "白色XL";
+			datas.add(bean);
+		}
 		pop_ok.setOnClickListener(this);
 		pop_del.setOnClickListener(this);
+		tv_all.setOnClickListener(this);
 	}
 
 }

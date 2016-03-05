@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+      <TextView
+          android:id="@+id/tv_size"
+       		android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:text="白色XL码" />
+      <LinearLayout 
+          android:id="@+id/ll1"
+          android:layout_alignTop="@id/tv_size"
+          android:layout_alignBottom="@id/tv_size"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@id/tv_size"
+          android:layout_marginLeft="10dp"
+          >
+          <TextView
+            android:id="@+id/pop_reduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/zhijiao_gray"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="12dp"
+            android:textColor="@color/tv_Black"
+            android:paddingRight="12dp"
+            android:text="一" />
+         <TextView
+            android:id="@+id/pop_num"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:background="@drawable/zhijiao"
+            android:text="0" />
+          <TextView
+                    android:id="@+id/pop_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                     android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
+                    android:textColor="@color/tv_Black"
+                    android:background="@drawable/zhijiao_gray"
+                    android:text="+" />
+      </LinearLayout>
+       
+
+          <TextView
+              android:id="@+id/tv_money"
+              android:gravity="center"
+              android:padding="10dp"
+              android:layout_alignTop="@id/tv_size"
+              android:layout_alignBottom="@id/tv_size"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:textSize="14sp"
+              android:layout_marginRight="10dp"
+              android:text="¥0" 
+              android:textColor="@color/red"
+              />
+</RelativeLayout>

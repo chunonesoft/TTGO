@@ -1,8 +1,12 @@
 package com.chunsoft.ttgo.home;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.chunsoft.adapter.CommonAdapter;
+import com.chunsoft.adapter.ViewHolder;
 import com.chunsoft.ttgo.R;
+import com.chunsoft.ttgo.bean.OrderBean;
 import com.chunsoft.ttgo.home.Popwindow.OnItemClickListener;
 import com.chunsoft.view.ScaleView.HackyViewPager;
 
@@ -24,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ProductDetail_A extends Activity implements OnItemClickListener,OnClickListener{
@@ -32,17 +37,18 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 	private ImageView put_in;
 	private ImageView buy_now;
 	private ImageView iv_kf;
-	/** ÓÃÓÚÉèÖÃ±³¾°°µµ­ */
+	
+	/** ç”¨äºè®¾ç½®èƒŒæ™¯æš—æ·¡ */
 	private LinearLayout all_choice_layout = null;
 	
-	/**ÅĞ¶ÏÊÇ·ñµã»÷µÄÁ¢¼´¹ºÂò°´Å¥*/
+	/**åˆ¤æ–­æ˜¯å¦ç‚¹å‡»çš„ç«‹å³è´­ä¹°æŒ‰é’®*/
 	boolean isClickBuy = false;
 	private ArrayList<View> allListView;
 	private HackyViewPager viewPager;
 	private Popwindow popWindow;
-	/**ViewPagerµ±Ç°ÏÔÊ¾Ò³µÄÏÂ±ê*/
+	/**ViewPagerå½“å‰æ˜¾ç¤ºé¡µçš„ä¸‹æ ‡*/
 	private int position=0;
-	/**ÊÇ·ñÌí¼ÓÊÕ²Ø*/
+	/**æ˜¯å¦æ·»åŠ æ”¶è—*/
 	private static boolean isCollection=false; 
 	private ImageView iv_baby_collection;
 	private int[] resId = { R.drawable.detail_show_1, R.drawable.detail_show_2, R.drawable.detail_show_3, R.drawable.detail_show_4, R.drawable.detail_show_5, R.drawable.detail_show_6 };
@@ -52,7 +58,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 		setContentView(R.layout.productdetail_a);
 		findView();
 		init();
-		//µÃµ½±£´æµÄÊÕ²ØĞÅÏ¢
+		//å¾—åˆ°ä¿å­˜çš„æ”¶è—ä¿¡æ¯
 		getSaveCollection();
 		initViewPager();
 		Click();
@@ -90,7 +96,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 			imageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					//ÌôÕ½µ½²é¿´´óÍ¼½çÃæ
+					//æŒ‘æˆ˜åˆ°æŸ¥çœ‹å¤§å›¾ç•Œé¢
 					Intent intent = new Intent(mContext, ShowBigPictrue.class);
 					intent.putExtra("position", position);
 					startActivity(intent);
@@ -147,7 +153,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 
 	}
 
-	/**×¢²á¼àÌı*/
+	/**æ³¨å†Œç›‘å¬*/
 	private void Click()
 	{
 		iv_back.setOnClickListener(this);
@@ -163,36 +169,36 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 			finish();
 			break;
 		case R.id.iv_baby_collection:
-			//ÊÕ²Ø
+			//æ”¶è—
 			if (isCollection) {
-				//ÌáÊ¾ÊÇ·ñÈ¡ÏûÊÕ²Ø
+				//æç¤ºæ˜¯å¦å–æ¶ˆæ”¶è—
 				cancelCollection();
 			}else {
 				isCollection=true;
 				setSaveCollection();
-				//Èç¹ûÒÑ¾­ÊÕ²Ø£¬ÔòÏÔÊ¾ÊÕ²ØºóµÄĞ§¹û
+				//å¦‚æœå·²ç»æ”¶è—ï¼Œåˆ™æ˜¾ç¤ºæ”¶è—åçš„æ•ˆæœ
 				iv_baby_collection.setImageResource(R.drawable.second_2_collection);
-				Toast.makeText(this, "ÊÕ²Ø³É¹¦", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "æ”¶è—æˆåŠŸ", Toast.LENGTH_SHORT).show();
 			}
 			break;
 		case R.id.put_in:
-			//Ìí¼Ó¹ºÎï³µ
+			//æ·»åŠ è´­ç‰©è½¦
 			isClickBuy = false;
 			setBackgroundBlack(all_choice_layout, 0);
 			popWindow.showAsDropDown(v);
 			break;
 		case R.id.buy_now:
-			//Á¢¼´¹ºÂò
+			//ç«‹å³è´­ä¹°
 			isClickBuy = true;
 			setBackgroundBlack(all_choice_layout, 0);
 			popWindow.showAsDropDown(v);
 			break;
 		case R.id.iv_kf:
-			//ÁªÏµ¿Í·ş
+			//è”ç³»å®¢æœ
 			AlertDialog.Builder builder = new Builder(ProductDetail_A.this);
-			//builder.setMessage("ÁªÏµ¿Í·ş");
+			//builder.setMessage("è”ç³»å®¢æœ");
 			builder.setTitle("18868448198");
-			builder.setPositiveButton("ÁªÏµ¿Í·ş", new android.content.DialogInterface.OnClickListener() {	
+			builder.setPositiveButton("è”ç³»å®¢æœ", new android.content.DialogInterface.OnClickListener() {	
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					 dialog.dismiss();
@@ -201,7 +207,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 					 startActivity(intent);
 				}
 			});
-			builder.setNegativeButton("È¡Ïû",new android.content.DialogInterface.OnClickListener() {
+			builder.setNegativeButton("å–æ¶ˆ",new android.content.DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -215,33 +221,33 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 		}
 	}
 	
-	/**±£´æÊÇ·ñÌí¼ÓÊÕ²Ø*/
+	/**ä¿å­˜æ˜¯å¦æ·»åŠ æ”¶è—*/
 	private void setSaveCollection(){
 		SharedPreferences sp=getSharedPreferences("SAVECOLLECTION", Context.MODE_PRIVATE);
 		Editor editor=sp.edit();
 		editor.putBoolean("isCollection", isCollection);
 		editor.commit();
 	}
-	/**µÃµ½±£´æµÄÊÇ·ñÌí¼ÓÊÕ²Ø±ê¼Ç*/
+	/**å¾—åˆ°ä¿å­˜çš„æ˜¯å¦æ·»åŠ æ”¶è—æ ‡è®°*/
 	private void getSaveCollection(){
 		SharedPreferences sp=getSharedPreferences("SAVECOLLECTION", Context.MODE_PRIVATE);
 		isCollection=sp.getBoolean("isCollection", false);
 		
 	}
-	/**È¡ÏûÊÕ²Ø*/
+	/**å–æ¶ˆæ”¶è—*/
 	private  void cancelCollection(){
 		AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-		dialog.setTitle("ÊÇ·ñÈ¡ÏûÊÕ²Ø");
-		dialog.setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
+		dialog.setTitle("æ˜¯å¦å–æ¶ˆæ”¶è—");
+		dialog.setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
 				isCollection=false;
-				//Èç¹ûÈ¡ÏûÊÕ²Ø£¬ÔòÏÔÊ¾È¡ÏûÊÕ²ØºóµÄĞ§¹û
+				//å¦‚æœå–æ¶ˆæ”¶è—ï¼Œåˆ™æ˜¾ç¤ºå–æ¶ˆæ”¶è—åçš„æ•ˆæœ
 				iv_baby_collection.setImageResource(R.drawable.second_2);
 				setSaveCollection();
 			}
 		});
-		dialog.setNegativeButton("È¡Ïû", null);
+		dialog.setNegativeButton("å–æ¶ˆ", null);
 		dialog.create().show();
 		
 	}
@@ -251,15 +257,15 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 		setBackgroundBlack(all_choice_layout, 1);
 
 		if (isClickBuy) {
-			//Èç¹ûÖ®Ç°ÊÇµã»÷µÄÁ¢¼´¹ºÂò£¬ÄÇÃ´¾ÍÌø×ªµ½Á¢¼´¹ºÎï½çÃæ
+			//å¦‚æœä¹‹å‰æ˜¯ç‚¹å‡»çš„ç«‹å³è´­ä¹°ï¼Œé‚£ä¹ˆå°±è·³è½¬åˆ°ç«‹å³è´­ç‰©ç•Œé¢
 			//Intent intent = new Intent(mContext, BuynowActivity.class);
 			//startActivity(intent);
 		}else {
-			Toast.makeText(this, "Ìí¼Óµ½¹ºÎï³µ³É¹¦", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "æ·»åŠ åˆ°è´­ç‰©è½¦æˆåŠŸ", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
-	/** ¿ØÖÆ±³¾°±ä°µ 0±ä°µ 1±äÁÁ */
+	/** æ§åˆ¶èƒŒæ™¯å˜æš— 0å˜æš— 1å˜äº® */
 	public void setBackgroundBlack(View view, int what) {
 		switch (what) {
 		case 0:
@@ -270,6 +276,48 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,OnC
 			break;
 		}
 	}
+	
+	public class OrderAdapter extends CommonAdapter<OrderBean>{
+		//è¡£æœå¢åŠ æ¯æ¬¡é€’å¢
+		private final int ADDORREDUCE=1;
+		private TextView pop_num,tv_money;
+		private Context mContext;
+		public OrderAdapter(Context context, List<OrderBean> datas, int layoutId) {
+			
+			super(context, datas, R.layout.cart_popview_item);	
+			mContext = context;
+		}
+
+		@Override
+		public void convert(final ViewHolder holder, OrderBean t) {
+			holder.getView(R.id.pop_add).setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					
+					pop_num = holder.getView(R.id.pop_num);
+					String num_add = Integer.valueOf(pop_num.getText().toString())+ADDORREDUCE+"";
+					pop_num.setText(num_add);
+					tv_money = holder.getView(R.id.tv_money);
+					tv_money.setText("Â¥"+Integer.valueOf(num_add)*129+"");
+				}
+			});
+			holder.getView(R.id.pop_reduce).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					pop_num = holder.getView(R.id.pop_num);
+					if(!pop_num.getText().toString().equals("0"))
+					{
+						String num_reduce = Integer.valueOf(pop_num.getText().toString())-ADDORREDUCE+"";
+						pop_num.setText(num_reduce);
+						tv_money = holder.getView(R.id.tv_money);
+						tv_money.setText("Â¥"+Integer.valueOf(num_reduce)*129);
+					}				
+				}
+			});
+		}
+
+	}
+
 
 
 }
