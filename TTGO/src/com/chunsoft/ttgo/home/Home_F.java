@@ -7,9 +7,7 @@ import com.chunsoft.ab.view.AbOnItemClickListener;
 import com.chunsoft.ab.view.AbSlidingPlayView;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.util.MyAdapter;
-import com.chunsoft.ttgo.util.MyListener;
 import com.chunsoft.view.MyListView;
-import com.chunsoft.view.PullToRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;

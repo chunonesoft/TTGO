@@ -1,14 +1,19 @@
 package com.chunsoft.ttgo.home;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import com.chunsoft.adapter.OrderAdapter;
+import com.chunsoft.adapter.CommonAdapter;
+import com.chunsoft.adapter.ViewHolder;
+import com.chunsoft.net.Data;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.OrderBean;
 import com.chunsoft.view.MyListView;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -16,18 +21,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.PopupWindow.OnDismissListener;
 
 public class Popwindow implements OnDismissListener, OnClickListener{
 
 	private Context context;
-	private TextView all_money,all_num,tv_all;
-	
+	TextView all_money,all_num,tv_all;
+	int price = 120;
+	int totalPrice = 0; // å•†å“æ€»ä»·
+	int totalNum = 0;   //å•†å“æ€»ä»¶æ•°
 	private TextView pop_ok;
 	private ImageView pop_del;
 	private MyListView mylv;
@@ -43,21 +48,18 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		View view=LayoutInflater.from(context).inflate(R.layout.popwindow, null);
 		findView(view);
 		popupWindow=new PopupWindow(view, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		//ÉèÖÃpopwindowµÄ¶¯»­Ğ§¹û
+		//è®¾ç½®popwindowçš„åŠ¨ç”»æ•ˆæœ
 		popupWindow.setAnimationStyle(R.style.popWindow_anim_style);
 		popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		popupWindow.setOnDismissListener(this);// µ±popWindowÏûÊ§Ê±µÄ¼àÌı
+		popupWindow.setOnDismissListener(this);// å½“popWindowæ¶ˆå¤±æ—¶çš„ç›‘å¬
 		Click();
 		adapter = new OrderAdapter(context, datas, R.layout.cart_popview_item);
 		mylv.setAdapter(adapter);
-		mylv.setFocusable(false);
 	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.tv_all:
-			
-			break;
+		
 		case R.id.pop_del:
 			listener.onClickOKPop();
 			dissmiss();
@@ -66,9 +68,9 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		case R.id.pop_ok:
 			listener.onClickOKPop();
 			/*if (str_color.equals("")) {
-				Toast.makeText(context, "Ç×£¬Äã»¹Ã»ÓĞÑ¡ÔñÑÕÉ«Ó´~", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "äº²ï¼Œä½ è¿˜æ²¡æœ‰é€‰æ‹©é¢œè‰²å“Ÿ~", Toast.LENGTH_SHORT).show();
 			}else if (str_type.equals("")) {
-				Toast.makeText(context, "Ç×£¬Äã»¹Ã»ÓĞÑ¡ÔñÀàĞÍÓ´~",Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "äº²ï¼Œä½ è¿˜æ²¡æœ‰é€‰æ‹©ç±»å‹å“Ÿ~",Toast.LENGTH_SHORT).show();
 			}else {
 				HashMap<String, Object> allHashMap=new HashMap<String,Object>();
 				
@@ -92,16 +94,16 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 	}
 	
 	public interface OnItemClickListener{
-		/** ÉèÖÃµã»÷È·ÈÏ°´Å¥Ê±¼àÌı½Ó¿Ú */
+		/** è®¾ç½®ç‚¹å‡»ç¡®è®¤æŒ‰é’®æ—¶ç›‘å¬æ¥å£ */
 		public void onClickOKPop();
 	}
 
-	/**ÉèÖÃ¼àÌı*/
+	/**è®¾ç½®ç›‘å¬*/
 	public void setOnItemClickListener(OnItemClickListener listener){
 		this.listener=listener;
 	}
 	
-	/**µ¯´°ÏÔÊ¾µÄÎ»ÖÃ*/  
+	/**å¼¹çª—æ˜¾ç¤ºçš„ä½ç½®*/  
 	public void showAsDropDown(View parent){
 		popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 		popupWindow.setFocusable(true);
@@ -109,48 +111,95 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		popupWindow.update();
 	}
 	
-	/**Ïû³ıµ¯´°*/
+	/**æ¶ˆé™¤å¼¹çª—*/
 	public void dissmiss(){
 		popupWindow.dismiss();
 	}
 	
 	public void findView(View view)
 	{
-		/*pop_choice_16g=(TextView) view.findViewById(R.id.pop_choice_16g);
-		pop_choice_32g=(TextView) view.findViewById(R.id.pop_choice_32g);
-		pop_choice_16m=(TextView) view.findViewById(R.id.pop_choice_16m);
-		pop_choice_32m=(TextView) view.findViewById(R.id.pop_choice_32m);
-		pop_choice_black=(TextView) view.findViewById(R.id.pop_choice_black);
-		pop_choice_white=(TextView) view.findViewById(R.id.pop_choice_white);
-		pop_add=(TextView) view.findViewById(R.id.pop_add);
-		pop_reduce=(TextView) view.findViewById(R.id.pop_reduce);
-		pop_num=(TextView) view.findViewById(R.id.pop_num);*/
 		mylv = (MyListView) view.findViewById(R.id.mylv);
 		pop_ok=(TextView) view.findViewById(R.id.pop_ok);
 		pop_del=(ImageView) view.findViewById(R.id.pop_del);
 		all_money = (TextView) view.findViewById(R.id.all_money);
 		all_num = (TextView) view.findViewById(R.id.all_num);
-		tv_all = (TextView) view.findViewById(R.id.tv_all);
 	}
 	public void Click()
 	{
-		/*pop_choice_16g.setOnClickListener(this);
-		pop_choice_32g.setOnClickListener(this);
-		pop_choice_16m.setOnClickListener(this);
-		pop_choice_32m.setOnClickListener(this);
-		pop_choice_black.setOnClickListener(this);
-		pop_choice_white.setOnClickListener(this);*/
-		/*pop_add.setOnClickListener(this);
-		pop_reduce.setOnClickListener(this);*/
 		for(int i = 0;i < 9;i++)
 		{
 			bean = new OrderBean();
-			bean.Color_Size = "°×É«XL";
+			bean.Color_Size = "ç™½è‰²XL";
 			datas.add(bean);
 		}
 		pop_ok.setOnClickListener(this);
 		pop_del.setOnClickListener(this);
-		tv_all.setOnClickListener(this);
 	}
+	
+	/**ä¿å­˜è´­ç‰©è½¦çš„æ•°æ®*/
+	private void setSaveData(){
+		SharedPreferences sp= context.getSharedPreferences("SAVE_CART", Context.MODE_PRIVATE);
+		Editor editor=sp.edit();
+		editor.putInt("ArrayCart_size", Data.arrayList_cart.size());
+		for (int i = 0; i < Data.arrayList_cart.size(); i++) {
+			editor.remove("ArrayCart_type_"+i);
+			editor.remove("ArrayCart_color_"+i);
+			editor.remove("ArrayCart_num_"+i);
+			editor.putString("ArrayCart_type_"+i, Data.arrayList_cart.get(i).get("type").toString());
+			editor.putString("ArrayCart_color_"+i, Data.arrayList_cart.get(i).get("color").toString());
+			editor.putString("ArrayCart_num_"+i, Data.arrayList_cart.get(i).get("num").toString());	
+		}
+	}
+	
+	class OrderAdapter extends CommonAdapter<OrderBean>{
+		//è¡£æœå¢åŠ æ¯æ¬¡é€’å¢
+		private final int ADDORREDUCE = 1;
+		private TextView pop_num,tv_money;
+		public OrderAdapter(Context context, List<OrderBean> datas, int layoutId) {
+			super(context, datas, R.layout.cart_popview_item);	
+		}
 
+		@Override
+		public void convert(final ViewHolder holder, OrderBean t) {
+			holder.getView(R.id.pop_add).setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					
+					pop_num = holder.getView(R.id.pop_num);
+					String num_add = Integer.valueOf(pop_num.getText().toString())+ADDORREDUCE+"";
+					pop_num.setText(num_add);
+					totalNum += 1;
+					totalPrice = totalNum*price;
+					all_num.setText("æ€»è®¡ï¼š"+totalNum+"ä»¶");
+					all_money.setText("æ€»é‡‘é¢ï¼š"+totalPrice+"å…ƒ");
+					tv_money = holder.getView(R.id.tv_money);
+					tv_money.setText("Â¥"+Integer.valueOf(num_add)*129+"");
+					//å­˜å‚¨æ•°æ®
+					HashMap<String, Object> allHashMap=new HashMap<String,Object>();
+					holder.getPosition();
+					allHashMap.put("id", "ç¾ä¸½äº§å“");
+					allHashMap.put("position", holder.getPosition());
+					allHashMap.put("num", num_add);
+				}
+			});
+			holder.getView(R.id.pop_reduce).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					pop_num = holder.getView(R.id.pop_num);
+					if(!pop_num.getText().toString().equals("0"))
+					{
+						String num_reduce = Integer.valueOf(pop_num.getText().toString())-ADDORREDUCE+"";
+						pop_num.setText(num_reduce);
+						totalNum -= 1;
+						totalPrice = totalNum*price;
+						all_num.setText("æ€»è®¡ï¼š"+totalNum+"ä»¶");
+						all_money.setText("æ€»é‡‘é¢ï¼š"+totalPrice+"å…ƒ");
+						tv_money = holder.getView(R.id.tv_money);
+						tv_money.setText("Â¥"+Integer.valueOf(num_reduce)*129);
+					}				
+				}
+			});
+		}
+
+	}
 }

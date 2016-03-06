@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/com/chunsoft/adapter/OrderAdapter.java=UTF-8
 encoding//src/com/chunsoft/adapter/ViewHolder.java=UTF-8
+encoding//src/com/chunsoft/ttgo/home/Popwindow.java=UTF-8
 encoding//src/com/chunsoft/ttgo/home/ProductDetail_A.java=UTF-8
+encoding//src/com/chunsoft/view=UTF-8
+encoding//src/com/chunsoft/view/PullToRefreshListView.java=UTF-8

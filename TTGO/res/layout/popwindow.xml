@@ -103,11 +103,11 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/bg_Gray" />
-    <ScrollView 
+   <!--  <ScrollView 
         android:layout_width="match_parent"
         android:layout_marginTop="10dp" 
         android:layout_height="260dp">
-        <!-- <com.chunsoft.view.MyListView
+        <com.chunsoft.view.MyListView
         	android:id="@+id/mylv"
         	android:focusable="false"
         	android:clickable="false"
@@ -116,82 +116,13 @@
         	android:layout_height="wrap_content"
         	android:listSelector="@color/transparent"
         > 
-    </com.chunsoft.view.MyListView>-->
+    </com.chunsoft.view.MyListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:orientation="vertical"
         >
         <LinearLayout 
-    		android:layout_width="match_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="horizontal"
-    		>
-      <TextView
-          android:id="@+id/tv_size"
-          android:layout_weight="1"
-       		android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:text="白色XL码" />
-      <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:orientation="horizontal"
-          >
-          <TextView
-            android:id="@+id/pop_reduce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/zhijiao_gray"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
-            android:textColor="@color/tv_Black"
-            android:paddingRight="12dp"
-            android:text="一" />
-         <TextView
-            android:id="@+id/pop_num"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center"
-            android:textColor="@color/red"
-            android:background="@drawable/zhijiao"
-            android:text="0" />
-          <TextView
-            
-               android:id="@+id/pop_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:textColor="@color/tv_Black"
-                    android:background="@drawable/zhijiao_gray"
-                    android:text="+" />
-      </LinearLayout>
-       
-
-          <TextView
-              android:layout_weight="1"
-              android:id="@+id/tv_item_money"
-              android:gravity="center"
-              android:padding="10dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:textSize="14sp"
-              android:text="¥0" 
-              android:textColor="@color/red"
-              />
-</LinearLayout>
-<LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
@@ -207,7 +138,7 @@
             android:text="白色XL码" />
       <LinearLayout 
           android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
@@ -220,9 +151,10 @@
             android:background="@drawable/zhijiao_gray"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
             android:textColor="@color/tv_Black"
-            android:paddingRight="12dp"
+            
             android:text="一" />
          <TextView
             android:id="@+id/pop_num1"
@@ -234,7 +166,6 @@
             android:background="@drawable/zhijiao"
             android:text="0" />
           <TextView
-            
                android:id="@+id/pop_add1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -250,7 +181,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money1"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -259,14 +190,23 @@
               android:text="¥0" 
               android:textColor="@color/red"
               />
-</LinearLayout>
-<LinearLayout 
+	</LinearLayout>
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
+		<LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size2"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -275,26 +215,26 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll2"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
+            android:paddingLeft="13dp"
             android:textColor="@color/tv_Black"
-            android:paddingRight="12dp"
+            android:paddingRight="13dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num2"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -304,7 +244,7 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
@@ -319,7 +259,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money2"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -329,13 +269,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
 <LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size3"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -344,15 +293,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll3"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -363,7 +312,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num3"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -373,13 +322,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -388,7 +337,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money3"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -398,13 +347,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
 <LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size4"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -413,15 +371,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll4"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -432,7 +390,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num4"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -442,13 +400,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -457,7 +415,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money4"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -467,13 +425,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
-<LinearLayout 
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
+	<LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size5"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -482,15 +449,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll5"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -501,7 +468,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num5"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -511,13 +478,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -526,7 +493,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money5"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -536,13 +503,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
 <LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size6"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -551,15 +527,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll6"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -570,7 +546,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num6"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -580,13 +556,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -595,7 +571,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money6"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -605,13 +581,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
 <LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size7"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -620,15 +605,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll7"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -639,7 +624,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num7"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -649,13 +634,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -664,7 +649,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money7"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -674,13 +659,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
 <LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size8"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -689,15 +683,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll8"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -708,7 +702,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num8"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -718,13 +712,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -733,7 +727,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money8"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -743,13 +737,22 @@
               android:textColor="@color/red"
               />
 </LinearLayout>
+<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/gray"
+	    android:layout_marginTop="2dp"
+	    android:layout_marginBottom="2dp"
+	    >
+	    
+	</View>
 <LinearLayout 
     		android:layout_width="match_parent"
     		android:layout_height="wrap_content"
     		android:orientation="horizontal"
     		>
       <TextView
-          android:id="@+id/tv_size"
+          android:id="@+id/tv_size9"
           android:layout_weight="1"
        		android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -758,15 +761,15 @@
             android:textSize="14sp"
             android:text="白色XL码" />
       <LinearLayout 
-          android:id="@+id/ll1"
-          android:layout_weight="1"
+          android:id="@+id/ll9"
+          android:layout_weight="2"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:gravity="center"
           android:orientation="horizontal"
           >
           <TextView
-            android:id="@+id/pop_reduce"
+            android:id="@+id/pop_reduce9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/zhijiao_gray"
@@ -777,7 +780,7 @@
             android:paddingRight="12dp"
             android:text="一" />
          <TextView
-            android:id="@+id/pop_num"
+            android:id="@+id/pop_num9"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -787,13 +790,13 @@
             android:text="0" />
           <TextView
             
-               android:id="@+id/pop_add"
+               android:id="@+id/pop_add9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                      android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
+                    android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="@color/tv_Black"
                     android:background="@drawable/zhijiao_gray"
                     android:text="+" />
@@ -802,7 +805,7 @@
 
           <TextView
               android:layout_weight="1"
-              android:id="@+id/tv_item_money"
+              android:id="@+id/tv_item_money9"
               android:gravity="center"
               android:padding="10dp"
               android:layout_width="wrap_content"
@@ -813,7 +816,7 @@
               />
 </LinearLayout>
     </LinearLayout>
-    </ScrollView>
+    </ScrollView> -->
    
     <!-- <ScrollView
         android:layout_width="match_parent"
@@ -1009,30 +1012,29 @@
                 android:background="@color/bg_Gray_light" />
         </LinearLayout>
     </ScrollView> -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="260dp" 
+        >
+        <com.chunsoft.view.MyListView
+            android:id="@+id/mylv"
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"
+            ></com.chunsoft.view.MyListView>
+    </ScrollView>
 	<RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         >
-         <TextView
-             android:id="@+id/tv_all" 
-             android:layout_width="wrap_content"
-             android:layout_height="match_parent"
-             android:text="总计"
-             android:textColor="@color/red"
-             android:textSize="18sp"
-             android:padding="10dp"
-             android:background="@color/bg_Gray"
-             android:layout_marginLeft="10dp"
-             android:gravity="center"
-             />
+         
          <TextView
              android:id="@+id/all_num" 
-             android:layout_marginLeft="50dp"
+             android:layout_marginLeft="20dp"
              android:layout_width="wrap_content"
              android:layout_height="match_parent"
-             android:text="128件"
-             android:layout_toRightOf="@id/tv_all"
+             android:text="总计：0件"
+            
              android:textColor="@color/red"
              android:textSize="18sp"
              android:gravity="center"
@@ -1041,11 +1043,11 @@
              android:id="@+id/all_money" 
              android:layout_width="wrap_content"
              android:layout_height="match_parent"
-             android:text="¥1280"
+             android:text="总金额：0元"
              android:layout_toRightOf="@id/all_num"
              android:textColor="@color/red"
              android:textSize="18sp"
-             android:layout_marginLeft="50dp"
+             android:layout_marginLeft="20dp"
              android:gravity="center"
              />
  		<TextView 
