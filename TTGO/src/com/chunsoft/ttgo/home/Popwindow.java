@@ -142,12 +142,12 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		Editor editor=sp.edit();
 		editor.putInt("ArrayCart_size", Data.arrayList_cart.size());
 		for (int i = 0; i < Data.arrayList_cart.size(); i++) {
-			editor.remove("ArrayCart_type_"+i);
+			/*editor.remove("ArrayCart_type_"+i);
 			editor.remove("ArrayCart_color_"+i);
 			editor.remove("ArrayCart_num_"+i);
 			editor.putString("ArrayCart_type_"+i, Data.arrayList_cart.get(i).get("type").toString());
 			editor.putString("ArrayCart_color_"+i, Data.arrayList_cart.get(i).get("color").toString());
-			editor.putString("ArrayCart_num_"+i, Data.arrayList_cart.get(i).get("num").toString());	
+			editor.putString("ArrayCart_num_"+i, Data.arrayList_cart.get(i).get("num").toString());	*/
 		}
 	}
 	
@@ -164,7 +164,6 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 			holder.getView(R.id.pop_add).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
-					
 					pop_num = holder.getView(R.id.pop_num);
 					String num_add = Integer.valueOf(pop_num.getText().toString())+ADDORREDUCE+"";
 					pop_num.setText(num_add);
@@ -199,6 +198,10 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 					}				
 				}
 			});
+			
+			/**
+			 * getData
+			 */
 		}
 
 	}
