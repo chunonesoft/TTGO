@@ -1,8 +1,9 @@
 package com.chunsoft.ttgo.bean;
 
 public class ProductBean {
+	public int ProductId;
 	public String ProductName;
-	public String ProductNum;
+	public int ProductNum;
 	public String ProductPrice;
 	public String ProductKind;
 }

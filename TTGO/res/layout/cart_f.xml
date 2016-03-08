@@ -18,6 +18,7 @@
            android:background="@color/bg_Gray" />
 
         </LinearLayout>
+
         
     <LinearLayout
         android:id="@+id/bottom_bar"

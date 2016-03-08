@@ -1,7 +1,6 @@
 package com.chunsoft.ttgo.home;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.chunsoft.adapter.CommonAdapter;
@@ -9,6 +8,7 @@ import com.chunsoft.adapter.ViewHolder;
 import com.chunsoft.net.Data;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.OrderBean;
+import com.chunsoft.ttgo.bean.ProductBean;
 import com.chunsoft.view.MyListView;
 
 import android.content.Context;
@@ -16,6 +16,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.PopupWindow.OnDismissListener;
 
 public class Popwindow implements OnDismissListener, OnClickListener{
@@ -37,13 +40,15 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 	private ImageView pop_del;
 	private MyListView mylv;
 	OrderAdapter adapter;
-	OrderBean bean ;
-	private List<OrderBean> datas = new ArrayList<OrderBean>();
+	ProductBean bean;
+	Data datas = new Data();
+	
 	
 	private PopupWindow popupWindow;
 	private OnItemClickListener listener;
 	public Popwindow (Context context)
 	{
+		
 		this.context=context;
 		View view=LayoutInflater.from(context).inflate(R.layout.popwindow, null);
 		findView(view);
@@ -53,8 +58,14 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		popupWindow.setOnDismissListener(this);// 当popWindow消失时的监听
 		Click();
-		adapter = new OrderAdapter(context, datas, R.layout.cart_popview_item);
+		//LinearLayout layout = (LinearLayout) mylv.getChildAt(1);
+		//TextView pop_num = (TextView) layout.findViewById(R.id.pop_num);
+		//TextView pop_num = (TextView) layout.getChildAt(1);
+		//Toast.makeText(context, pop_num.getText().toString(), Toast.LENGTH_SHORT).show();
+		adapter = new OrderAdapter(context, datas.arrayList_cart, R.layout.cart_popview_item);
 		mylv.setAdapter(adapter);
+		
+		
 	}
 	@Override
 	public void onClick(View v) {
@@ -67,6 +78,12 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 			break;
 		case R.id.pop_ok:
 			listener.onClickOKPop();
+			String str = "";
+			for(int i = 0;i < datas.arrayList_cart.size();i++)
+			{
+				str += datas.arrayList_cart.get(i).ProductNum;
+			}
+			Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
 			/*if (str_color.equals("")) {
 				Toast.makeText(context, "亲，你还没有选择颜色哟~", Toast.LENGTH_SHORT).show();
 			}else if (str_type.equals("")) {
@@ -128,9 +145,9 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 	{
 		for(int i = 0;i < 9;i++)
 		{
-			bean = new OrderBean();
-			bean.Color_Size = "白色XL";
-			datas.add(bean);
+			bean = new ProductBean();
+			bean.ProductKind = "白色XL";
+			datas.arrayList_cart.add(bean);
 		}
 		pop_ok.setOnClickListener(this);
 		pop_del.setOnClickListener(this);
@@ -142,25 +159,25 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		Editor editor=sp.edit();
 		editor.putInt("ArrayCart_size", Data.arrayList_cart.size());
 		for (int i = 0; i < Data.arrayList_cart.size(); i++) {
-			/*editor.remove("ArrayCart_type_"+i);
-			editor.remove("ArrayCart_color_"+i);
-			editor.remove("ArrayCart_num_"+i);
-			editor.putString("ArrayCart_type_"+i, Data.arrayList_cart.get(i).get("type").toString());
-			editor.putString("ArrayCart_color_"+i, Data.arrayList_cart.get(i).get("color").toString());
-			editor.putString("ArrayCart_num_"+i, Data.arrayList_cart.get(i).get("num").toString());	*/
+			editor.remove("ArrayCart_ProductKind_"+i);
+			editor.remove("ArrayCart_ProductNum_"+i);
+			editor.remove("ArrayCart_ProductId_"+i);
+			editor.putString("ArrayCart_ProductKind_"+i, Data.arrayList_cart.get(i).ProductKind.toString());
+			editor.putInt("ArrayCart_ProductNum_"+i, Data.arrayList_cart.get(i).ProductNum);
+			editor.putInt("ArrayCart_ProductId_"+i, Data.arrayList_cart.get(i).ProductId);	
 		}
 	}
 	
-	class OrderAdapter extends CommonAdapter<OrderBean>{
+	class OrderAdapter extends CommonAdapter<ProductBean>{
 		//衣服增加每次递增
 		private final int ADDORREDUCE = 1;
 		private TextView pop_num,tv_money;
-		public OrderAdapter(Context context, List<OrderBean> datas, int layoutId) {
+		public OrderAdapter(Context context, List<ProductBean> datas, int layoutId) {
 			super(context, datas, R.layout.cart_popview_item);	
 		}
 
 		@Override
-		public void convert(final ViewHolder holder, OrderBean t) {
+		public void convert(final ViewHolder holder, ProductBean t) {
 			holder.getView(R.id.pop_add).setOnClickListener(new OnClickListener() {			
 				@Override
 				public void onClick(View v) {
@@ -173,12 +190,34 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 					all_money.setText("总金额："+totalPrice+"元");
 					tv_money = holder.getView(R.id.tv_money);
 					tv_money.setText("¥"+Integer.valueOf(num_add)*129+"");
-					//存储数据
-					HashMap<String, Object> allHashMap=new HashMap<String,Object>();
-					holder.getPosition();
-					allHashMap.put("id", "美丽产品");
-					allHashMap.put("position", holder.getPosition());
-					allHashMap.put("num", num_add);
+				}
+			});
+			pop_num = holder.getView(R.id.pop_num);
+			pop_num.addTextChangedListener(new TextWatcher() {
+				
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count,
+						int after) {
+					
+				}
+				
+				@Override
+				public void afterTextChanged(Editable s) {
+					int position = holder.getPosition(); 
+					if(isExists(holder.getPosition()) != -1)
+					{
+						datas.arrayList_cart.get(position).ProductNum = Integer.valueOf(pop_num.getText().toString());
+					}
+					else
+					{
+						datas.arrayList_cart.get(position).ProductId = position;
+						datas.arrayList_cart.get(position).ProductNum =  Integer.valueOf(pop_num.getText().toString());
+					}
 				}
 			});
 			holder.getView(R.id.pop_reduce).setOnClickListener(new OnClickListener() {
@@ -202,6 +241,18 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 			/**
 			 * getData
 			 */
+		}
+		
+		public int isExists(int id)
+		{
+			for(int i = 0;i < datas.arrayList_cart.size();i ++)
+			{
+				if(datas.arrayList_cart.get(i).ProductId == id)
+				{
+					return id;
+				}
+			}
+			return -1;
 		}
 
 	}

@@ -28,8 +28,6 @@
             android:layout_marginRight="4dp"
             android:button="@drawable/check_box_bg"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-            android:clickable="false"
-            android:focusable="false"
             android:focusableInTouchMode="false"
             android:layout_gravity="center_vertical"
             android:gravity="center"
@@ -104,8 +102,8 @@
 
                     <TextView
                         android:id="@+id/tv_reduce"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/text_angle_gray"
                         android:gravity="center"
                         android:text="一"
@@ -114,8 +112,8 @@
 
                     <TextView
                         android:id="@+id/tv_num"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/text_angle"
                         android:gravity="center"
                         android:singleLine="true"
@@ -125,8 +123,8 @@
 
                     <TextView
                         android:id="@+id/tv_add"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:background="@drawable/text_angle_right"
                         android:gravity="center"
                         android:text="+"
