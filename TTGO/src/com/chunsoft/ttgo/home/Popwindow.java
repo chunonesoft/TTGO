@@ -209,9 +209,8 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 					{
 						if(pop_num.getText().toString().equals("0"))
 						{
-							bean = new ProductBean();
-							bean = datas.arrayList_cart.get(position);
-							datas.arrayList_cart.remove(bean);
+							datas.arrayList_cart.remove(position);
+							position--;
 						}
 						else{ 
 							datas.arrayList_cart.get(position).ProductNum = Integer.valueOf(pop_num.getText().toString());
@@ -222,7 +221,7 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 						bean = new ProductBean();
 						bean.ProductId = position;
 						bean.ProductKind = "白色X" + position;
-						bean.ProductPrice = "120";
+						bean.ProductPrice = 120;
 						bean.ProductNum = Integer.valueOf(pop_num.getText().toString());
 						bean.ProductName = "这是一件美丽的衣服" + position;
 						datas.arrayList_cart.add(bean);

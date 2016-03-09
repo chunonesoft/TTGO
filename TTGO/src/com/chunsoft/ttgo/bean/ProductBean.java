@@ -4,7 +4,7 @@ public class ProductBean {
 	public int ProductId;
 	public String ProductName;
 	public int ProductNum;
-	public String ProductPrice;
+	public int ProductPrice;
 	public String ProductKind;
 	public boolean isChecked;
 }
