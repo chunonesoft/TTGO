@@ -1,8 +1,5 @@
 package com.chunsoft.ttgo.cart;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.chunsoft.adapter.CartAdapter;
 import com.chunsoft.net.Data;
 import com.chunsoft.ttgo.R;
@@ -19,9 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class Cart_F extends Fragment implements IBtnCallListener,OnCheckedChangeListener,OnClickListener{
 	IBtnCallListener btnCallListener;

@@ -21,15 +21,12 @@ public class CartAdapter extends CommonAdapter<ProductBean>{
 
 	@Override
 	public void convert(final ViewHolder holder, ProductBean t) {
-		//holder.setText(R.id.tv_num, String.valueOf(t.ProductNum));
-		
 		holder.getView(R.id.tv_add).setOnClickListener(new OnClickListener() {
 			@Override
-			
 			public void onClick(View v) {
 				tv_num = holder.getView(R.id.tv_num);
 				String num = Integer.valueOf(tv_num.getText().toString())+ADDORREDUCE+"";
-				tv_num.setText(num);
+				tv_num.setText(num);			
 			}
 		});
 		
@@ -37,9 +34,11 @@ public class CartAdapter extends CommonAdapter<ProductBean>{
 			
 			@Override
 			public void onClick(View v) {
+				
 				tv_num = holder.getView(R.id.tv_num);
 				String num = Integer.valueOf(tv_num.getText().toString())-ADDORREDUCE+"";
 				tv_num.setText(num);
+
 			}
 		});
 	}
@@ -51,6 +50,4 @@ public class CartAdapter extends CommonAdapter<ProductBean>{
 	public void setOnCheckedChanged(onCheckedChanged listener){
 		this.listener=listener;
 	}
-
-
 }

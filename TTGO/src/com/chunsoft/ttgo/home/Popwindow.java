@@ -41,6 +41,7 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 	private MyListView mylv;
 	OrderAdapter adapter;
 	ProductBean bean;
+	ArrayList<ProductBean> testData = new ArrayList<ProductBean>();
 	Data datas = new Data();
 	
 	
@@ -62,7 +63,7 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		//TextView pop_num = (TextView) layout.findViewById(R.id.pop_num);
 		//TextView pop_num = (TextView) layout.getChildAt(1);
 		//Toast.makeText(context, pop_num.getText().toString(), Toast.LENGTH_SHORT).show();
-		adapter = new OrderAdapter(context, datas.arrayList_cart, R.layout.cart_popview_item);
+		adapter = new OrderAdapter(context, testData, R.layout.cart_popview_item);
 		mylv.setAdapter(adapter);
 		
 		
@@ -78,12 +79,7 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 			break;
 		case R.id.pop_ok:
 			listener.onClickOKPop();
-			String str = "";
-			for(int i = 0;i < datas.arrayList_cart.size();i++)
-			{
-				str += datas.arrayList_cart.get(i).ProductNum;
-			}
-			Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
+			
 			/*if (str_color.equals("")) {
 				Toast.makeText(context, "亲，你还没有选择颜色哟~", Toast.LENGTH_SHORT).show();
 			}else if (str_type.equals("")) {
@@ -147,7 +143,7 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 		{
 			bean = new ProductBean();
 			bean.ProductKind = "白色XL";
-			datas.arrayList_cart.add(bean);
+			testData.add(bean);
 		}
 		pop_ok.setOnClickListener(this);
 		pop_del.setOnClickListener(this);
@@ -211,12 +207,28 @@ public class Popwindow implements OnDismissListener, OnClickListener{
 					int position = holder.getPosition(); 
 					if(isExists(holder.getPosition()) != -1)
 					{
-						datas.arrayList_cart.get(position).ProductNum = Integer.valueOf(pop_num.getText().toString());
+						if(pop_num.getText().toString().equals("0"))
+						{
+							bean = new ProductBean();
+							bean = datas.arrayList_cart.get(position);
+							datas.arrayList_cart.remove(bean);
+						}
+						else{ 
+							datas.arrayList_cart.get(position).ProductNum = Integer.valueOf(pop_num.getText().toString());
+						}
 					}
 					else
 					{
-						datas.arrayList_cart.get(position).ProductId = position;
-						datas.arrayList_cart.get(position).ProductNum =  Integer.valueOf(pop_num.getText().toString());
+						bean = new ProductBean();
+						bean.ProductId = position;
+						bean.ProductKind = "白色X" + position;
+						bean.ProductPrice = "120";
+						bean.ProductNum = Integer.valueOf(pop_num.getText().toString());
+						bean.ProductName = "这是一件美丽的衣服" + position;
+						datas.arrayList_cart.add(bean);
+						//datas.arrayList_cart.get(position).ProductId = position;
+						
+						//datas.arrayList_cart.get(position).ProductNum =  Integer.valueOf(pop_num.getText().toString());
 					}
 				}
 			});
