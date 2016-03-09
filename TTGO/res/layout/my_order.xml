@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <include layout="@layout/top_menu_ph" />
+        <include layout="@layout/top_menu_myorder" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,14 +36,14 @@
                 android:background="@color/bg_Gray" />
 
             <TextView
-                  android:id="@+id/bt_cart_low"
+                  android:id="@+id/bt_cart_dfk"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="未付款"
+                android:text="待付款"
                 android:textColor="@color/tv_Black" />
 
             <View
@@ -54,14 +54,48 @@
                 android:background="@color/bg_Gray" />
 
             <TextView
-                  android:id="@+id/bt_cart_stock"
+                  android:id="@+id/bt_cart_dfh"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="已付款"
+                android:text="待发货"
+                android:textColor="@color/tv_Black" />
+            
+			<View
+                android:layout_width="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_Gray" />
+            <TextView
+                android:id="@+id/bt_cart_dsh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="待收货"
+                android:textColor="@color/tv_Black" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_Gray" />
+            <TextView
+                android:id="@+id/bt_cart_ysh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="已收货"
                 android:textColor="@color/tv_Black" />
         </LinearLayout>
 
@@ -77,13 +111,25 @@
                 android:layout_weight="1"
                 android:background="@color/bg_Black" />
             <View
-                android:id="@+id/show_cart_low"
+                android:id="@+id/show_cart_dfk"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"
                 android:background="@color/bg_Gray" />
             <View
-                android:id="@+id/show_cart_stock"
+                android:id="@+id/show_cart_dfh"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/bg_Gray" />
+            <View
+                android:id="@+id/show_cart_dsh"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/bg_Gray" />
+            <View
+                android:id="@+id/show_cart_ysh"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"

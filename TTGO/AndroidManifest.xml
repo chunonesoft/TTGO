@@ -25,6 +25,7 @@
         <activity android:name="com.chunsoft.ttgo.home.ShowBigPictrue"/>
         <activity android:name="com.chunsoft.ttgo.home.Test_A"/>
         <activity android:name="com.chunsoft.ttgo.myself.Ph_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.myself.MyOrder"></activity>
     </application>
     
 </manifest>

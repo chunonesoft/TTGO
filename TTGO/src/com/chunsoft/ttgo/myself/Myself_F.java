@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class Myself_F extends Fragment implements OnClickListener{
-	private TextView tv_myphorder;
+	private TextView tv_myphorder,tv_myorder;
 	private Intent intent;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -26,10 +26,12 @@ public class Myself_F extends Fragment implements OnClickListener{
 	private void FindView(View view)
 	{
 		tv_myphorder = (TextView) view.findViewById(R.id.tv_myphorder);
+		tv_myorder = (TextView) view.findViewById(R.id.tv_myorder);
 	}
 	private void Click()
 	{
 		tv_myphorder.setOnClickListener(this);
+		tv_myorder.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
@@ -38,7 +40,10 @@ public class Myself_F extends Fragment implements OnClickListener{
 			intent = new Intent(getActivity(),Ph_A.class);
 			startActivity(intent);
 			break;
-
+		case R.id.tv_myorder:
+			intent = new Intent(getActivity(),MyOrder.class);
+			startActivity(intent);
+			break;
 		default:
 			break;
 		}
