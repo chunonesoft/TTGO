@@ -25,6 +25,7 @@ public class CartAdapter extends CommonAdapter<ProductBean>{
 		
 		holder.getView(R.id.tv_add).setOnClickListener(new OnClickListener() {
 			@Override
+			
 			public void onClick(View v) {
 				tv_num = holder.getView(R.id.tv_num);
 				String num = Integer.valueOf(tv_num.getText().toString())+ADDORREDUCE+"";
