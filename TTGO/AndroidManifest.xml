@@ -26,6 +26,7 @@
         <activity android:name="com.chunsoft.ttgo.home.Test_A"/>
         <activity android:name="com.chunsoft.ttgo.myself.Ph_A"></activity>
         <activity android:name="com.chunsoft.ttgo.myself.MyOrder"></activity>
+        <activity android:name="com.chunsoft.ttgo.myself.Tk_A"></activity>
     </application>
     
 </manifest>

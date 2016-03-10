@@ -1,9 +1,6 @@
 package com.chunsoft.ttgo.myself;
 
 import com.chunsoft.ttgo.R;
-import com.chunsoft.ttgo.home.Home_F;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +11,7 @@ import android.widget.TextView;
 
 public class MyOrder extends FragmentActivity implements OnClickListener{
 	private TextView bt_cart_all, bt_cart_dfk, bt_cart_dfh, bt_cart_dsh, bt_cart_ysh;
-	private View show_cart_all, show_cart_dfk,show_cart_dfh, show_cart_dsh, show_cart_stock, show_cart_ysh;
+	private View show_cart_all, show_cart_dfk,show_cart_dfh, show_cart_dsh, show_cart_ysh;
 	MyOrder_All all;
 	MyOrder_dfk dfk;
 	MyOrder_dfh dfh;
@@ -32,16 +29,17 @@ public class MyOrder extends FragmentActivity implements OnClickListener{
 	/**¿Ø¼þÊµÀý»¯*/
 	private void FindView()
 	{
+
 		bt_cart_all = (TextView) findViewById(R.id.bt_cart_all);
 		bt_cart_dfk = (TextView) findViewById(R.id.bt_cart_dfk);
 		bt_cart_dfh = (TextView) findViewById(R.id.bt_cart_dfh); 
-		bt_cart_dsh = (TextView) findViewById(R.id.bt_cart_all);
-		bt_cart_ysh = (TextView) findViewById(R.id.bt_cart_all);
+		bt_cart_dsh = (TextView) findViewById(R.id.bt_cart_dsh);
+		bt_cart_ysh = (TextView) findViewById(R.id.bt_cart_ysh);
 		show_cart_all = findViewById(R.id.show_cart_all);
 		show_cart_dfk = findViewById(R.id.show_cart_dfk);
 		show_cart_dfh = findViewById(R.id.show_cart_dfh);
 		show_cart_dsh = findViewById(R.id.show_cart_dsh);
-		show_cart_ysh = findViewById(R.id.show_cart_ysh);
+		show_cart_ysh = findViewById(R.id.show_cart_ysh);	
 	}
 	private void Click()
 	{
@@ -74,6 +72,13 @@ public class MyOrder extends FragmentActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bt_cart_all:
+			if (all == null) {
+				all = new MyOrder_All();
+				addFragment(all);
+				showFragment(all);
+			} else {
+				showFragment(all);
+			}
 			show_cart_all.setBackgroundColor(getResources().getColor(R.color.bg_Black));
 			show_cart_dfk.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
@@ -81,6 +86,13 @@ public class MyOrder extends FragmentActivity implements OnClickListener{
 			show_cart_dsh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			break;
 		case R.id.bt_cart_dfk:
+			if (dfk == null) {
+				dfk = new MyOrder_dfk();
+				addFragment(dfk);
+				showFragment(dfk);
+			} else {
+				showFragment(dfk);
+			}
 			show_cart_all.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfk.setBackgroundColor(getResources().getColor(R.color.bg_Black));
 			show_cart_dfh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
@@ -88,6 +100,13 @@ public class MyOrder extends FragmentActivity implements OnClickListener{
 			show_cart_dsh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			break;
 		case R.id.bt_cart_dfh:
+			if (dfh == null) {
+				dfh = new MyOrder_dfh();
+				addFragment(dfh);
+				showFragment(dfh);
+			} else {
+				showFragment(dfh);
+			}
 			show_cart_all.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfk.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfh.setBackgroundColor(getResources().getColor(R.color.bg_Black));
@@ -95,6 +114,13 @@ public class MyOrder extends FragmentActivity implements OnClickListener{
 			show_cart_dsh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			break;
 		case R.id.bt_cart_dsh:
+			if (dsh == null) {
+				dsh = new MyOrder_dsh();
+				addFragment(dsh);
+				showFragment(dsh);
+			} else {
+				showFragment(dsh);
+			}
 			show_cart_all.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfk.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
@@ -102,6 +128,13 @@ public class MyOrder extends FragmentActivity implements OnClickListener{
 			show_cart_dsh.setBackgroundColor(getResources().getColor(R.color.bg_Black));
 			break;
 		case R.id.bt_cart_ysh:
+			if (ysh == null) {
+				ysh = new MyOrder_ysh();
+				addFragment(ysh);
+				showFragment(ysh);
+			} else {
+				showFragment(ysh);
+			}
 			show_cart_all.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfk.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
 			show_cart_dfh.setBackgroundColor(getResources().getColor(R.color.bg_Gray));
