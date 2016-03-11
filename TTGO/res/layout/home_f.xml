@@ -3,28 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <include layout="@layout/top_menu"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-    <ScrollView
-        android:id="@+id/sv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+
+    
+
         <LinearLayout 
+            android:id="@+id/ll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+            <include
+        	android:layout_width="match_parent"
+        	android:layout_height="45dp"
+        	layout="@layout/top_menu" />
             <com.chunsoft.ab.view.AbSlidingPlayView
                 android:id="@+id/viewPager_menu"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="150dp"
                  android:background="#00000000" 
                  />
-            <com.chunsoft.view.MyListView 
-                android:id="@+id/mylistview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ></com.chunsoft.view.MyListView>
+            
     <!-- <com.chunsoft.view.PullToRefreshLayout
     android:id="@+id/refresh_view"
     android:layout_width="match_parent"
@@ -45,6 +42,10 @@
     
 </com.chunsoft.view.PullToRefreshLayout> -->
         </LinearLayout>
-    </ScrollView>
 
+<com.chunsoft.view.xListview.XListView
+                android:id="@+id/mylistview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                ></com.chunsoft.view.xListview.XListView>
 </LinearLayout>

@@ -7,7 +7,8 @@ import com.chunsoft.ab.view.AbOnItemClickListener;
 import com.chunsoft.ab.view.AbSlidingPlayView;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.util.MyAdapter;
-import com.chunsoft.view.MyListView;
+import com.chunsoft.view.xListview.XListView;
+import com.chunsoft.view.xListview.XListView.IXListViewListener;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,18 +18,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 
-public class Home_F extends Fragment implements OnClickListener{
+public class Home_F extends Fragment implements OnClickListener,OnTouchListener, IXListViewListener{
 	private ImageView iv_search;
-	private ScrollView sv;
+	private LinearLayout ll1;
 	/**首页轮播*/
 	private AbSlidingPlayView viewPager;
 	/**存储首页轮播的界面*/
@@ -36,46 +37,31 @@ public class Home_F extends Fragment implements OnClickListener{
 	/**首页轮播的界面的资源*/
 	private int[] resId = {R.drawable.menu_viewpager_1, R.drawable.menu_viewpager_2, R.drawable.menu_viewpager_3, R.drawable.menu_viewpager_4, R.drawable.menu_viewpager_5 };
 	
-	MyListView listView;
+	private AnimationSet animationSet;
+	/**第一次按下屏幕时的Y坐标*/
+	float fist_down_Y = 0;
+	/**请求数据的页数*/
+	private int pageIndex = 0;
+	XListView listView;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_f, null);
 		findView(view);
-		sv.smoothScrollTo(0, 0);
-		Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT).show();
+		
 		onClick();
-		initView();
 		initListView();
-		sv.post(new Runnable() {
-			
-			@Override
-			public void run() {
-				sv.scrollTo(0, 0);
-			}
-		});
-		sv.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-
-		        if (event.getAction() == MotionEvent.ACTION_UP) {
-		          View view = ((ScrollView) v).getChildAt(0);
-		          if (view.getMeasuredHeight() <= v.getScrollY()+ v.getHeight()) {
-		        	  Toast.makeText(getActivity(), "滑到底部了", Toast.LENGTH_SHORT).show();
-		          }
-		        }
-				return false;
-			}
-		});
+		initView();
+		
 		return view;
 	}
 	
 	/**对象实例化*/
 	private void findView(View view)
 	{
-		sv = (ScrollView) view.findViewById(R.id.sv);
+		ll1 = (LinearLayout) view.findViewById(R.id.ll1);
 		iv_search = (ImageView) view.findViewById(R.id.iv_search);
-		listView = (MyListView) view.findViewById(R.id.mylistview);
+		listView = (XListView) view.findViewById(R.id.mylistview);
 		viewPager = (AbSlidingPlayView) view.findViewById(R.id.viewPager_menu);
 		//((PullToRefreshLayout) view.findViewById(R.id.refresh_view))
 		//.setOnRefreshListener(new MyListener());
@@ -94,6 +80,11 @@ public class Home_F extends Fragment implements OnClickListener{
 		//设置播放间隔时间
 		viewPager.setSleepTime(2000);
 		initViewPager();
+		listView.setOnTouchListener(this);
+		listView.setXListViewListener(this);
+		// 设置可以进行下拉加载的功能
+		listView.setPullLoadEnable(true);
+		listView.setPullRefreshEnable(false);
 	}
 	@Override
 	public void onClick(View v) {
@@ -147,21 +138,6 @@ public class Home_F extends Fragment implements OnClickListener{
 		}
 		MyAdapter adapter = new MyAdapter(getActivity(), items);
 		listView.setAdapter(adapter);
-		listView.setOnItemLongClickListener(new OnItemLongClickListener()
-		{
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id)
-			{
-				Toast.makeText(
-						getActivity(),
-						"LongClick on "
-								+ parent.getAdapter().getItemId(position),
-						Toast.LENGTH_SHORT).show();
-				return true;
-			}
-		});
 		listView.setOnItemClickListener(new OnItemClickListener()
 		{
 
@@ -174,6 +150,52 @@ public class Home_F extends Fragment implements OnClickListener{
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		float y = event.getY();
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			//第一次按下时的坐标
+			fist_down_Y = y;
+			break;
+		case MotionEvent.ACTION_MOVE:
+			// 向上滑动，隐藏滚动框
+			if (fist_down_Y - y > 250 && ll1.isShown()) {
+				if (animationSet != null) {
+					animationSet = null;
+				}
+				animationSet = (AnimationSet) AnimationUtils.loadAnimation(getActivity(), R.anim.up_out);
+				ll1.startAnimation(animationSet);
+				ll1.setY(-100);
+				ll1.setVisibility(View.GONE);
+			}
+			// 向下滑动，显示滚动框
+			if (y - fist_down_Y > 250 && !ll1.isShown()) {
+				if (animationSet != null) {
+					animationSet = null;
+				}
+				animationSet = (AnimationSet) AnimationUtils.loadAnimation(getActivity(), R.anim.down_in);
+				ll1.startAnimation(animationSet);
+				ll1.setY(0);
+				ll1.setVisibility(View.VISIBLE);
+			}
+			break;
+
+		}
+		return false;
+
+	}
+
+	@Override
+	public void onRefresh() {
+		
+	}
+
+	@Override
+	public void onLoadMore() {
+		
 	}
 	
 }
