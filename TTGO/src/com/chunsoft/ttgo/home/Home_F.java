@@ -22,6 +22,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 	float fist_down_Y = 0;
 	/**请求数据的页数*/
 	private int pageIndex = 0;
-	XListView listView;
+	GridView gridview;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 	{
 		ll1 = (LinearLayout) view.findViewById(R.id.ll1);
 		iv_search = (ImageView) view.findViewById(R.id.iv_search);
-		listView = (XListView) view.findViewById(R.id.mylistview);
+		gridview = (GridView) view.findViewById(R.id.myGridView);
 		viewPager = (AbSlidingPlayView) view.findViewById(R.id.viewPager_menu);
 		//((PullToRefreshLayout) view.findViewById(R.id.refresh_view))
 		//.setOnRefreshListener(new MyListener());
@@ -80,11 +81,13 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 		//设置播放间隔时间
 		viewPager.setSleepTime(2000);
 		initViewPager();
-		listView.setOnTouchListener(this);
-		listView.setXListViewListener(this);
+		gridview.setOnTouchListener(this);
+		//listView.setOnTouchListener(this);
+		//listView.setXListViewListener(this);
 		// 设置可以进行下拉加载的功能
-		listView.setPullLoadEnable(true);
-		listView.setPullRefreshEnable(false);
+		//listView.setPullLoadEnable(true);
+		//listView.setPullRefreshEnable(false);
+		
 	}
 	@Override
 	public void onClick(View v) {
@@ -137,7 +140,8 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 			items.add("这里是item " + i);
 		}
 		MyAdapter adapter = new MyAdapter(getActivity(), items);
-		listView.setAdapter(adapter);
+		gridview.setAdapter(adapter);
+		/*//listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener()
 		{
 
@@ -149,7 +153,7 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 						" Click on " + parent.getAdapter().getItemId(position),
 						Toast.LENGTH_SHORT).show();
 			}
-		});
+		});*/
 	}
 
 	@Override
@@ -162,7 +166,7 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 			break;
 		case MotionEvent.ACTION_MOVE:
 			// 向上滑动，隐藏滚动框
-			if (fist_down_Y - y > 250 && ll1.isShown()) {
+			if (fist_down_Y - y > 0 && ll1.isShown()) {
 				if (animationSet != null) {
 					animationSet = null;
 				}
