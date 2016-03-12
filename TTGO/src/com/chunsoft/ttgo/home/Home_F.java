@@ -166,7 +166,7 @@ public class Home_F extends Fragment implements OnClickListener,OnTouchListener,
 			break;
 		case MotionEvent.ACTION_MOVE:
 			// 向上滑动，隐藏滚动框
-			if (fist_down_Y - y > 0 && ll1.isShown()) {
+			if (fist_down_Y - y > 100 && ll1.isShown()) {
 				if (animationSet != null) {
 					animationSet = null;
 				}
