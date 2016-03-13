@@ -349,4 +349,12 @@
     <!-- 首页颜色 -->
     <color name="title">#d3052b</color>
     <color name="light_blue">#6593cb</color>
+    
+    <!-- 我的订单模块颜色 -->
+    <color name="text_normal">#54585b</color>
+    <color name="text_click">#d3052b</color>
+    <color name="line_normal">#e7e7e7</color>
+    <color name="title_text">#5f646e</color>
+    <color name="title_bg">#f9f9f9</color>
+    <color name="top_line">#b2b2b2</color>
 </resources>

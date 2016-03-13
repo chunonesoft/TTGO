@@ -14,44 +14,34 @@
         	android:layout_width="match_parent"
         	android:layout_height="45dp"
         	layout="@layout/top_menu" />
-	<com.chunsoft.ab.view.AbSlidingPlayView
-                android:id="@+id/viewPager_menu"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                 android:background="#00000000" 
-                 />
 	</LinearLayout>
-        <com.chunsoft.view.PullToRefreshView 
+     <com.handmark.pulltorefresh.library.PullToRefreshScrollView 
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_refresh_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="both" >
+     <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >    
-                   
-    <!-- <com.chunsoft.view.PullToRefreshLayout
-    android:id="@+id/refresh_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-	
-    <include layout="@layout/allview_refresh_head" />
-    支持所有实现Pullable接口的View
-
-    <com.chunsoft.view.PullableListView
-        android:id="@+id/content_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:divider="@color/gray"
-        android:dividerHeight="1dp" />
-
-    <include layout="@layout/allview_load_more" />
-    
-</com.chunsoft.view.PullToRefreshLayout> -->
-       
-
-				<GridView
+            android:orientation="vertical" 
+            >
+       			<com.chunsoft.ab.view.AbSlidingPlayView
+                android:id="@+id/viewPager_menu"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                 />
+				<com.chunsoft.view.MyGridView
                 android:id="@+id/myGridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:horizontalSpacing="3dp"
+                android:verticalSpacing="3dp"
                 android:numColumns="2"
-                ></GridView>
-				</com.chunsoft.view.PullToRefreshView>
+                android:background="#eeeeee"
+                ></com.chunsoft.view.MyGridView>
+		</LinearLayout>
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 </LinearLayout>

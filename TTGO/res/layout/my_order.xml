@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF" >
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_Gray_light"
+            android:background="#ffffff"
             android:orientation="horizontal" >
 
             <TextView
@@ -26,7 +26,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="全部"
-                android:textColor="@color/tv_Black" />
+                android:textColor="@color/title" />
 
             <View
                 android:layout_width="1dp"
@@ -36,7 +36,7 @@
                 android:background="@color/bg_Gray" />
 
             <TextView
-                  android:id="@+id/bt_cart_dfk"
+                android:id="@+id/bt_cart_dfk"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -44,7 +44,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="待付款"
-                android:textColor="@color/tv_Black" />
+                android:textColor="#54585b" />
 
             <View
                 android:layout_width="1dp"
@@ -62,7 +62,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="待发货"
-                android:textColor="@color/tv_Black" />
+                android:textColor="#54585b" />
             
 			<View
                 android:layout_width="1dp"
@@ -79,7 +79,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="待收货"
-                android:textColor="@color/tv_Black" />
+                android:textColor="#54585b" />
 
             <View
                 android:layout_width="1dp"
@@ -96,7 +96,7 @@
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="已收货"
-                android:textColor="@color/tv_Black" />
+                android:textColor="#54585b" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,31 +109,31 @@
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"
-                android:background="@color/bg_Black" />
+                android:background="@color/title" />
             <View
                 android:id="@+id/show_cart_dfk"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"
-                android:background="@color/bg_Gray" />
+                android:background="@color/line_normal" />
             <View
                 android:id="@+id/show_cart_dfh"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"
-                android:background="@color/bg_Gray" />
+                android:background="@color/line_normal" />
             <View
                 android:id="@+id/show_cart_dsh"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"
-                android:background="@color/bg_Gray" />
+                android:background="@color/line_normal" />
             <View
                 android:id="@+id/show_cart_ysh"
                 android:layout_width="0dp"
                 android:layout_height="2dp"
                 android:layout_weight="1"
-                android:background="@color/bg_Gray" />
+                android:background="@color/line_normal" />
         </LinearLayout>
         
         <RelativeLayout 

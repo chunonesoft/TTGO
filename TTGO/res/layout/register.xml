@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
+    <include layout="@layout/top_menu_login" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/top_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+        <TextView
+            android:text="国家地区" 
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="#6f6f6f"
+            />
+        <EditText
+            android:background="@null"
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent"
+            android:text="中国大陆+86"
+            android:textSize="12dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/text_normal"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/top_line" />
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+        <TextView
+            android:text="手机号" 
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="#6f6f6f"
+            />
+        <EditText
+            android:background="@null"
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent"
+            android:hint="请输入手机号码"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="#dfdfdf"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+
+        android:background="@color/top_line" />
+     <Button
+        android:id="@+id/btn_login" 
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_style"
+        />
+     <TextView     
+        android:text="注册即视为同意TTGO平台服务协议。" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_margin="10dp"
+        android:textSize="10dp"
+        android:textColor="@color/text_normal"
+            />
+     
+
+</LinearLayout>
