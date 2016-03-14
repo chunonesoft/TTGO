@@ -5,10 +5,6 @@
     android:background="#eeeeee"
     android:orientation="vertical" >
     <include layout="@layout/top_menu_login" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/top_line" />
         <EditText
             android:background="@color/white"
             android:layout_width="match_parent" 
@@ -16,6 +12,7 @@
             android:hint="收货人姓名"
             android:textColorHint="#dfdfdf"
             android:paddingLeft="10dp"
+            android:textSize="14dp"
             android:textColor="@color/text_normal"
             />
         <View
@@ -27,6 +24,7 @@
             android:layout_width="match_parent" 
             android:layout_height="40dp"
             android:hint="手机号码"
+            android:textSize="14dp"
             android:textColorHint="#dfdfdf"
             android:paddingLeft="10dp"
             android:textColor="@color/text_normal"
@@ -40,6 +38,7 @@
             android:layout_width="match_parent" 
             android:layout_height="40dp"
             android:hint="邮政编码"
+            android:textSize="14dp"
             android:textColorHint="#dfdfdf"
             android:paddingLeft="10dp"
             android:textColor="@color/text_normal"
@@ -83,6 +82,7 @@
             android:layout_width="match_parent" 
             android:layout_height="80dp"
             android:hint="详细地址"
+            android:textSize="14dp"
             android:gravity="left"
             android:paddingTop="10dp"
             android:textColorHint="#dfdfdf"
@@ -100,13 +100,15 @@
         <Button
         android:id="@+id/btn_login" 
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:text="保存"
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_style"
+        android:background="@color/title"
         />
         <LinearLayout
+            android:id="@+id/ll_choose_adress"
+           android:visibility="gone"
          android:layout_above="@id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

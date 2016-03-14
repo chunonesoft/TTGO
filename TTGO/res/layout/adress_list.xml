@@ -10,19 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ></com.chunsoft.view.FlexiListView>
-    <LinearLayout
-        android:id="@+id/ll1"
+    <Button
+        android:id="@+id/add_adress"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="vertical">
-         
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/button_style"
-            android:text="添加新地址" />
-
-
-     </LinearLayout>
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:background="@color/title"
+        android:text="添加新地址" />
 </LinearLayout>

@@ -3,19 +3,22 @@ package com.chunsoft.ttgo.myself;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
-
-import com.chunsoft.ttgo.R;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class Add_Adress extends BaseActivity implements OnClickListener,OnWheelChangedListener{
+import com.chunsoft.ttgo.R;
+
+public class Add_Adress extends BaseActivity implements OnClickListener,
+		OnWheelChangedListener {
 	private WheelView mViewProvince;
 	private WheelView mViewCity;
 	private WheelView mViewDistrict;
-	private TextView tv_adress;
+	private TextView tv_adress, tv_title;
+	private LinearLayout ll_choose_adress;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,18 +28,20 @@ public class Add_Adress extends BaseActivity implements OnClickListener,OnWheelC
 		SetData();
 	}
 
-	private void FindView()
-	{
+	private void FindView() {
+		tv_title = (TextView) findViewById(R.id.tv_title);
+		tv_title.setText("添加收货地址");
+		ll_choose_adress = (LinearLayout) findViewById(R.id.ll_choose_adress);
 		tv_adress = (TextView) findViewById(R.id.tv_adress);
 		mViewProvince = (WheelView) findViewById(R.id.id_province);
 		mViewCity = (WheelView) findViewById(R.id.id_city);
 		mViewDistrict = (WheelView) findViewById(R.id.id_district);
 	}
-	
-	private void SetData()
-	{
+
+	private void SetData() {
 		initProvinceDatas();
-		mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(Add_Adress.this, mProvinceDatas));
+		mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(
+				Add_Adress.this, mProvinceDatas));
 		// 设置可见条目数量
 		mViewProvince.setVisibleItems(7);
 		mViewCity.setVisibleItems(7);
@@ -44,34 +49,47 @@ public class Add_Adress extends BaseActivity implements OnClickListener,OnWheelC
 		updateCities();
 		updateAreas();
 	}
-	private void Click()
-	{
+
+	private void Click() {
+		tv_adress.setOnClickListener(this);
 		// 添加change事件
-    		mViewProvince.addChangingListener(this);
-    		// 添加change事件
-    		mViewCity.addChangingListener(this);
-    		// 添加change事件
-    		mViewDistrict.addChangingListener(this);
+		mViewProvince.addChangingListener(this);
+		// 添加change事件
+		mViewCity.addChangingListener(this);
+		// 添加change事件
+		mViewDistrict.addChangingListener(this);
 	}
+
 	@Override
 	public void onChanged(WheelView wheel, int oldValue, int newValue) {
 		if (wheel == mViewProvince) {
 			updateCities();
-			tv_adress.setText(mCurrentProviceName+mCurrentCityName+mCurrentDistrictName+"");
+			tv_adress.setText(mCurrentProviceName + mCurrentCityName
+					+ mCurrentDistrictName + "");
 		} else if (wheel == mViewCity) {
 			updateAreas();
+			tv_adress.setText(mCurrentProviceName + mCurrentCityName
+					+ mCurrentDistrictName + "");
 		} else if (wheel == mViewDistrict) {
 			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
 			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
-			tv_adress.setText(mCurrentProviceName+mCurrentCityName+mCurrentDistrictName+"");
+
+			tv_adress.setText(mCurrentProviceName + mCurrentCityName
+					+ mCurrentDistrictName + "");
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+		switch (v.getId()) {
+		case R.id.tv_adress:
+			ll_choose_adress.setVisibility(View.VISIBLE);
+			break;
+		default:
+			break;
+		}
 	}
-	
+
 	/**
 	 * 根据当前的市，更新区WheelView的信息
 	 */
@@ -83,7 +101,8 @@ public class Add_Adress extends BaseActivity implements OnClickListener,OnWheelC
 		if (areas == null) {
 			areas = new String[] { "" };
 		}
-		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
+		mViewDistrict
+				.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
 		mViewDistrict.setCurrentItem(0);
 	}
 
