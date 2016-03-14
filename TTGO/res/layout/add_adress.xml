@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
+    <include layout="@layout/top_menu_login" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+        <EditText
+            android:background="@color/white"
+            android:layout_width="match_parent" 
+            android:layout_height="40dp"
+            android:hint="收货人姓名"
+            android:textColorHint="#dfdfdf"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_normal"
+            />
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+        <EditText
+            android:background="@color/white"
+            android:layout_width="match_parent" 
+            android:layout_height="40dp"
+            android:hint="手机号码"
+            android:textColorHint="#dfdfdf"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_normal"
+            />
+         <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+        <EditText
+            android:background="@color/white"
+            android:layout_width="match_parent" 
+            android:layout_height="40dp"
+            android:hint="邮政编码"
+            android:textColorHint="#dfdfdf"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_normal"
+            />
+         <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+        <TextView
+            android:id="@+id/tv_adress"
+            android:background="@color/white"
+            android:layout_width="match_parent" 
+            android:layout_height="40dp"
+            android:text="省、市、区"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_normal"
+            />
+         <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+        <TextView
+            android:background="@color/white"
+            android:layout_width="match_parent" 
+            android:layout_height="40dp"
+            android:text="商圈"
+            android:textColorHint="#dfdfdf"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_normal"
+            />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+
+     <EditText
+            android:background="@color/white"
+            android:layout_width="match_parent" 
+            android:layout_height="80dp"
+            android:hint="详细地址"
+            android:gravity="left"
+            android:paddingTop="10dp"
+            android:textColorHint="#dfdfdf"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text_normal"
+            />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+    <RelativeLayout 
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+        <Button
+        android:id="@+id/btn_login" 
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_style"
+        />
+        <LinearLayout
+         android:layout_above="@id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/id_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </kankan.wheel.widget.WheelView>
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/id_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </kankan.wheel.widget.WheelView>
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/id_district"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </kankan.wheel.widget.WheelView>
+    </LinearLayout>
+    </RelativeLayout>
+    
+
+</LinearLayout>

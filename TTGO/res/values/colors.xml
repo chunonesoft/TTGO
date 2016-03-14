@@ -356,5 +356,6 @@
     <color name="line_normal">#e7e7e7</color>
     <color name="title_text">#5f646e</color>
     <color name="title_bg">#f9f9f9</color>
+    <color name="province_line_border">#C7C7C7</color>
     <color name="top_line">#b2b2b2</color>
 </resources>
