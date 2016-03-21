@@ -27,7 +27,12 @@
     <string name="p2refresh_end_click_load_more">点击加载</string>
     <string name="p2refresh_release_refresh">松开立即刷新</string>
     <string name="p2refresh_pull_to_refresh">下拉刷新</string>
-    <string name="p2refresh_doing_head_refresh">正在刷新&#8230;</string>
-    <string name="p2refresh_doing_end_refresh">加载中&#8230;</string>
-    <string name="p2refresh_refresh_lasttime">最近更新&#160;&#058;&#160;</string>
+    <string name="p2refresh_doing_head_refresh">正在刷新</string>
+    <string name="p2refresh_doing_end_refresh">加载中</string>
+    <string name="p2refresh_refresh_lasttime">最近更新</string>
+    
+    <!-- Volley error -->
+    <string name="no_internet">无网络连接~！</string>
+	<string name="generic_server_down">连接服务器失败~！</string>
+	<string name="generic_error">网络异常,请稍后再试~！</string>
 </resources>
