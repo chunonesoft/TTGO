@@ -42,7 +42,7 @@ public class Home_F extends Fragment implements OnClickListener,
 			R.drawable.menu_viewpager_4, R.drawable.menu_viewpager_5 };
 
 	private int pageIndex = 0;
-	MyGridView gridview;
+	private MyGridView gridview;
 	MyAdapter adapter;
 	List<String> items;
 
