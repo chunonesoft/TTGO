@@ -6,4 +6,22 @@
         <item name="android:windowEnterAnimation">@anim/pop_up_in</item>
         <item name="android:windowExitAnimation">@anim/pop_down_out</item>
     </style>
+    
+    <!-- Loding_dialog样式Start -->
+    <style name="Dialog_bocop">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@+android:style/Animation.Dialog</item>
+    </style>
+    <!-- Loding_dialog样式End -->
+    
+     <style name="mystyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/dialogbg</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

@@ -15,6 +15,7 @@ import com.chunsoft.ttgo.cart.Cart_F;
 import com.chunsoft.ttgo.group.Group_F;
 import com.chunsoft.ttgo.myself.Myself_F;
 import com.chunsoft.ttgo.util.IBtnCallListener;
+import com.chunsoft.ttgo.util.PreferencesUtils;
 
 public class Main_FA extends FragmentActivity implements OnClickListener,
 		IBtnCallListener {
@@ -118,10 +119,9 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 			break;
 		// Œ“ΩÁ√Ê
 		case R.id.iv_menu_3:
-			if (true) {
+			if (PreferencesUtils.getSharePreStr(mContext, "userId").equals("")) {
 				intent = new Intent(mContext, Login_A.class);
 				startActivity(intent);
-
 			} else {
 				if (myself_F == null) {
 					myself_F = new Myself_F();

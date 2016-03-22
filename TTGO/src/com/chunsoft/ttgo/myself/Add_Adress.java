@@ -6,6 +6,7 @@ import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 	private WheelView mViewDistrict;
 	private TextView tv_adress, tv_title;
 	private LinearLayout ll_choose_adress;
+	private Button btn_save;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 	}
 
 	private void FindView() {
+		btn_save = (Button) findViewById(R.id.btn_save);
 		tv_title = (TextView) findViewById(R.id.tv_title);
 		tv_title.setText("添加收货地址");
 		ll_choose_adress = (LinearLayout) findViewById(R.id.ll_choose_adress);
@@ -51,6 +54,7 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 	}
 
 	private void Click() {
+		btn_save.setOnClickListener(this);
 		tv_adress.setOnClickListener(this);
 		// 添加change事件
 		mViewProvince.addChangingListener(this);
@@ -84,6 +88,9 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.tv_adress:
 			ll_choose_adress.setVisibility(View.VISIBLE);
+			break;
+		case R.id.btn_save:
+			finish();
 			break;
 		default:
 			break;

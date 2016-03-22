@@ -98,7 +98,7 @@
         android:layout_width="match_parent"
         >
         <Button
-        android:id="@+id/btn_login" 
+        android:id="@+id/btn_save" 
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="保存"
@@ -109,7 +109,7 @@
         <LinearLayout
             android:id="@+id/ll_choose_adress"
            android:visibility="gone"
-         android:layout_above="@id/btn_login"
+         android:layout_above="@id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >

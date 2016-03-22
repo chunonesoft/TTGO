@@ -35,7 +35,8 @@
         <activity android:name="com.chunsoft.ttgo.myself.Add_Adress"></activity>
         <activity android:name="com.chunsoft.ttgo.myself.AdressList"></activity>
         <activity android:name="com.chunsoft.ttgo.home.Login_A"></activity>
-        
+        <activity android:name="com.chunsoft.ttgo.home.Register_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.home.Wjmm_A"></activity>
     </application>
     
 </manifest>
