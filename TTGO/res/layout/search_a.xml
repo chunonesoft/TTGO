@@ -6,5 +6,10 @@
     <include layout="@layout/top_menu_search"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
+    <com.chunsoft.view.xListview.XListView 
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></com.chunsoft.view.xListview.XListView>
 
 </LinearLayout>

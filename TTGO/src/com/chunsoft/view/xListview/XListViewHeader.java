@@ -6,8 +6,6 @@
  */
 package com.chunsoft.view.xListview;
 
-import com.chunsoft.ttgo.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -20,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chunsoft.ttgo.R;
 
 public class XListViewHeader extends LinearLayout {
 	private LinearLayout mContainer;
@@ -52,9 +51,11 @@ public class XListViewHeader extends LinearLayout {
 	}
 
 	private void initView(Context context) {
-		// 初始情况，设置下拉刷新view高度为0
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 40);
-		mContainer = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.xlistview_header, null);
+		// 初始情况，设置下拉刷新view高度为0 change 40
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, 0);
+		mContainer = (LinearLayout) LayoutInflater.from(context).inflate(
+				R.layout.xlistview_header, null);
 		addView(mContainer, lp);
 		setGravity(Gravity.BOTTOM);
 
@@ -62,10 +63,14 @@ public class XListViewHeader extends LinearLayout {
 		mHintTextView = (TextView) findViewById(R.id.xlistview_header_hint_textview);
 		mProgressBar = (ProgressBar) findViewById(R.id.xlistview_header_progressbar);
 
-		mRotateUpAnim = new RotateAnimation(0.0f, -180.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
+				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+				0.5f);
 		mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
 		mRotateUpAnim.setFillAfter(true);
-		mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+				0.5f);
 		mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
 		mRotateDownAnim.setFillAfter(true);
 	}
@@ -110,10 +115,12 @@ public class XListViewHeader extends LinearLayout {
 	}
 
 	public void setVisiableHeight(int height) {
-		if (height <= 0){
-		height = 40;
+		if (height <= 0) {
+			// change 40
+			height = 0;
 		}
-		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContainer.getLayoutParams();
+		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mContainer
+				.getLayoutParams();
 		lp.height = height;
 		mContainer.setLayoutParams(lp);
 	}
