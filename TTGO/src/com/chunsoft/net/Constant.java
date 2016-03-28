@@ -32,4 +32,8 @@ public class Constant {
 	 * registerUser
 	 */
 	public static String registerUser = "user_userRegister.action";
+	/**
+	 * get Data about product
+	 */
+	public static String getProInfo = "product_getProInfo.action";
 }

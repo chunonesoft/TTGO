@@ -1,13 +1,5 @@
 package com.chunsoft.adapter;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageLoader.ImageCache;
-import com.android.volley.toolbox.ImageLoader.ImageListener;
-import com.chunsoft.net.Constant;
-import com.chunsoft.net.LruImageCache;
-import com.chunsoft.ttgo.home.MyApplication;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.SparseArray;
@@ -15,7 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.chunsoft.net.Constant;
+import com.chunsoft.net.LruImageCache;
+import com.chunsoft.ttgo.home.MyApplication;
 
 public class ViewHolder {
 
@@ -23,104 +23,102 @@ public class ViewHolder {
 	private int mPosition;
 	private View mConvertView;
 	private Context context;
-	public ViewHolder(Context context,ViewGroup parent,int layoutId,int position)
-	{
+
+	public ViewHolder(Context context, ViewGroup parent, int layoutId,
+			int position) {
 		this.mPosition = position;
 		this.mViews = new SparseArray<View>();
-		this.mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,false);
+		this.mConvertView = LayoutInflater.from(context).inflate(layoutId,
+				parent, false);
 		mConvertView.setTag(this);
-		
+
 	}
-	public static ViewHolder get(Context context,View convertView,
-			ViewGroup parent,int layoutId,int position)
-	{
-		if(convertView == null)
-		{
+
+	public static ViewHolder get(Context context, View convertView,
+			ViewGroup parent, int layoutId, int position) {
+		if (convertView == null) {
 			return new ViewHolder(context, parent, layoutId, position);
-		}
-		else
-		{
+		} else {
 			ViewHolder holder = (ViewHolder) convertView.getTag();
 			holder.mPosition = position;
 			return holder;
 		}
 	}
+
 	/**
 	 * ͨ��viewId��ÿؼ�?
+	 * 
 	 * @param viewId
 	 * @return
 	 */
-	public <T extends View> T getView(int viewId)
-	{
+	public <T extends View> T getView(int viewId) {
 		View view = mViews.get(viewId);
-		if(view == null)
-		{
+		if (view == null) {
 			view = mConvertView.findViewById(viewId);
 			mViews.put(viewId, view);
 		}
-		return (T)view;
-		
+		return (T) view;
+
 	}
-	
-	public View getConvertView()
-	{
-		
-		return mConvertView;	
+
+	public View getConvertView() {
+
+		return mConvertView;
 	}
-	public ViewHolder setText(int viewId,String text)
-	{
+
+	public ViewHolder setText(int viewId, String text) {
 		TextView tv = getView(viewId);
 		tv.setText(text);
 		return this;
 	}
-	public ViewHolder setImageResouce(int viewId,int resId)
-	{
+
+	public ViewHolder setImageResouce(int viewId, int resId) {
 		ImageView view = getView(viewId);
 		view.setImageResource(resId);
 		return this;
 	}
-	
-	//按钮增加单击事件
-	public ViewHolder ClickAddText(int value,int viewId)
-	{
-		//TextView tv1 = getView(viewId1); 
-		TextView tv = getView(viewId);		
-		tv.setText((value+1)+"");
+
+	// 按钮增加单击事件
+	public ViewHolder ClickAddText(int value, int viewId) {
+		// TextView tv1 = getView(viewId1);
+		TextView tv = getView(viewId);
+		tv.setText((value + 1) + "");
 		return this;
 	}
-	public ViewHolder ClickSubText(int value,int viewId)
-	{
-		//TextView tv1 = getView(viewId1); 
-		TextView tv = getView(viewId);		
-		tv.setText((value-1)+"");
+
+	public ViewHolder ClickSubText(int value, int viewId) {
+		// TextView tv1 = getView(viewId1);
+		TextView tv = getView(viewId);
+		tv.setText((value - 1) + "");
 		return this;
 	}
-	
-	public ViewHolder setImageBitmap(int viewId,Bitmap bitmap)
-	{
+
+	public ViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
 		ImageView view = getView(viewId);
 		view.setImageBitmap(bitmap);
 		return this;
 	}
 
-	public ViewHolder setVolleyImage(int viewId,String uri,int default_image,int failed_image)
-	{
+	public ViewHolder setVolleyImage(int viewId, String uri, int default_image,
+			int failed_image) {
 		RequestQueue mQueue = MyApplication.getInstance().getRequestQueue();
 		ImageLoader imageLoader = new ImageLoader(mQueue, new LruImageCache());
-		ImageView view = getView(viewId); 
-		    ImageListener listener = ImageLoader.getImageListener(view,  
-				default_image,failed_image); 
-		    imageLoader.get(Constant.ImageUri+uri, listener);  
+		ImageView view = getView(viewId);
+		view.setScaleType(ScaleType.FIT_XY);
+		ImageListener listener = ImageLoader.getImageListener(view,
+				default_image, failed_image);
+		imageLoader.get(Constant.ImageUri + uri, listener);
 		return this;
 	}
-	
-	public ViewHolder setImageURI(int viewId,String uri)
-	{
+
+	public ViewHolder setImageURI(int viewId, String uri) {
 		return this;
 	}
+
 	public int getPosition() {
 		return mPosition;
 	}
+
 	public void setPosition(int mPosition) {
 		this.mPosition = mPosition;
 	}

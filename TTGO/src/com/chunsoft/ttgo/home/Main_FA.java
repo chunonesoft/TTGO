@@ -36,7 +36,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 			R.drawable.bt_menu_3_select };
 
 	/* 主页界面 */
-	private Home_F home_F;
+	private Home_F_new home_F;
 	/* 社区界面 */
 	private Group_F group_F;
 	/* 购物车界面 */
@@ -64,7 +64,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 
 		// 设置默认界面
 		if (home_F == null) {
-			home_F = new Home_F();
+			home_F = new Home_F_new();
 			addFragment(home_F);
 			showFragment(home_F);
 		} else {
@@ -82,7 +82,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 		// 主页界面
 		case R.id.iv_menu_0:
 			if (home_F == null) {
-				home_F = new Home_F();
+				home_F = new Home_F_new();
 				addFragment(home_F);
 				showFragment(home_F);
 			} else {
@@ -217,7 +217,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 	@Override
 	public void transferMsg() {
 		if (home_F == null) {
-			home_F = new Home_F();
+			home_F = new Home_F_new();
 			addFragment(home_F);
 			showFragment(home_F);
 		} else {
