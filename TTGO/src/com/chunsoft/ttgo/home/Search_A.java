@@ -5,21 +5,34 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Response;
 import com.chunosft.utils.ToastUtil;
 import com.chunsoft.adapter.CommonAdapter;
 import com.chunsoft.adapter.ViewHolder;
+import com.chunsoft.net.AbstractVolleyErrorListener;
+import com.chunsoft.net.Constant;
+import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.ProBean;
+import com.chunsoft.ttgo.bean.ProListBean;
+import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.view.xListview.XListView;
 import com.chunsoft.view.xListview.XListView.IXListViewListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class Search_A extends Activity implements OnClickListener,
 		IXListViewListener {
@@ -34,9 +47,13 @@ public class Search_A extends Activity implements OnClickListener,
 	 */
 	private String searchWord;
 	private Context mContext;
-	private List<ProBean> datas = new ArrayList<ProBean>();
 	private ProBean bean;
 	private SearchAdapter adapter;
+	private JSONObject sendData;
+	private String URL;
+	private int page = 1;
+	private int totalPage = 1;
+	private List<ProListBean> datas = new ArrayList<ProListBean>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,24 +64,24 @@ public class Search_A extends Activity implements OnClickListener,
 		onClick();
 	}
 
-	/* ¶ÔÏóÊµÀı»¯ */
+	/* å¯¹è±¡å®ä¾‹åŒ– */
 	private void findView() {
 		et_searsh = (EditText) findViewById(R.id.et_Search);
 		lv = (XListView) findViewById(R.id.lv);
 		iv_search = (ImageView) findViewById(R.id.iv_search);
 	}
 
-	/* ³õÊ¼»¯ */
+	/* åˆå§‹åŒ– */
 	private void init() {
 		mContext = Search_A.this;
 		lv.setXListViewListener(this);
-		// ÉèÖÃ¿ÉÒÔ½øĞĞÏÂÀ­¼ÓÔØµÄ¹¦ÄÜ
+		// è®¾ç½®å¯ä»¥è¿›è¡Œä¸‹æ‹‰åŠ è½½çš„åŠŸèƒ½
 		lv.setPullLoadEnable(true);
 		lv.setPullRefreshEnable(true);
 
 	}
 
-	/* ÊÂ¼ş¼àÌı */
+	/* äº‹ä»¶ç›‘å¬ */
 	private void onClick() {
 		iv_search.setOnClickListener(this);
 	}
@@ -75,16 +92,45 @@ public class Search_A extends Activity implements OnClickListener,
 		case R.id.iv_search:
 			searchWord = et_searsh.getText().toString();
 			if (searchWord.equals("")) {
-				ToastUtil.showShortToast(mContext, "ËÑË÷´Ê²»ÄÜÎª¿Õ");
+				ToastUtil.showShortToast(mContext, "æœç´¢è¯ä¸èƒ½ä¸ºç©º");
 			} else {
-				for (int i = 0; i < 15; i++) {
-					bean = new ProBean();
-					bean.retcode = "1";
-					datas.add(bean);
-				}
-				adapter = new SearchAdapter(mContext, datas, R.layout.groupitem);
-				adapter.notifyDataSetChanged();
-				lv.setAdapter(adapter);
+				page = 1;
+				getSearchData(searchWord, String.valueOf(page),
+						new VolleyDataCallback<ProBean>() {
+
+							@Override
+							public void onSuccess(final ProBean returnData) {
+								if (returnData.productList.size() == 0) {
+									ToastUtil
+											.showShortToast(mContext, "æ²¡æœ‰äº§å“ä¿¡æ¯");
+								} else {
+									totalPage = Integer
+											.valueOf(returnData.totalpage);
+									datas = returnData.productList;
+									page++;
+									adapter = new SearchAdapter(mContext,
+											datas, R.layout.home_gv_item);
+									lv.setAdapter(adapter);
+									lv.setOnItemClickListener(new OnItemClickListener() {
+										@Override
+										public void onItemClick(
+												AdapterView<?> parent,
+												View view, int position, long id) {
+											Intent intent = new Intent();
+											intent.putExtra(
+													"proID",
+													returnData.productList
+															.get(position).proID);
+											intent.setClass(mContext,
+													ProductDetail_A.class);
+											startActivity(intent);
+										}
+									});
+								}
+
+							}
+						});
+
 			}
 			break;
 
@@ -95,47 +141,58 @@ public class Search_A extends Activity implements OnClickListener,
 
 	@Override
 	public void onRefresh() {
-		if (datas.isEmpty()) {
-			return;
-		} else {
-			datas.clear();
-			for (int i = 0; i < 5; i++) {
-				bean = new ProBean();
-				bean.retcode = "1";
-				datas.add(bean);
-			}
-			adapter.notifyDataSetChanged();
-			// Í£Ö¹Ë¢ĞÂºÍ¼ÓÔØ
-			onLoad();
-		}
-
+		page = 1;
+		searchWord = et_searsh.getText().toString();
+		getSearchData(searchWord, String.valueOf(page),
+				new VolleyDataCallback<ProBean>() {
+					@Override
+					public void onSuccess(ProBean returnDatas) {
+						if (returnDatas.productList.size() == 0) {
+							ToastUtil.showShortToast(mContext, "æ²¡æœ‰äº§å“ä¿¡æ¯");
+						} else {
+							datas = returnDatas.productList;
+							page++;
+							totalPage = Integer.valueOf(returnDatas.totalpage);
+							adapter.notifyDataSetChanged();
+						}
+					}
+				});
+		// åœæ­¢åˆ·æ–°å’ŒåŠ è½½
+		onLoad();
 	}
 
 	@Override
 	public void onLoadMore() {
-		if (datas.isEmpty()) {
-			return;
+		searchWord = et_searsh.getText().toString();
+		if (page <= totalPage) {
+			getSearchData(searchWord, String.valueOf(page),
+					new VolleyDataCallback<ProBean>() {
+						@Override
+						public void onSuccess(ProBean returnDatas) {
+							for (int i = 0; i < returnDatas.productList.size(); i++) {
+								datas.add(returnDatas.productList.get(i));
+							}
+							page++;
+							totalPage = Integer.valueOf(returnDatas.totalpage);
+							adapter.notifyDataSetChanged();
+						}
+					});
 		} else {
-			for (int i = 0; i < 5; i++) {
-				bean = new ProBean();
-				datas.add(bean);
-			}
-			adapter.notifyDataSetChanged();
-			onLoad();
+			ToastUtil.showLongToast(mContext, "æ²¡æœ‰æ›´å¤šæ•°æ®äº†");
 		}
-
+		onLoad();
 	}
 
-	/** Í£Ö¹¼ÓÔØºÍË¢ĞÂ */
+	/** åœæ­¢åŠ è½½å’Œåˆ·æ–° */
 	private void onLoad() {
 		lv.stopRefresh();
-		// Í£Ö¹¼ÓÔØ¸ü¶à
+		// åœæ­¢åŠ è½½æ›´å¤š
 		lv.stopLoadMore();
-		// ÉèÖÃ×îºóÒ»´ÎË¢ĞÂÊ±¼ä
+		// è®¾ç½®æœ€åä¸€æ¬¡åˆ·æ–°æ—¶é—´
 		lv.setRefreshTime(getCurrentTime(System.currentTimeMillis()));
 	}
 
-	/** ¼òµ¥µÄÊ±¼ä¸ñÊ½ */
+	/** ç®€å•çš„æ—¶é—´æ ¼å¼ */
 	public static SimpleDateFormat mDateFormat = new SimpleDateFormat(
 			"MM-dd HH:mm");
 
@@ -147,16 +204,53 @@ public class Search_A extends Activity implements OnClickListener,
 		return mDateFormat.format(new Date(time));
 	}
 
-	public class SearchAdapter extends CommonAdapter<ProBean> {
+	public class SearchAdapter extends CommonAdapter<ProListBean> {
 
-		public SearchAdapter(Context context, List<ProBean> datas, int layoutId) {
+		public SearchAdapter(Context context, List<ProListBean> datas,
+				int layoutId) {
 			super(context, datas, layoutId);
 		}
 
 		@Override
-		public void convert(ViewHolder holder, ProBean t) {
-
+		public void convert(ViewHolder holder, ProListBean t) {
+			if (!t.equals("")) {
+				holder.setText(R.id.tv_content, t.name.toString());
+				holder.setText(R.id.tv_price, "Â¥" + t.proPrice.toString());
+				holder.setText(R.id.tv_sale, t.saleNum.toString() + "äººä»˜æ¬¾");
+				ImageView image = holder.getView(R.id.iv);
+				ImageLoader.getInstance().displayImage(
+						Constant.ImageUri + t.picPath, image);// ä½¿ç”¨ImageLoaderå¯¹å›¾ç‰‡è¿›è¡ŒåŠ è£…ï¼
+			}
 		}
+	}
 
+	/**
+	 * get search data from server
+	 */
+	private void getSearchData(String name, String page,
+			final VolleyDataCallback<ProBean> callback) {
+		URL = Constant.IP + Constant.getProSearchInfo;
+		sendData = new JSONObject();
+		try {
+			sendData.put("name", name);
+			sendData.put("page", page);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		GsonRequest<ProBean> request = new GsonRequest<ProBean>(URL,
+				sendData.toString(), new Response.Listener<ProBean>() {
+					@Override
+					public void onResponse(ProBean arg0) {
+						callback.onSuccess(arg0);
+					}
+
+				}, new AbstractVolleyErrorListener(mContext) {
+
+					@Override
+					public void onError() {
+
+					}
+				}, ProBean.class);
+		MyApplication.getInstance().addToRequestQueue(request);
 	}
 }

@@ -2,6 +2,9 @@ package com.chunsoft.ttgo.home;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -14,15 +17,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.chunsoft.net.AbstractVolleyErrorListener;
+import com.chunsoft.net.Constant;
+import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
+import com.chunsoft.ttgo.bean.ProDetailBean;
+import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.home.Popwindow.OnItemClickListener;
 import com.chunsoft.ttgo.myself.AdressList;
 import com.chunsoft.view.ScaleView.HackyViewPager;
@@ -34,6 +45,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	private ImageView put_in;
 	private ImageView buy_now;
 	private ImageView iv_kf;
+	private TextView tv_name, tv_price, tv_salenum, tv_storenum;
 
 	/** 用于设置背景暗淡 */
 	private LinearLayout all_choice_layout = null;
@@ -45,28 +57,47 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	private Popwindow popWindow;
 	/** ViewPager当前显示页的下标 */
 	private int position = 0;
+
 	/** 是否添加收藏 */
 	private static boolean isCollection = false;
 	private ImageView iv_baby_collection;
 	private int[] resId = { R.drawable.detail_show_1, R.drawable.detail_show_2,
 			R.drawable.detail_show_3, R.drawable.detail_show_4,
 			R.drawable.detail_show_5, R.drawable.detail_show_6 };
+	private Intent intent;
+	private String proID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.productdetail_a);
+		Intent intent = getIntent();
+		proID = intent.getStringExtra("proID");
+		Log.e("proID--------------", proID);
 		findView();
 		init();
 		// 得到保存的收藏信息
 		getSaveCollection();
 		initViewPager();
+		getDetailData(proID, new VolleyDataCallback<ProDetailBean>() {
+			@Override
+			public void onSuccess(ProDetailBean datas) {
+				tv_name.setText(datas.proName);
+				tv_price.setText(datas.proPrice);
+			}
+		});
 		Click();
 		popWindow = new Popwindow(this);
 		popWindow.setOnItemClickListener(this);
+
 	}
 
 	private void findView() {
+		tv_name = (TextView) findViewById(R.id.tv_name);
+		tv_price = (TextView) findViewById(R.id.tv_price);
+		tv_salenum = (TextView) findViewById(R.id.tv_salenum);
+		tv_storenum = (TextView) findViewById(R.id.tv_storenum);
+
 		all_choice_layout = (LinearLayout) findViewById(R.id.all_choice_layout);
 		iv_back = (ImageView) findViewById(R.id.iv_back);
 		iv_kf = (ImageView) findViewById(R.id.iv_kf);
@@ -122,6 +153,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 			public void onPageScrollStateChanged(int arg0) {
 
 			}
+
 		});
 		viewPager.setAdapter(adapter);
 	}
@@ -286,4 +318,32 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 		}
 	}
 
+	private void getDetailData(String proID,
+			final VolleyDataCallback<ProDetailBean> callback) {
+		JSONObject sendData;
+		String URL;
+		URL = Constant.IP + Constant.getProDetailInfo;
+		sendData = new JSONObject();
+		try {
+			sendData.put("proID", proID);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GsonRequest<ProDetailBean> req = new GsonRequest<>(URL,
+				sendData.toString(), new Response.Listener<ProDetailBean>() {
+
+					@Override
+					public void onResponse(ProDetailBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(mContext) {
+
+					@Override
+					public void onError() {
+
+					}
+				}, ProDetailBean.class);
+		MyApplication.getInstance().addToRequestQueue(req);
+	}
 }

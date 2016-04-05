@@ -36,4 +36,17 @@ public class Constant {
 	 * get Data about product
 	 */
 	public static String getProInfo = "product_getProInfo.action";
+	/**
+	 * get Pro Detail about product by proId
+	 */
+	public static String getProDetailInfo = "product_getProDetailInfo.action";
+	/**
+	 * get Pro Detail about product by proId
+	 */
+	public static String getProRecommendPro = "product_recommendPro.action";
+	/**
+	 * get Search Pro Info by info
+	 */
+	public static String getProSearchInfo = "product_searchProInfo.action";
+
 }

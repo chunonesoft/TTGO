@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,7 +42,7 @@ import com.chunsoft.view.xListview.XListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class Home_F_new extends Fragment implements OnClickListener,
-		OnItemClickListener, IXListViewListener {
+		IXListViewListener {
 	/**
 	 * widget statement
 	 */
@@ -92,7 +93,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 	/** 事件监听 */
 	private void onClick() {
 		iv_search.setOnClickListener(this);
-		x_lv.setOnItemClickListener(this);
 	}
 
 	/** 初始化界面 */
@@ -114,7 +114,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 		mAdView.setImageResources(infos, mAdCycleViewListener);
 		getData(String.valueOf(currentPage), new VolleyDataCallback<ProBean>() {
 			@Override
-			public void onSuccess(ProBean datas) {
+			public void onSuccess(final ProBean datas) {
 				totalPage = Integer.valueOf(datas.totalpage);
 				productList = datas.productList;
 				adapters = new ProAdapter(mContext, productList,
@@ -124,6 +124,17 @@ public class Home_F_new extends Fragment implements OnClickListener,
 					dialog.dismiss();
 					dialog = null;
 				}
+				x_lv.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						Intent intent = new Intent();
+						intent.putExtra("proID",
+								datas.productList.get(position).proID);
+						intent.setClass(mContext, ProductDetail_A.class);
+						startActivity(intent);
+					}
+				});
 			}
 		});
 
@@ -154,23 +165,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 
 	}
 
-	private void getMoreData() {
-		if (currentPage < totalPage) {
-
-		} else {
-
-		}
-		adapters.notifyDataSetChanged();
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// 跳转到详情界面
-		Intent intent = new Intent(getActivity(), ProductDetail_A.class);
-		startActivity(intent);
-	}
-
 	/**
 	 * get Data about pro
 	 */
@@ -180,6 +174,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 			dialog.show();
 		}
 		String URL = Constant.IP + Constant.getProInfo;
+		Log.e("URL--------------------", URL);
 		sendData = new JSONObject();
 		try {
 			sendData.put("page", page);
@@ -191,6 +186,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 					@Override
 					public void onResponse(ProBean arg0) {
 						callback.onSuccess(arg0);
+						Log.e("data---------", arg0.currentpage);
 					}
 
 				}, new AbstractVolleyErrorListener(mContext) {
@@ -211,34 +207,20 @@ public class Home_F_new extends Fragment implements OnClickListener,
 
 		@Override
 		public void convert(ViewHolder holder, ProListBean t) {
-			holder.setText(R.id.tv_content, t.proIntro.toString());
-			holder.setText(R.id.tv_price, "¥" + t.proPrice.toString());
-			holder.setText(R.id.tv_sale, t.saleNum.toString() + "人付款");
-			// 使用ImageLoader对图片进行加装！
-			// holder.setVolleyImage(R.id.iv, t.picPath, R.drawable.icon_empty,
-			// R.drawable.icon_error);
-			ImageView image = holder.getView(R.id.iv);
-			ImageLoader.getInstance().displayImage(
-					Constant.ImageUri + t.picPath, image);// 使用ImageLoader对图片进行加装！
+			if (!t.equals("")) {
+				holder.setText(R.id.tv_content, t.name.toString());
+				holder.setText(R.id.tv_price, "¥" + t.proPrice.toString());
+				holder.setText(R.id.tv_sale, t.saleNum.toString() + "人付款");
+				// 使用ImageLoader对图片进行加装！
+				// holder.setVolleyImage(R.id.iv, t.picPath,
+				// R.drawable.icon_empty,
+				// R.drawable.icon_error);
+				ImageView image = holder.getView(R.id.iv);
+				ImageLoader.getInstance().displayImage(
+						Constant.ImageUri + t.picPath, image);// 使用ImageLoader对图片进行加装！
+			}
 		}
 	}
-
-	/*
-	 * public void setListViewHeightBasedOnChildren(ListView listView) { //
-	 * 获取ListView对应的Adapter ListAdapter listAdapter = listView.getAdapter(); if
-	 * (listAdapter == null) { return; }
-	 * 
-	 * int totalHeight = 0; for (int i = 0, len = listAdapter.getCount(); i <
-	 * len; i++) { // listAdapter.getCount()返回数据项的数目 View listItem =
-	 * listAdapter.getView(i, null, listView); // 计算子项View 的宽高
-	 * listItem.measure(0, 0); // 统计所有子项的总高度 totalHeight +=
-	 * listItem.getMeasuredHeight(); }
-	 * 
-	 * ViewGroup.LayoutParams params = listView.getLayoutParams(); params.height
-	 * = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() -
-	 * 1)); // listView.getDividerHeight()获取子项间分隔符占用的高度 //
-	 * params.height最后得到整个ListView完整显示需要的高度 listView.setLayoutParams(params); }
-	 */
 
 	@Override
 	public void onResume() {

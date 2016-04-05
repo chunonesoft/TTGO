@@ -246,7 +246,7 @@ public class Home_F extends Fragment implements OnClickListener,
 
 		@Override
 		public void convert(ViewHolder holder, ProListBean t) {
-			holder.setText(R.id.tv_content, t.proIntro.toString());
+			holder.setText(R.id.tv_content, t.name.toString());
 		}
 	}
 
