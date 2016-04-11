@@ -115,7 +115,7 @@
             android:textSize="16sp" />
     </LinearLayout>
         
-    <com.chunsoft.view.PullToRefreshListView
+    <com.chunsoft.view.xListview.XListView
         android:layout_below="@id/ll1"
         android:layout_above="@id/bottom_bar"
         android:id="@+id/content_view"

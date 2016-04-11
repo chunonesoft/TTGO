@@ -20,21 +20,25 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 import com.android.volley.Response;
 import com.chunosft.utils.ToastUtil;
-import com.chunsoft.adapter.CommonAdapter;
-import com.chunsoft.adapter.ViewHolder;
 import com.chunsoft.net.AbstractVolleyErrorListener;
 import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.ADInfo;
+import com.chunsoft.ttgo.bean.JoinListBean;
 import com.chunsoft.ttgo.bean.ProBean;
 import com.chunsoft.ttgo.bean.ProListBean;
+import com.chunsoft.ttgo.bean.RecProListBean;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
+import com.chunsoft.view.AutoScrollTextView;
 import com.chunsoft.view.ImageCycleView;
 import com.chunsoft.view.ImageCycleView.ImageCycleViewListener;
 import com.chunsoft.view.xListview.XListView;
@@ -49,6 +53,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 	private ImageView iv_search;
 	ImageCycleView mAdView;
 	ProgressDialog dialog = null;
+	AutoScrollTextView autoScrollTextView;
 
 	/**
 	 * variable statement
@@ -64,12 +69,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 	private Context mContext;
 	private ProAdapter adapters;
 	private ArrayList<ADInfo> infos = new ArrayList<ADInfo>();
-	private String[] imageUrls = {
-			"http://pic16.nipic.com/20110831/5867329_155851694000_2.jpg",
-			"http://pic65.nipic.com/file/20150423/1515468_133352223000_2.jpg",
-			"http://pic14.nipic.com/20110530/6871773_151825944926_2.jpg",
-			"http://tu.webps.cn/tb/img/4/TB1bz7AHXXXXXcAXpXXXXXXXXXX_%21%210-item_pic.jpg",
-			"http://pic.58pic.com/58pic/11/18/41/50h58PICy7m.jpg" };
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,25 +99,50 @@ public class Home_F_new extends Fragment implements OnClickListener,
 		cycleview = LayoutInflater.from(mContext).inflate(
 				R.layout.image_cycle_view, null);
 		mAdView = (ImageCycleView) cycleview.findViewById(R.id.ad_view);
+		autoScrollTextView = (AutoScrollTextView) cycleview
+				.findViewById(R.id.tv_Notice);
+		getJoinList(new VolleyDataCallback<JoinListBean>() {
+			@Override
+			public void onSuccess(JoinListBean datas) {
+				String str = "";
+				for (int i = 0; i < datas.JOININFO_LIST.size(); i++) {
+					str += datas.JOININFO_LIST.get(i).CONTENT + '\n';
+				}
+				Log.e("string ---------------", str);
+				autoScrollTextView.setText(str);
+				autoScrollTextView.init(getActivity().getWindowManager());
+				autoScrollTextView.startScroll();
+			}
+		});
+		autoScrollTextView.init(getActivity().getWindowManager());
+		autoScrollTextView.startScroll();
 		x_lv.addHeaderView(cycleview);
 		x_lv.setXListViewListener(this);
 		// 设置可以进行下拉加载的功能
 		x_lv.setPullLoadEnable(true);
 		x_lv.setPullRefreshEnable(true);
-		for (int i = 0; i < imageUrls.length; i++) {
-			ADInfo info = new ADInfo();
-			info.setUrl(imageUrls[i]);
-			info.setContent("top-->" + i);
-			infos.add(info);
-		}
-		mAdView.setImageResources(infos, mAdCycleViewListener);
+		/**
+		 * show image on home page
+		 */
+		getRecommendPro(new VolleyDataCallback<RecProListBean>() {
+			@Override
+			public void onSuccess(RecProListBean datas) {
+				for (int i = 0; i < datas.PIC_LIST.size(); i++) {
+					ADInfo info = new ADInfo();
+					info.setUrl(Constant.ImageUri
+							+ datas.PIC_LIST.get(i).PRO_PIC);
+					info.setId(datas.PIC_LIST.get(i).PRO_ID);
+					infos.add(info);
+				}
+				mAdView.setImageResources(infos, mAdCycleViewListener);
+			}
+		});
 		getData(String.valueOf(currentPage), new VolleyDataCallback<ProBean>() {
 			@Override
 			public void onSuccess(final ProBean datas) {
 				totalPage = Integer.valueOf(datas.totalpage);
 				productList = datas.productList;
-				adapters = new ProAdapter(mContext, productList,
-						R.layout.home_gv_item);
+				adapters = new ProAdapter(mContext, productList);
 				x_lv.setAdapter(adapters);
 				if (dialog != null && dialog.isShowing()) {
 					dialog.dismiss();
@@ -129,8 +153,13 @@ public class Home_F_new extends Fragment implements OnClickListener,
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
 						Intent intent = new Intent();
-						intent.putExtra("proID",
-								datas.productList.get(position).proID);
+
+						intent.putExtra("proID", datas.productList
+								.get((int) parent.getAdapter().getItemId(
+										position)).proID);
+						Log.e("proID--------->", datas.productList
+								.get((int) parent.getAdapter().getItemId(
+										position)).proID);
 						intent.setClass(mContext, ProductDetail_A.class);
 						startActivity(intent);
 					}
@@ -141,11 +170,13 @@ public class Home_F_new extends Fragment implements OnClickListener,
 	}
 
 	private ImageCycleViewListener mAdCycleViewListener = new ImageCycleViewListener() {
-
 		@Override
 		public void onImageClick(ADInfo info, int position, View imageView) {
-			Toast.makeText(mContext, "content->" + info.getContent(),
-					Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent();
+			intent.putExtra("proID", info.getId());
+			Log.e("proID", info.getId());
+			intent.setClass(mContext, ProductDetail_A.class);
+			startActivity(intent);
 		}
 
 		@Override
@@ -193,32 +224,53 @@ public class Home_F_new extends Fragment implements OnClickListener,
 
 					@Override
 					public void onError() {
-
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+							dialog = null;
+						}
 					}
 				}, ProBean.class);
 		MyApplication.getInstance().addToRequestQueue(request);
 	}
 
-	class ProAdapter extends CommonAdapter<ProListBean> {
+	public class ProAdapter extends BaseAdapter {
+		List<ProListBean> datas;
+		Context mContext;
 
-		public ProAdapter(Context context, List<ProListBean> datas, int layoutId) {
-			super(context, datas, layoutId);
+		public ProAdapter(Context mContext, List<ProListBean> datas) {
+			this.mContext = mContext;
+			this.datas = datas;
 		}
 
 		@Override
-		public void convert(ViewHolder holder, ProListBean t) {
-			if (!t.equals("")) {
-				holder.setText(R.id.tv_content, t.name.toString());
-				holder.setText(R.id.tv_price, "¥" + t.proPrice.toString());
-				holder.setText(R.id.tv_sale, t.saleNum.toString() + "人付款");
-				// 使用ImageLoader对图片进行加装！
-				// holder.setVolleyImage(R.id.iv, t.picPath,
-				// R.drawable.icon_empty,
-				// R.drawable.icon_error);
-				ImageView image = holder.getView(R.id.iv);
-				ImageLoader.getInstance().displayImage(
-						Constant.ImageUri + t.picPath, image);// 使用ImageLoader对图片进行加装！
+		public int getCount() {
+			return datas.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return datas.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder = null;
+			View view = convertView;
+			if (view == null) {
+				view = LayoutInflater.from(getActivity()).inflate(
+						R.layout.home_gv_item, null);
+				holder = new ViewHolder(view);
+				view.setTag(holder);
+			} else {
+				holder = (ViewHolder) view.getTag();
 			}
+			bindListItem(holder, datas.get(position));
+			return view;
 		}
 	}
 
@@ -250,8 +302,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 				productList = datas.productList;
 				totalPage = Integer.valueOf(datas.totalpage);
 				currentPage++;
-				adapters = new ProAdapter(mContext, productList,
-						R.layout.home_gv_item);
+				adapters = new ProAdapter(mContext, productList);
 				x_lv.setAdapter(adapters);
 
 				if (dialog != null && dialog.isShowing()) {
@@ -280,7 +331,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 								dialog.dismiss();
 								dialog = null;
 							}
-
 						}
 					});
 		} else {
@@ -308,5 +358,70 @@ public class Home_F_new extends Fragment implements OnClickListener,
 			return "";
 		}
 		return mDateFormat.format(new Date(time));
+	}
+
+	private void getJoinList(final VolleyDataCallback<JoinListBean> callback) {
+		String URL = Constant.IP + Constant.getJoinList;
+		GsonRequest<JoinListBean> req = new GsonRequest<JoinListBean>(URL, "",
+				new Response.Listener<JoinListBean>() {
+
+					@Override
+					public void onResponse(JoinListBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(getActivity()) {
+					@Override
+					public void onError() {
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+							dialog = null;
+						}
+					}
+				}, JoinListBean.class);
+		MyApplication.getInstance().addToRequestQueue(req);
+	}
+
+	private void getRecommendPro(
+			final VolleyDataCallback<RecProListBean> callback) {
+		String URL = Constant.IP + Constant.getProRecommendPro;
+		GsonRequest<RecProListBean> req = new GsonRequest<RecProListBean>(URL,
+				"", new Response.Listener<RecProListBean>() {
+
+					@Override
+					public void onResponse(RecProListBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(getActivity()) {
+					@Override
+					public void onError() {
+
+					}
+				}, RecProListBean.class);
+		MyApplication.getInstance().addToRequestQueue(req);
+	}
+
+	static class ViewHolder {
+		@Bind(R.id.tv_content)
+		TextView tv_content;
+		@Bind(R.id.tv_price)
+		TextView tv_price;
+		@Bind(R.id.tv_sale)
+		TextView tv_sale;
+		@Bind(R.id.iv)
+		ImageView image;
+
+		public ViewHolder(View view) {
+			ButterKnife.bind(this, view);
+		}
+	}
+
+	private void bindListItem(ViewHolder holder, ProListBean data) {
+
+		holder.tv_content.setText(data.name);
+		holder.tv_price.setText("¥" + data.proPrice);
+		holder.tv_sale.setText(data.saleNum + "人付款");
+		ImageLoader.getInstance().displayImage(
+				Constant.ImageUri + data.picPath, holder.image);// 使用ImageLoader对图片进行加装！
+
 	}
 }

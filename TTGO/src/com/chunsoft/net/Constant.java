@@ -48,5 +48,21 @@ public class Constant {
 	 * get Search Pro Info by info
 	 */
 	public static String getProSearchInfo = "product_searchProInfo.action";
+	/**
+	 * get Join list data
+	 */
+	public static String getJoinList = "Join_list.action";
+	/**
+	 * get Cart list data
+	 */
+	public static String getCartList = "Cart_list.action";
+	/**
+	 * get Notice list data
+	 */
+	public static String getNotice = "notice_list.action";
+	/**
+	 * Add product to cart
+	 */
+	public static String addCartPro = "Cart_addProToCart.action";
 
 }

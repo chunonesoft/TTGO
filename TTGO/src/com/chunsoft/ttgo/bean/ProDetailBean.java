@@ -6,7 +6,7 @@ public class ProDetailBean {
 	public String retcode;
 	public String retmsg;
 	public String proName;
-	public String proPrice;
+	public int proPrice;
 	public String picPath;
 	public List<PropertyBean> proProperty;
 }

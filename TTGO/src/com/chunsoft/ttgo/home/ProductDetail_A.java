@@ -1,6 +1,7 @@
 package com.chunsoft.ttgo.home;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 import com.android.volley.Response;
 import com.chunsoft.net.AbstractVolleyErrorListener;
@@ -33,6 +36,7 @@ import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.ProDetailBean;
+import com.chunsoft.ttgo.bean.PropertyBean;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.home.Popwindow.OnItemClickListener;
 import com.chunsoft.ttgo.myself.AdressList;
@@ -40,16 +44,44 @@ import com.chunsoft.view.ScaleView.HackyViewPager;
 
 public class ProductDetail_A extends Activity implements OnItemClickListener,
 		OnClickListener {
-	private Context mContext;
-	private ImageView iv_back;
-	private ImageView put_in;
-	private ImageView buy_now;
-	private ImageView iv_kf;
-	private TextView tv_name, tv_price, tv_salenum, tv_storenum;
+	/**
+	 * widget statement
+	 */
+	@Bind(R.id.tv_name)
+	TextView tv_name;
 
+	@Bind(R.id.tv_price)
+	TextView tv_price;
+
+	@Bind(R.id.tv_salenum)
+	TextView tv_salenum;
+
+	@Bind(R.id.tv_storenum)
+	TextView tv_storenum;
+
+	@Bind(R.id.iv_back)
+	ImageView iv_back;
+
+	@Bind(R.id.put_in)
+	ImageView put_in;
+
+	@Bind(R.id.buy_now)
+	ImageView buy_now;
+
+	@Bind(R.id.iv_kf)
+	ImageView iv_kf;
+
+	@Bind(R.id.iv_baby_collection)
+	ImageView iv_baby_collection;
 	/** 用于设置背景暗淡 */
-	private LinearLayout all_choice_layout = null;
+	@Bind(R.id.all_choice_layout)
+	LinearLayout all_choice_layout;
 
+	/**
+	 * variable statement
+	 */
+	private Context mContext;
+	List<PropertyBean> proProperty;
 	/** 判断是否点击的立即购买按钮 */
 	boolean isClickBuy = false;
 	private ArrayList<View> allListView;
@@ -60,50 +92,38 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 
 	/** 是否添加收藏 */
 	private static boolean isCollection = false;
-	private ImageView iv_baby_collection;
 	private int[] resId = { R.drawable.detail_show_1, R.drawable.detail_show_2,
 			R.drawable.detail_show_3, R.drawable.detail_show_4,
 			R.drawable.detail_show_5, R.drawable.detail_show_6 };
-	private Intent intent;
 	private String proID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.productdetail_a);
+		ButterKnife.bind(this);
 		Intent intent = getIntent();
 		proID = intent.getStringExtra("proID");
-		Log.e("proID--------------", proID);
-		findView();
 		init();
 		// 得到保存的收藏信息
 		getSaveCollection();
 		initViewPager();
+		Click();
+
 		getDetailData(proID, new VolleyDataCallback<ProDetailBean>() {
 			@Override
 			public void onSuccess(ProDetailBean datas) {
+				proProperty = new ArrayList<PropertyBean>();
+				proProperty = datas.proProperty;
 				tv_name.setText(datas.proName);
-				tv_price.setText(datas.proPrice);
+				tv_price.setText("¥" + datas.proPrice + "");
+				Log.e("datas.proPrice----->", datas.proPrice + "");
+				popWindow = new Popwindow(mContext, datas, proID);
+
+				popWindow.setOnItemClickListener(ProductDetail_A.this);
 			}
 		});
-		Click();
-		popWindow = new Popwindow(this);
-		popWindow.setOnItemClickListener(this);
 
-	}
-
-	private void findView() {
-		tv_name = (TextView) findViewById(R.id.tv_name);
-		tv_price = (TextView) findViewById(R.id.tv_price);
-		tv_salenum = (TextView) findViewById(R.id.tv_salenum);
-		tv_storenum = (TextView) findViewById(R.id.tv_storenum);
-
-		all_choice_layout = (LinearLayout) findViewById(R.id.all_choice_layout);
-		iv_back = (ImageView) findViewById(R.id.iv_back);
-		iv_kf = (ImageView) findViewById(R.id.iv_kf);
-		put_in = (ImageView) findViewById(R.id.put_in);
-		buy_now = (ImageView) findViewById(R.id.buy_now);
-		iv_baby_collection = (ImageView) findViewById(R.id.iv_baby_collection);
 	}
 
 	private void init() {
@@ -159,7 +179,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	}
 
 	private class ViewPagerAdapter extends PagerAdapter {
-
 		@Override
 		public int getCount() {
 			return allListView.size();
@@ -181,7 +200,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 			container.addView(view);
 			return view;
 		}
-
 	}
 
 	/** 注册监听 */
@@ -327,7 +345,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 		try {
 			sendData.put("proID", proID);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		GsonRequest<ProDetailBean> req = new GsonRequest<>(URL,
