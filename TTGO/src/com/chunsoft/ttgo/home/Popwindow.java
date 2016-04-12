@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.AddCartBean;
 import com.chunsoft.ttgo.bean.FeedbackBean;
 import com.chunsoft.ttgo.bean.ProDetailBean;
+import com.chunsoft.ttgo.bean.PropertyBean;
 import com.chunsoft.ttgo.bean.Propery;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.util.PreferencesUtils;
@@ -79,37 +81,29 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 	private int price = 0;
 	int totalPrice = 0; // 商品总价
 	int totalNum = 0; // 商品总件数
+	private String proID;
 	private OrderAdapter adapter;
 	private AddCartBean cartData;
 	private Propery bean;
-
+	private ProDetailBean mArrayList = new ProDetailBean();
 	private PopupWindow popupWindow;
 	private OnItemClickListener listener;
 
 	public Popwindow(Context context, ProDetailBean mArrayList, String proID) {
 		this.context = context;
 		this.price = mArrayList.proPrice;
+		this.proID = proID;
 		View view = LayoutInflater.from(context).inflate(R.layout.popwindow,
 				null);
 		ButterKnife.bind(this, view);
-
+		this.mArrayList.proProperty = new ArrayList<PropertyBean>();
+		this.mArrayList = mArrayList;
 		tv_content.setText(mArrayList.proName);
 		tv_money.setText("¥" + mArrayList.proPrice);
 		tv_store.setText("(库存" + (mArrayList.proPrice * 2 + 7) + "件)");
 		ImageLoader.getInstance().displayImage(
 				Constant.ImageUri + mArrayList.picPath, iv_pic);// 使用ImageLoader对图片进行加装！
-		cartData = new AddCartBean();
-		cartData.propery = new ArrayList<Propery>();
-		cartData.proID = proID;
-		cartData.token = PreferencesUtils.getSharePreStr(context, "Token");
-		cartData.userId = PreferencesUtils.getSharePreStr(context, "userId");
-		for (int i = 0; i < mArrayList.proProperty.size(); i++) {
-			bean = new Propery();
-			bean.proNum = 0;
-			bean.styleId = mArrayList.proProperty.get(i).color
-					+ mArrayList.proProperty.get(i).size;
-			cartData.propery.add(i, bean);
-		}
+
 		popupWindow = new PopupWindow(view, LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		// 设置popwindow的动画效果
@@ -156,15 +150,28 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 
 			break;
 		case R.id.pop_ok:
-			listener.onClickOKPop();
+			cartData = new AddCartBean();
+			cartData.propery = new ArrayList<Propery>();
+			cartData.proID = proID;
+			cartData.token = PreferencesUtils.getSharePreStr(context, "Token");
+			cartData.userId = PreferencesUtils
+					.getSharePreStr(context, "userId");
+			for (int i = 0; i < mArrayList.proProperty.size(); i++) {
+				bean = new Propery();
+				bean.proNum = 0;
+				bean.styleId = mArrayList.proProperty.get(i).id;
+				cartData.propery.add(i, bean);
+			}
 			Gson gson = new Gson();
 			String sendData = gson.toJson(cartData);
+			Log.e("sendData--------->", sendData);
 			AddCartData(sendData, new VolleyDataCallback<FeedbackBean>() {
 				@Override
 				public void onSuccess(FeedbackBean datas) {
-					ToastUtil.showShortToast(context, datas.retmsg);
+					ToastUtil.showShortToast(context, "有数据吗" + datas.retmsg);
 				}
 			});
+			listener.onClickOKPop();
 			/*
 			 * if (str_color.equals("")) { Toast.makeText(context,
 			 * "亲，你还没有选择颜色哟~", Toast.LENGTH_SHORT).show(); }else if

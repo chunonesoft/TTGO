@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:background="@color/bg_Gray"
     android:orientation="vertical" >
+    <include layout="@layout/top_menu_myorder" />
     <com.chunsoft.view.xListview.XListView 
+        
         android:id="@+id/x_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

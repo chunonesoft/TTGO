@@ -30,7 +30,9 @@ import com.chunsoft.adapter.ViewHolder;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.OrderBean;
 import com.chunsoft.ttgo.home.Login_A;
+import com.chunsoft.ttgo.home.Notice_A;
 import com.chunsoft.ttgo.home.Wjmm_A;
+import com.chunsoft.ttgo.util.IntentUti;
 import com.chunsoft.ttgo.util.MyUtils;
 import com.chunsoft.ttgo.util.PreferencesUtils;
 import com.chunsoft.view.CustomDialog;
@@ -123,6 +125,9 @@ public class Myself_F extends Fragment implements OnClickListener,
 		case R.id.ll_count:
 			intent = new Intent(mContext, Wjmm_A.class);
 			startActivity(intent);
+			break;
+		case R.id.ll_person:
+			IntentUti.IntentTo(getActivity(), Notice_A.class);
 			break;
 		case R.id.iv_person:
 			showChoosePhotoDialog();

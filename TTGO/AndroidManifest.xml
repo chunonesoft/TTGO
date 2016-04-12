@@ -37,6 +37,7 @@
         <activity android:name="com.chunsoft.ttgo.home.Login_A"></activity>
         <activity android:name="com.chunsoft.ttgo.home.Register_A"></activity>
         <activity android:name="com.chunsoft.ttgo.home.Wjmm_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.home.Notice_A"></activity>
     </application>
     
 </manifest>

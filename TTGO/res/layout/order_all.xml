@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <com.chunsoft.view.PullToRefreshListView
+    <com.chunsoft.view.xListview.XListView
+        android:id="@+id/xlv_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-    </com.chunsoft.view.PullToRefreshListView>
-
+        />
 </LinearLayout>

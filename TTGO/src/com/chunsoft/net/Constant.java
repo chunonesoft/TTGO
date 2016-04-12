@@ -64,5 +64,17 @@ public class Constant {
 	 * Add product to cart
 	 */
 	public static String addCartPro = "Cart_addProToCart.action";
+	/**
+	 * product_getStyle
+	 */
+	public static String getStyleList = "product_getStyle.action";
+	/**
+	 * getOrderInfo
+	 */
+	public static String getOrderInfo = "order_getOrderInfo.action";
+	/**
+	 * getAccountPro
+	 */
+	public static String getAccountPro = "product_proAccount.action";
 
 }

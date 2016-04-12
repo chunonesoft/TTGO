@@ -25,7 +25,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -34,14 +33,18 @@ import com.chunsoft.net.AbstractVolleyErrorListener;
 import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
+import com.chunsoft.ttgo.bean.AccountDataBean;
 import com.chunsoft.ttgo.bean.CartContentBean;
 import com.chunsoft.ttgo.bean.CartListBean;
+import com.chunsoft.ttgo.bean.ProShopList;
+import com.chunsoft.ttgo.bean.UploadCartDataBean;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.home.MyApplication;
 import com.chunsoft.ttgo.util.IBtnCallListener;
 import com.chunsoft.ttgo.util.PreferencesUtils;
 import com.chunsoft.view.xListview.XListView;
 import com.chunsoft.view.xListview.XListView.IXListViewListener;
+import com.google.gson.Gson;
 
 public class Cart_F extends Fragment implements IBtnCallListener,
 		IXListViewListener {
@@ -83,6 +86,9 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 	private SparseArray<Boolean> mSelectState = new SparseArray<Boolean>();
 	private boolean isBatchModel;// 是否可删除模式
 	private List<CartContentBean> datas;
+	private UploadCartDataBean upLoadDatas;
+	String userId = PreferencesUtils.getSharePreStr(getActivity(), "userId");
+	String token = PreferencesUtils.getSharePreStr(getActivity(), "Token");
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +96,7 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.cart_f,
 				null);
 		ButterKnife.bind(this, view);
-
+		initData();
 		content_view.setXListViewListener(this);
 		// 设置可以进行下拉加载的功能
 		content_view.setPullLoadEnable(true);
@@ -182,7 +188,6 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 									}
 								}
 							}
-
 							adapter.notifyDataSetChanged();
 							mSelectState.clear();
 							totalPrice = 0;
@@ -190,7 +195,19 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 							tv_cart_total.setText("￥" + 0.00 + "");
 							mCheckAll.setChecked(false);
 						} else {
-							Toast.makeText(getActivity(), "结算", 0).show();
+							// upLoadDatas = "";
+							Gson gson = new Gson();
+							String sendData = gson.toJson(upLoadDatas);
+							AccountPro(sendData,
+									new VolleyDataCallback<AccountDataBean>() {
+
+										@Override
+										public void onSuccess(
+												AccountDataBean datas) {
+
+										}
+
+									});
 						}
 
 					}
@@ -232,6 +249,13 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 			}
 		}
 		return selectedIds;
+	}
+
+	private void initData() {
+		upLoadDatas = new UploadCartDataBean();
+		upLoadDatas.userId = userId;
+		upLoadDatas.token = token;
+		upLoadDatas.proShopList = new ArrayList<ProShopList>();
 	}
 
 	// 适配器
@@ -357,9 +381,7 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 			dialog = ProgressDialog.show(getActivity(), "", "正在加载...");
 			dialog.show();
 		}
-		String userId = PreferencesUtils
-				.getSharePreStr(getActivity(), "userId");
-		String token = PreferencesUtils.getSharePreStr(getActivity(), "Token");
+
 		JSONObject sendData = new JSONObject();
 		try {
 			sendData.put("userId", userId);
@@ -416,5 +438,29 @@ public class Cart_F extends Fragment implements IBtnCallListener,
 		content_view.stopLoadMore();
 		// 设置最后一次刷新时间
 		content_view.setRefreshTime(getCurrentTime(System.currentTimeMillis()));
+	}
+
+	private void AccountPro(String sendData,
+			final VolleyDataCallback<AccountDataBean> callback) {
+		String URL = Constant.IP + Constant.getAccountPro;
+		GsonRequest<AccountDataBean> request = new GsonRequest<AccountDataBean>(
+				URL, sendData, new Response.Listener<AccountDataBean>() {
+
+					@Override
+					public void onResponse(AccountDataBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(getActivity()) {
+
+					@Override
+					public void onError() {
+						if (dialog == null) {
+							dialog = ProgressDialog.show(getActivity(), "",
+									"正在加载...");
+							dialog.show();
+						}
+					}
+				}, AccountDataBean.class);
+		MyApplication.getInstance().addToRequestQueue(request, "AccountPro");
 	}
 }
