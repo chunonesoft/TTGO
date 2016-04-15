@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" 
+        
+        android:orientation="horizontal"
+        >
+         <CheckBox
+            android:id="@+id/cb_style"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="4dp"
+            android:button="@drawable/check_box_bg"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="visible" />
+         <TextView 
+             android:layout_toRightOf="@id/cb_style"
+             android:id="@+id/tv_storename"
+             android:text="TTGO电商"
+             android:gravity="center"
+             android:layout_marginLeft="10dp"
+             android:layout_alignTop="@id/cb_style"
+             android:layout_alignBottom="@id/cb_style"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@color/black"            
+             />
+    </RelativeLayout>
+
+    <com.chunsoft.view.MyListView
+        android:id="@+id/lv_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/white"
+        android:dividerHeight="3dp"
+        ></com.chunsoft.view.MyListView>
+</LinearLayout>

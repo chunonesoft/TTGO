@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.chunsoft.ttgo.R;
-import com.chunsoft.ttgo.cart.Cart_F;
+import com.chunsoft.ttgo.cart.Cart_F_new1;
 import com.chunsoft.ttgo.group.Group_F;
 import com.chunsoft.ttgo.myself.Myself_F;
 import com.chunsoft.ttgo.util.IBtnCallListener;
@@ -40,7 +40,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 	/* 社区界面 */
 	private Group_F group_F;
 	/* 购物车界面 */
-	private Cart_F cart_F;
+	private Cart_F_new1 cart_F;
 	/* 我界面 */
 	private Myself_F myself_F;
 
@@ -112,7 +112,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 				removeFragment(cart_F);
 				cart_F = null;
 			}
-			cart_F = new Cart_F();
+			cart_F = new Cart_F_new1();
 			// 判断当前界面是否隐藏，如果隐藏就进行添加显示，false表示显示，true表示当前界面隐藏
 			addFragment(cart_F);
 			showFragment(cart_F);

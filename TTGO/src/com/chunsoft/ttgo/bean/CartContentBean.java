@@ -1,11 +1,11 @@
 package com.chunsoft.ttgo.bean;
 
+import java.util.List;
+
 public class CartContentBean {
-	public String proPic;
+	public List<ContentItemBean> content;
+	public int proId;
 	public int price;
 	public String proName;
-	public String color;
-	public int number;
-	public String size;
-	public int proId;
+	public String proPath;
 }

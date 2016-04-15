@@ -420,6 +420,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 		holder.tv_content.setText(data.name);
 		holder.tv_price.setText("¥" + data.proPrice);
 		holder.tv_sale.setText(data.saleNum + "人付款");
+		Log.e("proInfo--------->", data.toString());
 		ImageLoader.getInstance().displayImage(
 				Constant.ImageUri + data.picPath, holder.image);// 使用ImageLoader对图片进行加装！
 

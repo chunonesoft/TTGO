@@ -5,5 +5,5 @@ import java.util.List;
 public class CartListBean {
 	public String retcode;
 	public String retmsg;
-	public List<CartContentBean> content;
+	public List<CartContentBean> contentList;
 }

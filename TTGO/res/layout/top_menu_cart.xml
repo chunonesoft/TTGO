@@ -22,17 +22,7 @@
             android:paddingLeft="10dp"
             android:text="购物车"
             android:textColor="@color/title_text"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/tv_top_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:text="编辑"
-            android:textColor="@color/text_click"
-            android:textSize="16sp" />    
+            android:textSize="18sp" />    
     </LinearLayout>
     <View
         android:layout_width="match_parent"

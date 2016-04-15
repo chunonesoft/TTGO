@@ -76,5 +76,9 @@ public class Constant {
 	 * getAccountPro
 	 */
 	public static String getAccountPro = "product_proAccount.action";
+	/**
+	 * delete cart pro
+	 */
+	public static String deleteCartPro = "Cart_deleteCartById.action";
 
 }

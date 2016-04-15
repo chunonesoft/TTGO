@@ -1,7 +1,6 @@
 package com.chunsoft.ttgo.home;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,7 +34,6 @@ import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.ProDetailBean;
-import com.chunsoft.ttgo.bean.PropertyBean;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.home.Popwindow.OnItemClickListener;
 import com.chunsoft.ttgo.myself.AdressList;
@@ -81,7 +78,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	 * variable statement
 	 */
 	private Context mContext;
-	List<PropertyBean> proProperty;
 	/** 判断是否点击的立即购买按钮 */
 	boolean isClickBuy = false;
 	private ArrayList<View> allListView;
@@ -113,11 +109,8 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 		getDetailData(proID, new VolleyDataCallback<ProDetailBean>() {
 			@Override
 			public void onSuccess(ProDetailBean datas) {
-				proProperty = new ArrayList<PropertyBean>();
-				proProperty = datas.proProperty;
 				tv_name.setText(datas.proName);
 				tv_price.setText("¥" + datas.proPrice + "");
-				Log.e("datas.proPrice----->", datas.proPrice + "");
 				popWindow = new Popwindow(mContext, datas, proID);
 
 				popWindow.setOnItemClickListener(ProductDetail_A.this);

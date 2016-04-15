@@ -8,8 +8,8 @@ import butterknife.ButterKnife.ViewBinder;
 public class MyOrder_All$$ViewBinder<T extends com.chunsoft.ttgo.myself.MyOrder_All> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131099772, "field 'xlv_all'");
-    target.xlv_all = finder.castView(view, 2131099772, "field 'xlv_all'");
+    view = finder.findRequiredView(source, 2131099784, "field 'xlv_all'");
+    target.xlv_all = finder.castView(view, 2131099784, "field 'xlv_all'");
   }
 
   @Override public void unbind(T target) {

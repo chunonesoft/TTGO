@@ -84,6 +84,7 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 	private String proID;
 	private OrderAdapter adapter;
 	private AddCartBean cartData;
+	private AddCartBean uploadData;
 	private Propery bean;
 	private ProDetailBean mArrayList = new ProDetailBean();
 	private PopupWindow popupWindow;
@@ -110,6 +111,17 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 		popupWindow.setAnimationStyle(R.style.popWindow_anim_style);
 		popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		popupWindow.setOnDismissListener(this);// 当popWindow消失时的监听
+		cartData = new AddCartBean();
+		cartData.propery = new ArrayList<Propery>();
+		cartData.proID = proID;
+		cartData.token = PreferencesUtils.getSharePreStr(context, "Token");
+		cartData.userId = PreferencesUtils.getSharePreStr(context, "userId");
+		for (int i = 0; i < mArrayList.proProperty.size(); i++) {
+			bean = new Propery();
+			bean.proNum = "0";
+			bean.styleId = mArrayList.proProperty.get(i).id;
+			cartData.propery.add(i, bean);
+		}
 		mylv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -122,13 +134,13 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 				holder.cb.toggle();
 				if (selected) {
 					mSelectState.put(_id, true);
-					totalNum += bean.proNum;
-					totalPrice += bean.proNum * price;
+					totalNum += Integer.valueOf(bean.proNum);
+					totalPrice += Integer.valueOf(bean.proNum) * price;
 
 				} else {
 					mSelectState.delete(_id);
-					totalNum -= bean.proNum;
-					totalPrice -= bean.proNum * price;
+					totalNum -= Integer.valueOf(bean.proNum);
+					totalPrice -= Integer.valueOf(bean.proNum) * price;
 				}
 				all_money.setText("总金额：" + totalPrice + "元");
 				all_num.setText("总计：" + totalNum + "件");
@@ -150,48 +162,52 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 
 			break;
 		case R.id.pop_ok:
-			cartData = new AddCartBean();
-			cartData.propery = new ArrayList<Propery>();
-			cartData.proID = proID;
-			cartData.token = PreferencesUtils.getSharePreStr(context, "Token");
-			cartData.userId = PreferencesUtils
-					.getSharePreStr(context, "userId");
-			for (int i = 0; i < mArrayList.proProperty.size(); i++) {
-				bean = new Propery();
-				bean.proNum = 0;
-				bean.styleId = mArrayList.proProperty.get(i).id;
-				cartData.propery.add(i, bean);
-			}
+			uploadData = new AddCartBean();
+			uploadData.propery = new ArrayList<Propery>();
+			uploadData.proID = cartData.proID;
+			uploadData.token = cartData.token;
+			uploadData.userId = cartData.userId;
 			Gson gson = new Gson();
-			String sendData = gson.toJson(cartData);
-			Log.e("sendData--------->", sendData);
-			AddCartData(sendData, new VolleyDataCallback<FeedbackBean>() {
-				@Override
-				public void onSuccess(FeedbackBean datas) {
-					ToastUtil.showShortToast(context, "有数据吗" + datas.retmsg);
+			List<Integer> ids = getSelectedIds();
+			for (int i = 0; i < cartData.propery.size(); i++) {
+				int dataId = i;
+				for (int j = 0; j < ids.size(); j++) {
+					int deleteId = ids.get(j);
+					if ((dataId == deleteId)
+							&& cartData.propery.get(i).proNum != "0") {
+						uploadData.propery.add(cartData.propery.get(i));
+					}
 				}
-			});
+			}
+			if (uploadData.propery.size() != 0) {
+				String sendData = gson.toJson(uploadData);
+				Log.e("添加数据---》", sendData);
+				AddCartData(sendData, new VolleyDataCallback<FeedbackBean>() {
+					@Override
+					public void onSuccess(FeedbackBean datas) {
+						ToastUtil
+								.showShortToast(context, "有数据吗" + datas.retmsg);
+					}
+				});
+			}
+
 			listener.onClickOKPop();
-			/*
-			 * if (str_color.equals("")) { Toast.makeText(context,
-			 * "亲，你还没有选择颜色哟~", Toast.LENGTH_SHORT).show(); }else if
-			 * (str_type.equals("")) { Toast.makeText(context,
-			 * "亲，你还没有选择类型哟~",Toast.LENGTH_SHORT).show(); }else {
-			 * HashMap<String, Object> allHashMap=new HashMap<String,Object>();
-			 * 
-			 * allHashMap.put("color",str_color);
-			 * allHashMap.put("type",str_type);
-			 * allHashMap.put("num",pop_num.getText().toString());
-			 * allHashMap.put("id",Data.arrayList_cart_id+=1);
-			 * 
-			 * Data.arrayList_cart.add(allHashMap); setSaveData();
-			 */
 			dissmiss();
 			break;
 		default:
 			listener.onClickOKPop();
 			break;
 		}
+	}
+
+	private final List<Integer> getSelectedIds() {
+		ArrayList<Integer> selectedIds = new ArrayList<Integer>();
+		for (int index = 0; index < mSelectState.size(); index++) {
+			if (mSelectState.valueAt(index)) {
+				selectedIds.add(mSelectState.keyAt(index));
+			}
+		}
+		return selectedIds;
 	}
 
 	@Override
@@ -273,8 +289,9 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 
 					boolean selected = mSelectState.get(_id, false);
 
-					cartData.propery.get(position).proNum = cartData.propery
-							.get(position).proNum + 1;
+					cartData.propery.get(position).proNum = String
+							.valueOf(Integer.valueOf(cartData.propery
+									.get(position).proNum) + 1);
 
 					notifyDataSetChanged();
 
@@ -290,14 +307,15 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 			holder.pop_reduce.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (cartData.propery.get(position).proNum == 0)
+					if (cartData.propery.get(position).proNum == "0")
 						return;
 
 					int _id = position;
 
 					boolean selected = mSelectState.get(_id, false);
-					cartData.propery.get(position).proNum = cartData.propery
-							.get(position).proNum - 1;
+					cartData.propery.get(position).proNum = String
+							.valueOf(Integer.valueOf(cartData.propery
+									.get(position).proNum) - 1);
 					notifyDataSetChanged();
 
 					if (selected) {
@@ -335,7 +353,8 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 	private void bindListItem(ViewHolder holder, Propery data, int position) {
 		holder.tv_size.setText(data.styleId);
 		holder.pop_num.setText(data.proNum + "");
-		holder.tv_money.setText("¥" + price * data.proNum + "元");
+		holder.tv_money.setText("¥" + price * Integer.valueOf(data.proNum)
+				+ "元");
 		int _id = position;
 		boolean selected = mSelectState.get(_id, false);
 		holder.cb.setChecked(selected);

@@ -43,4 +43,8 @@
     
     <!-- 标题 -->
     <string name="notify">通知</string>
+    
+    <!-- 战绩统计 -->
+    <string name="btn_start">请选择开始时间</string>
+    <string name="btn_end">请选择结束时间</string>
 </resources>
