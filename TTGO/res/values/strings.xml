@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">TTGO</string>
+    <string name="app_name">快时尚工厂</string>
     
     <!-- 上拉加载更多，下拉刷新 -->
     <string name="pull_to_refresh">下拉刷新</string>
@@ -43,8 +43,20 @@
     
     <!-- 标题 -->
     <string name="notify">通知</string>
+    <string name="firm_order">确认订单</string>
+    <string name="return_pro">退款/售后</string>
     
-    <!-- 战绩统计 -->
-    <string name="btn_start">请选择开始时间</string>
-    <string name="btn_end">请选择结束时间</string>
+    <!-- 按钮文字 -->
+    <string name="reminder">我要催单</string>
+    <string name="sure">确认收货</string> 
+    <string name="add_adress">填写物流信息</string> 
+    <string name="commit_sold">确认售出</string>
+    <string name="bill_settlement">账单结算</string>
+    <string name="bill">账单</string>
+    <string name="bill_detail">账单详情</string>
+    <string name="modify_adress">编辑地址</string>
+    <string name="add_kddh">填写快递单号</string>
+    
+    
+    
 </resources>

@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="TTGO店招"
+        android:text="快时尚工厂"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:gravity="center"

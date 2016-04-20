@@ -1,5 +1,6 @@
 package com.chunsoft.ttgo.cart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,6 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import com.android.volley.Response;
+import com.chunosft.utils.ToastUtil;
 import com.chunsoft.adapter.ShopcartExpandableListViewAdapter;
 import com.chunsoft.adapter.ShopcartExpandableListViewAdapter.CheckInterface;
 import com.chunsoft.adapter.ShopcartExpandableListViewAdapter.ModifyCountInterface;
@@ -35,7 +38,10 @@ import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.CartListBean;
+import com.chunsoft.ttgo.bean.FeedbackBean;
 import com.chunsoft.ttgo.bean.GroupInfo;
+import com.chunsoft.ttgo.bean.ProKindList;
+import com.chunsoft.ttgo.bean.ProShopList;
 import com.chunsoft.ttgo.bean.ProductInfo;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.home.MyApplication;
@@ -51,7 +57,7 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 	// 删除
 	@Bind(R.id.tv_delete)
 	TextView tv_delete;
-	// 删除 结算
+	// 结算
 	@Bind(R.id.tv_go_to_pay)
 	TextView tv_go_to_pay;
 
@@ -64,6 +70,8 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 	ProgressDialog dialog = null;
 	private String userId;
 	private String token;
+	private JSONObject sendData;
+	private String URL;
 
 	private double totalPrice = 0.00;// 购买的商品总价
 	private int totalCount = 0;// 购买的商品总数量
@@ -75,6 +83,11 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 	List<ProductInfo> products;
 	ModifyCountInterface xModifyCountInterface;
 	CheckInterface xCheckInterface;
+
+	List<ProShopList> proShopList;
+	ProShopList pShopListBean;
+	List<ProKindList> proKindList;
+	ProKindList prokindBean;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -159,6 +172,7 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+
 							return;
 						}
 					});
@@ -166,6 +180,14 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
+							UpLoadData();
+							Intent intent = new Intent();
+							intent.setClass(getActivity(),
+									Submit_Order_FA.class);
+							intent.putExtra("upData",
+									(Serializable) proShopList);
+							doDelete();
+							startActivity(intent);
 							return;
 						}
 					});
@@ -208,7 +230,6 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 		for (int i = 0; i < groups.size(); i++) {
 			GroupInfo group = groups.get(i);
 			if (group.isChoosed()) {
-
 				toBeDeleteGroups.add(group);
 			}
 			List<ProductInfo> toBeDeleteProducts = new ArrayList<ProductInfo>();// 待删除的子元素列表
@@ -216,6 +237,21 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 			for (int j = 0; j < childs.size(); j++) {
 				if (childs.get(j).isChoosed()) {
 					toBeDeleteProducts.add(childs.get(j));
+					DeleteCartById(childs.get(j).proId + "",
+							childs.get(j).styleId + "",
+							new VolleyDataCallback<FeedbackBean>() {
+								@Override
+								public void onSuccess(FeedbackBean datas) {
+									if (datas.retcode.equals(0)) {
+										ToastUtil.showShortToast(getActivity(),
+												datas.retmsg);
+									}
+									if (dialog != null && dialog.isShowing()) {
+										dialog.dismiss();
+										dialog = null;
+									}
+								}
+							});
 				}
 			}
 			childs.removeAll(toBeDeleteProducts);
@@ -225,6 +261,36 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 
 		selva.notifyDataSetChanged();
 		calculate();
+	}
+
+	private void UpLoadData() {
+		proShopList = new ArrayList<ProShopList>();// 待删除的组元素列表
+		for (int i = 0; i < groups.size(); i++) {
+			GroupInfo group = groups.get(i);
+			// if (group.isChoosed()) {
+			//
+			// toBeDeleteGroups.add(group);
+			// }
+			pShopListBean = new ProShopList();
+			proKindList = new ArrayList<ProKindList>();
+			// proShopList.get(i).proKindList = new ArrayList<ProKindList>();
+			List<ProductInfo> childs = children.get(group.getId());
+			for (int j = 0; j < childs.size(); j++) {
+				if (childs.get(j).isChoosed()) {
+					prokindBean = new ProKindList();
+					pShopListBean.cash = "1";
+					pShopListBean.proID = childs.get(j).proId + "";
+					Log.e("pShopListBean.proID" + j, pShopListBean.proID);
+					prokindBean.proNum = childs.get(j).number + "";
+					prokindBean.styleId = childs.get(j).styleId + "";
+					proKindList.add(prokindBean);
+				}
+			}
+			if (proKindList.size() != 0) {
+				pShopListBean.proKindList = proKindList;
+				proShopList.add(pShopListBean);
+			}
+		}
 	}
 
 	@Override
@@ -371,17 +437,16 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 
 	private void getCartListData(final VolleyDataCallback<CartListBean> callback) {
 
-		String URL = Constant.IP + Constant.getCartList;
+		URL = Constant.IP + Constant.getCartList;
 		if (dialog == null) {
 			dialog = ProgressDialog.show(getActivity(), "", "正在加载...");
 			dialog.show();
 		}
 
-		JSONObject sendData = new JSONObject();
+		sendData = new JSONObject();
 		try {
 			sendData.put("userId", userId);
 			sendData.put("token", token);
-			Log.e("senddata------->", sendData.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -405,4 +470,39 @@ public class Cart_F_new1 extends Fragment implements CheckInterface,
 		MyApplication.getInstance().addToRequestQueue(request, "getCartList");
 	}
 
+	private void DeleteCartById(String proId, String styleId,
+			final VolleyDataCallback<FeedbackBean> callback) {
+		URL = Constant.IP + Constant.deleteCartPro;
+		if (dialog == null) {
+			dialog = ProgressDialog.show(getActivity(), "", "正在加载...");
+			dialog.show();
+		}
+		sendData = new JSONObject();
+		try {
+			sendData.put("userId", userId);
+			sendData.put("token", token);
+			sendData.put("proId", proId);
+			sendData.put("styleId", styleId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		GsonRequest<FeedbackBean> request = new GsonRequest<FeedbackBean>(URL,
+				sendData.toString(), new Response.Listener<FeedbackBean>() {
+
+					@Override
+					public void onResponse(FeedbackBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(getActivity()) {
+
+					@Override
+					public void onError() {
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+							dialog = null;
+						}
+					}
+				}, FeedbackBean.class);
+		MyApplication.getInstance().addToRequestQueue(request);
+	}
 }

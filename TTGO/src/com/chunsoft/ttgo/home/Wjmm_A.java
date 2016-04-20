@@ -90,7 +90,6 @@ public class Wjmm_A extends Activity implements OnClickListener {
 					public void onSuccess(FeedbackBean datas) {
 						if (datas.retcode.equals("1")) {
 							ToastUtil.showShortToast(mContext, "验证码已发送");
-							et_checknum.setText("1507");
 						} else
 							ToastUtil.showShortToast(mContext,
 									datas.retmsg.toString());
@@ -153,7 +152,7 @@ public class Wjmm_A extends Activity implements OnClickListener {
 		String URL = Constant.IP + Constant.requestPIN;
 		sendData = new JSONObject();
 		try {
-			sendData.put("phonenum", num);
+			sendData.put("mobile", num);
 			sendData.put("pinflag", "2");
 		} catch (JSONException e) {
 			e.printStackTrace();

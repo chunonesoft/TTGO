@@ -1,21 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eeeeee"
-    android:orientation="vertical" >
-    <include layout="@layout/top_menu_login" />
-     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/bg_Gray" />
-      <ListView
-          android:id="@+id/lv_back"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="3dp"
-        android:dividerHeight="5dp"
-        >
-    </ListView>
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <include layout="@layout/top_menu_myorder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_sqz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="申请中"
+                android:textColor="@color/title" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_Gray" />
+
+            <TextView
+                android:id="@+id/tv_thz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="退货中"
+                android:textColor="#54585b" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_Gray" />
+
+            <TextView
+                  android:id="@+id/tv_yth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="已退货"
+                android:textColor="#54585b" />
+            
+			
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <View
+                android:id="@+id/v_sqz"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/title" />
+            <View
+                android:id="@+id/v_thz"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/line_normal" />
+            <View
+                android:id="@+id/v_yth"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/line_normal" />
+
+        </LinearLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/show_return_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></RelativeLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+

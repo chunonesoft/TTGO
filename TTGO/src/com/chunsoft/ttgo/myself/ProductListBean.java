@@ -1,6 +1,8 @@
 package com.chunsoft.ttgo.myself;
 
-public class ProductListBean {
+import java.io.Serializable;
+
+public class ProductListBean implements Serializable {
 	public String num;
 	public String proPrice;
 	public String proName;

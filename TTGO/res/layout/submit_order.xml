@@ -61,12 +61,7 @@
         android:layout_height="10dp"
         android:layout_below="@id/tv_adress"
         android:background="#eeeeee" />
-      <com.chunsoft.view.MyListView
-         android:id="@+id/lv"
-         android:layout_below="@id/view"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content" 
-         ></com.chunsoft.view.MyListView>
+
     </RelativeLayout>
      <LinearLayout 
          android:layout_width="match_parent"

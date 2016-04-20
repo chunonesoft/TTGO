@@ -111,12 +111,10 @@ public class Login_A extends Activity implements OnClickListener {
 											datas.retmsg + datas.Token);
 									PreferencesUtils.putSharePre(mContext,
 											"userId", datas.userId);
-									// Log.e("userId--------------",
-									// datas.userId);
+									Log.e("userId--------------", datas.userId);
 									PreferencesUtils.putSharePre(mContext,
 											"Token", datas.Token);
-									// Log.e("Token--------------",
-									// datas.Token);
+									Log.e("Token--------------", datas.Token);
 									PreferencesUtils.putSharePre(mContext,
 											"phonenum", mobile);
 									Constant.userId = datas.userId;

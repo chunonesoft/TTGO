@@ -54,6 +54,12 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 		initView();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		// super.onSaveInstanceState(outState);
+	}
+
 	// 初始化组件
 	private void initView() {
 		mContext = Main_FA.this;
@@ -108,14 +114,19 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 			break;
 		// 购物车界面
 		case R.id.iv_menu_2:
-			if (cart_F != null) {
-				removeFragment(cart_F);
-				cart_F = null;
+			if (PreferencesUtils.getSharePreStr(mContext, "userId").equals("")) {
+				intent = new Intent(mContext, Login_A.class);
+				startActivity(intent);
+			} else {
+				if (cart_F != null) {
+					removeFragment(cart_F);
+					cart_F = null;
+				}
+				cart_F = new Cart_F_new1();
+				// 判断当前界面是否隐藏，如果隐藏就进行添加显示，false表示显示，true表示当前界面隐藏
+				addFragment(cart_F);
+				showFragment(cart_F);
 			}
-			cart_F = new Cart_F_new1();
-			// 判断当前界面是否隐藏，如果隐藏就进行添加显示，false表示显示，true表示当前界面隐藏
-			addFragment(cart_F);
-			showFragment(cart_F);
 			break;
 		// 我界面
 		case R.id.iv_menu_3:

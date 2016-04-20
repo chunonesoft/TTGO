@@ -80,5 +80,45 @@ public class Constant {
 	 * delete cart pro
 	 */
 	public static String deleteCartPro = "Cart_deleteCartById.action";
+	/**
+	 * getUserMessage
+	 */
+	public static String getUserMessage = "user_getUserMessage.action";
+	/**
+	 * product _ proAccount.action
+	 */
+	public static String Submitpro = "product_proAccount.action";
+	/**
+	 * order_receiveProducts.action
+	 */
+	public static String SubmitReceiveProducts = "order_receiveProducts.action";
+	/**
+	 * SubmitSaleOut
+	 */
+	public static String SubmitSaleOut = "order_saleProducts.action";
+	/**
+	 * GetBill
+	 */
+	public static String GetBill = "order_getBill.action";
+	/**
+	 * ModifyReceiveInfo
+	 */
+	public static String ModifyReceiveInfo = "user_receiveInfo.action";
+	/**
+	 * getBillDetatil
+	 */
+	public static String getBillDetatil = "order_getBillDetatil.action";
+	/**
+	 * applyReturn
+	 */
+	public static String applyReturn = "return_applyReturn.action";
+	/**
+	 * write return Num
+	 */
+	public static String writeAdress = "return_ReturnDetial.action";
+	/**
+	 * getPuDetail
+	 */
+	public static String getPuDetail = "user_getPuDetail.action";
 
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        >
+        <TextView
+            android:id="@+id/tv_orederNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号：2016004017"
+            android:textColor="@color/text_normal" 
+            />
+        <TextView
+            android:id="@+id/tv_orederTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="成交时间：2016-04-17"
+            android:textColor="@color/text_normal" 
+            />
+ <!--        <TextView
+            android:id="@+id/tv_saleTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="付款时间：2016-04-17"
+            android:textColor="@color/text_normal"  
+            />
+             -->
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <TextView
+            android:id="@+id/tv_allmoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合计：¥0"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/title"  
+            />
+        <ImageView
+        android:id="@+id/iv_kf"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/cart_kf" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    
+
+</LinearLayout>

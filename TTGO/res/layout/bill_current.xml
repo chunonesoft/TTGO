@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" 
+            />
+        <TextView
+            android:id="@+id/all_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="上月账单合计：¥0"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/title"
+            />
+    </LinearLayout>
+    <com.chunsoft.view.xListview.XListView 
+        android:id="@+id/xlv_bill_current"
+        android:dividerHeight="5dp"
+        android:divider="#eeeeee"
+        android:layout_above="@id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </com.chunsoft.view.xListview.XListView>
+    
+    
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.chunsoft.ttgo.myself;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -9,12 +10,16 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -31,6 +36,7 @@ import com.chunsoft.ttgo.home.MyApplication;
 import com.chunsoft.ttgo.util.PreferencesUtils;
 import com.chunsoft.view.xListview.XListView;
 import com.chunsoft.view.xListview.XListView.IXListViewListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class MyOrder_All extends Fragment implements IXListViewListener {
 	@Bind(R.id.xlv_all)
@@ -59,7 +65,7 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 	private void init() {
 		mContext = getActivity();
 		xlv_all.setXListViewListener(this);
-		// ÉèÖÃ¿ÉÒÔ½øĞĞÏÂÀ­¼ÓÔØµÄ¹¦ÄÜ
+		// è®¾ç½®å¯ä»¥è¿›è¡Œä¸‹æ‹‰åŠ è½½çš„åŠŸèƒ½
 		xlv_all.setPullLoadEnable(true);
 		xlv_all.setPullRefreshEnable(true);
 	}
@@ -70,7 +76,7 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 		getOrderData(currentPage, userId, typeID, Token,
 				new VolleyDataCallback<OrderDataBean>() {
 					@Override
-					public void onSuccess(OrderDataBean datas) {
+					public void onSuccess(final OrderDataBean datas) {
 						currentPage++;
 						totalPage = datas.totalPage;
 						Log.e("datas.totalCount---->", datas.totalCount);
@@ -81,6 +87,20 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 							dialog.dismiss();
 							dialog = null;
 						}
+						xlv_all.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent,
+									View view, int position, long id) {
+								Intent intent = new Intent();
+								intent.setClass(getActivity(),
+										OrderDetail_A.class);
+								intent.putExtra("detailData",
+										(Serializable) datas.orderConList
+												.get(position - 1));
+								startActivity(intent);
+							}
+						});
 					}
 				});
 	}
@@ -123,7 +143,7 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 						}
 					});
 		} else {
-			ToastUtil.showShortToast(mContext, "Ã»ÓĞ¸ü¶àÊı¾İ~");
+			ToastUtil.showShortToast(mContext, "æ²¡æœ‰æ›´å¤šæ•°æ®~");
 		}
 		onLoad();
 	}
@@ -131,7 +151,7 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 	private void getOrderData(int currentPage, String userId, String typeID,
 			String token, final VolleyDataCallback<OrderDataBean> callback) {
 		if (dialog == null) {
-			dialog = ProgressDialog.show(getActivity(), "", "ÕıÔÚ¼ÓÔØ...");
+			dialog = ProgressDialog.show(getActivity(), "", "æ­£åœ¨åŠ è½½...");
 			dialog.show();
 		}
 		JSONObject sendData;
@@ -141,6 +161,7 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 			sendData.put("userId", userId);
 			sendData.put("typeID", typeID);
 			sendData.put("token", token);
+			Log.e("sendData----->", sendData.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -172,20 +193,42 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 
 		@Override
 		public void convert(ViewHolder holder, OrderConListBean t) {
-			holder.setText(R.id.tv_order_id, t.orderNo);
+			int totalnum = 0;
+			Log.e("Order_Num", t.orderNo);
+			ImageView iv_image = holder.getView(R.id.iv_image);
+			ImageLoader.getInstance().displayImage(
+					Constant.ImageUri + t.productList.get(0).path, iv_image);
+			holder.setText(R.id.tv_order_time, t.orderTime);
+			if (t.statusName.indexOf(",") != -1) {
+				String statusName = t.statusName.substring(0,
+						t.statusName.indexOf(","));
+				holder.setText(R.id.tv_order_state, statusName);
+			} else {
+				holder.setText(R.id.tv_order_state, t.statusName);
+			}
+
+			holder.setText(R.id.tv_name, t.productList.get(0).proName + "ç­‰"
+					+ t.productList.size() + "ç§è¡£æœ");
+			holder.setText(R.id.tv_color, "é¢œè‰²ï¼š" + t.productList.size() + "ç§");
+			holder.setText(R.id.tv_size, "å°ºç ï¼š" + t.productList.size() + "ç§");
+			for (int i = 0; i < t.productList.size(); i++) {
+				totalnum += Integer.valueOf(t.productList.get(i).num);
+			}
+			holder.setText(R.id.tv_all_num, "å…±" + totalnum + "ä»¶å•†å“");
+			holder.setText(R.id.tv_all_price, "åˆè®¡ï¼šÂ¥" + t.proTotalPrice);
 		}
 	}
 
-	/** Í£Ö¹¼ÓÔØºÍË¢ĞÂ */
+	/** åœæ­¢åŠ è½½å’Œåˆ·æ–° */
 	private void onLoad() {
 		xlv_all.stopRefresh();
-		// Í£Ö¹¼ÓÔØ¸ü¶à
+		// åœæ­¢åŠ è½½æ›´å¤š
 		xlv_all.stopLoadMore();
-		// ÉèÖÃ×îºóÒ»´ÎË¢ĞÂÊ±¼ä
+		// è®¾ç½®æœ€åä¸€æ¬¡åˆ·æ–°æ—¶é—´
 		xlv_all.setRefreshTime(getCurrentTime(System.currentTimeMillis()));
 	}
 
-	/** ¼òµ¥µÄÊ±¼ä¸ñÊ½ */
+	/** ç®€å•çš„æ—¶é—´æ ¼å¼ */
 	public static SimpleDateFormat mDateFormat = new SimpleDateFormat(
 			"MM-dd HH:mm");
 

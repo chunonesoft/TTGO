@@ -108,7 +108,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 				for (int i = 0; i < datas.JOININFO_LIST.size(); i++) {
 					str += datas.JOININFO_LIST.get(i).CONTENT + '\n';
 				}
-				Log.e("string ---------------", str);
 				autoScrollTextView.setText(str);
 				autoScrollTextView.init(getActivity().getWindowManager());
 				autoScrollTextView.startScroll();
@@ -157,9 +156,7 @@ public class Home_F_new extends Fragment implements OnClickListener,
 						intent.putExtra("proID", datas.productList
 								.get((int) parent.getAdapter().getItemId(
 										position)).proID);
-						Log.e("proID--------->", datas.productList
-								.get((int) parent.getAdapter().getItemId(
-										position)).proID);
+
 						intent.setClass(mContext, ProductDetail_A.class);
 						startActivity(intent);
 					}
@@ -205,7 +202,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 			dialog.show();
 		}
 		String URL = Constant.IP + Constant.getProInfo;
-		Log.e("URL--------------------", URL);
 		sendData = new JSONObject();
 		try {
 			sendData.put("page", page);
@@ -217,7 +213,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 					@Override
 					public void onResponse(ProBean arg0) {
 						callback.onSuccess(arg0);
-						Log.e("data---------", arg0.currentpage);
 					}
 
 				}, new AbstractVolleyErrorListener(mContext) {
@@ -334,10 +329,11 @@ public class Home_F_new extends Fragment implements OnClickListener,
 						}
 					});
 		} else {
-			// 停止刷新和加载
-			onLoad();
+
 			ToastUtil.showShortToast(mContext, "没有更多数据了");
 		}
+		// 停止刷新和加载
+		onLoad();
 	}
 
 	/** 停止加载和刷新 */
@@ -394,7 +390,10 @@ public class Home_F_new extends Fragment implements OnClickListener,
 				}, new AbstractVolleyErrorListener(getActivity()) {
 					@Override
 					public void onError() {
-
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+							dialog = null;
+						}
 					}
 				}, RecProListBean.class);
 		MyApplication.getInstance().addToRequestQueue(req);
@@ -420,9 +419,14 @@ public class Home_F_new extends Fragment implements OnClickListener,
 		holder.tv_content.setText(data.name);
 		holder.tv_price.setText("¥" + data.proPrice);
 		holder.tv_sale.setText(data.saleNum + "人付款");
-		Log.e("proInfo--------->", data.toString());
-		ImageLoader.getInstance().displayImage(
-				Constant.ImageUri + data.picPath, holder.image);// 使用ImageLoader对图片进行加装！
+		holder.image.setTag(data.picPath);
+		String imageUri = data.picPath;
+		if (imageUri.equals(holder.image.getTag())) {
+			ImageLoader.getInstance().displayImage(
+					Constant.ImageUri + data.picPath, holder.image);
+		} else {
+			holder.image.setImageResource(R.drawable.icon_empty);
+		}
 
 	}
 }

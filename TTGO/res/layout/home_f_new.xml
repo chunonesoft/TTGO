@@ -18,7 +18,7 @@
          android:id="@+id/x_lv"
          android:layout_width="match_parent"
          android:background="#efeff4"
-         android:dividerHeight="5dp"
+         android:dividerHeight="10dp"
          android:layout_height="match_parent" 
          ></com.chunsoft.view.xListview.XListView>
 </LinearLayout>

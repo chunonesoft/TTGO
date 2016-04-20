@@ -3,39 +3,82 @@ package com.chunsoft.ttgo.myself;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
+import com.android.volley.Response;
+import com.chunosft.utils.ToastUtil;
+import com.chunsoft.net.AbstractVolleyErrorListener;
+import com.chunsoft.net.Constant;
+import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
+import com.chunsoft.ttgo.bean.FeedbackBean;
+import com.chunsoft.ttgo.bean.VolleyDataCallback;
+import com.chunsoft.ttgo.cart.Submit_Order_FA;
+import com.chunsoft.ttgo.home.MyApplication;
+import com.chunsoft.ttgo.util.PreferencesUtils;
 
 public class Add_Adress extends BaseActivity implements OnClickListener,
 		OnWheelChangedListener {
+	@Bind(R.id.tv_adress)
+	TextView tv_adress;
+
+	@Bind(R.id.tv_title)
+	TextView tv_title;
+
+	@Bind(R.id.btn_save)
+	Button btn_save;
+
+	@Bind(R.id.ll_choose_adress)
+	LinearLayout ll_choose_adress;
+
+	@Bind(R.id.et_name)
+	EditText et_name;
+
+	@Bind(R.id.et_phone)
+	EditText et_phone;
+
+	@Bind(R.id.et_detailadress)
+	EditText et_detailadress;
+
+	@Bind(R.id.et_postalcode)
+	EditText et_postalcode;
+
 	private WheelView mViewProvince;
 	private WheelView mViewCity;
 	private WheelView mViewDistrict;
-	private TextView tv_adress, tv_title;
-	private LinearLayout ll_choose_adress;
-	private Button btn_save;
+
+	String receiveName;
+	String receiveAddress;
+	String receiveMobile;
+	String province;
+	String userId;
+	String token;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.add_adress);
+		ButterKnife.bind(this);
 		FindView();
 		Click();
 		SetData();
 	}
 
 	private void FindView() {
-		btn_save = (Button) findViewById(R.id.btn_save);
-		tv_title = (TextView) findViewById(R.id.tv_title);
-		tv_title.setText("添加收货地址");
-		ll_choose_adress = (LinearLayout) findViewById(R.id.ll_choose_adress);
-		tv_adress = (TextView) findViewById(R.id.tv_adress);
+		tv_title.setText(getResources().getText(R.string.modify_adress));
 		mViewProvince = (WheelView) findViewById(R.id.id_province);
 		mViewCity = (WheelView) findViewById(R.id.id_city);
 		mViewDistrict = (WheelView) findViewById(R.id.id_district);
@@ -77,7 +120,6 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 		} else if (wheel == mViewDistrict) {
 			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
 			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
-
 			tv_adress.setText(mCurrentProviceName + mCurrentCityName
 					+ mCurrentDistrictName + "");
 		}
@@ -90,11 +132,34 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 			ll_choose_adress.setVisibility(View.VISIBLE);
 			break;
 		case R.id.btn_save:
+			initData();
+			ModifyInfo(new VolleyDataCallback<FeedbackBean>() {
+				@Override
+				public void onSuccess(FeedbackBean datas) {
+					ToastUtil.showShortToast(Add_Adress.this, datas.retmsg);
+				}
+			});
+			Intent intent = new Intent(Add_Adress.this, Submit_Order_FA.class);
+			Bundle backData = new Bundle();
+			backData.putString("receiveName", receiveName);
+			backData.putString("receiveMobile", receiveMobile);
+			backData.putString("receiveAddress", receiveAddress);
+			intent.putExtras(backData);
+			setResult(0, intent);
 			finish();
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void initData() {
+		userId = PreferencesUtils.getSharePreStr(Add_Adress.this, "userId");
+		token = PreferencesUtils.getSharePreStr(Add_Adress.this, "Token");
+		receiveName = et_name.getText().toString();
+		receiveMobile = et_phone.getText().toString();
+		receiveAddress = tv_adress.getText().toString()
+				+ et_detailadress.getText().toString();
 	}
 
 	/**
@@ -126,5 +191,40 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 		mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(this, cities));
 		mViewCity.setCurrentItem(0);
 		updateAreas();
+	}
+
+	private void ModifyInfo(final VolleyDataCallback<FeedbackBean> callback) {
+		JSONObject sendData;
+		sendData = new JSONObject();
+		try {
+			sendData.put("userId", userId);
+			sendData.put("token", token);
+			sendData.put("receiveMan", receiveName);
+			sendData.put("receiveAddress", receiveAddress);
+			sendData.put("realName", receiveName);
+			sendData.put("receiveMobile", receiveMobile);
+			String province = receiveAddress.substring(0,
+					receiveAddress.indexOf("省"));
+			sendData.put("province", province);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		String URL = Constant.IP + Constant.ModifyReceiveInfo;
+		GsonRequest<FeedbackBean> request = new GsonRequest<FeedbackBean>(URL,
+				sendData.toString(), new Response.Listener<FeedbackBean>() {
+
+					@Override
+					public void onResponse(FeedbackBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(Add_Adress.this) {
+
+					@Override
+					public void onError() {
+
+					}
+				}, FeedbackBean.class);
+		MyApplication.getInstance().addToRequestQueue(request);
 	}
 }

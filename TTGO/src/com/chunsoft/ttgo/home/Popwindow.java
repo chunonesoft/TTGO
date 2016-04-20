@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +30,7 @@ import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.AddCartBean;
+import com.chunsoft.ttgo.bean.AddCartBean1;
 import com.chunsoft.ttgo.bean.FeedbackBean;
 import com.chunsoft.ttgo.bean.ProDetailBean;
 import com.chunsoft.ttgo.bean.PropertyBean;
@@ -83,7 +83,8 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 	int totalNum = 0; // 商品总件数
 	private String proID;
 	private OrderAdapter adapter;
-	private AddCartBean cartData;
+	private AddCartBean1 cartData;
+	private PropertyBean proBean;
 	private AddCartBean uploadData;
 	private Propery bean;
 	private ProDetailBean mArrayList = new ProDetailBean();
@@ -111,23 +112,26 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 		popupWindow.setAnimationStyle(R.style.popWindow_anim_style);
 		popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		popupWindow.setOnDismissListener(this);// 当popWindow消失时的监听
-		cartData = new AddCartBean();
-		cartData.propery = new ArrayList<Propery>();
+		cartData = new AddCartBean1();
+		cartData.proPropery = new ArrayList<PropertyBean>();
 		cartData.proID = proID;
 		cartData.token = PreferencesUtils.getSharePreStr(context, "Token");
 		cartData.userId = PreferencesUtils.getSharePreStr(context, "userId");
 		for (int i = 0; i < mArrayList.proProperty.size(); i++) {
-			bean = new Propery();
-			bean.proNum = "0";
-			bean.styleId = mArrayList.proProperty.get(i).id;
-			cartData.propery.add(i, bean);
+			proBean = new PropertyBean();
+			proBean.proNum = "0";
+			proBean.color = mArrayList.proProperty.get(i).color;
+			proBean.size = mArrayList.proProperty.get(i).size;
+
+			proBean.id = mArrayList.proProperty.get(i).id;
+			cartData.proPropery.add(i, proBean);
 		}
 		mylv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Propery bean = cartData.propery.get((int) parent.getAdapter()
-						.getItemId(position));
+				PropertyBean bean = cartData.proPropery.get((int) parent
+						.getAdapter().getItemId(position));
 				ViewHolder holder = (ViewHolder) view.getTag();
 				int _id = (int) parent.getAdapter().getItemId(position);
 				boolean selected = !mSelectState.get(_id, false);
@@ -148,7 +152,7 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 		});
 		Click();
 
-		adapter = new OrderAdapter(context, cartData.propery);
+		adapter = new OrderAdapter(context, cartData.proPropery);
 		mylv.setAdapter(adapter);
 	}
 
@@ -157,9 +161,8 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 		switch (v.getId()) {
 
 		case R.id.pop_del:
-			listener.onClickOKPop();
+			listener.onClickOKPop("");
 			dissmiss();
-
 			break;
 		case R.id.pop_ok:
 			uploadData = new AddCartBean();
@@ -169,33 +172,37 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 			uploadData.userId = cartData.userId;
 			Gson gson = new Gson();
 			List<Integer> ids = getSelectedIds();
-			for (int i = 0; i < cartData.propery.size(); i++) {
+			for (int i = 0; i < cartData.proPropery.size(); i++) {
 				int dataId = i;
 				for (int j = 0; j < ids.size(); j++) {
 					int deleteId = ids.get(j);
 					if ((dataId == deleteId)
-							&& cartData.propery.get(i).proNum != "0") {
-						uploadData.propery.add(cartData.propery.get(i));
+							&& cartData.proPropery.get(i).proNum != "0") {
+						bean = new Propery();
+						bean.proNum = cartData.proPropery.get(i).proNum;
+						bean.styleId = cartData.proPropery.get(i).id;
+						uploadData.propery.add(bean);
 					}
 				}
 			}
 			if (uploadData.propery.size() != 0) {
-				String sendData = gson.toJson(uploadData);
-				Log.e("添加数据---》", sendData);
+				final String sendData = gson.toJson(uploadData);
+
 				AddCartData(sendData, new VolleyDataCallback<FeedbackBean>() {
 					@Override
 					public void onSuccess(FeedbackBean datas) {
-						ToastUtil
-								.showShortToast(context, "有数据吗" + datas.retmsg);
+						ToastUtil.showShortToast(context, datas.retmsg);
+						listener.onClickOKPop(sendData);
 					}
 				});
+			} else {
+				listener.onClickOKPop("");
 			}
-
-			listener.onClickOKPop();
 			dissmiss();
 			break;
 		default:
-			listener.onClickOKPop();
+			listener.onClickOKPop("");
+			dissmiss();
 			break;
 		}
 	}
@@ -217,7 +224,7 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 
 	public interface OnItemClickListener {
 		/** 设置点击确认按钮时监听接口 */
-		public void onClickOKPop();
+		public void onClickOKPop(String data);
 	}
 
 	/** 设置监听 */
@@ -245,9 +252,9 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 
 	class OrderAdapter extends BaseAdapter {
 		private Context mContext;
-		private List<Propery> data_adapter;
+		private List<PropertyBean> data_adapter;
 
-		public OrderAdapter(Context mContext, List<Propery> datas) {
+		public OrderAdapter(Context mContext, List<PropertyBean> datas) {
 			this.mContext = mContext;
 			this.data_adapter = datas;
 		}
@@ -289,8 +296,8 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 
 					boolean selected = mSelectState.get(_id, false);
 
-					cartData.propery.get(position).proNum = String
-							.valueOf(Integer.valueOf(cartData.propery
+					cartData.proPropery.get(position).proNum = String
+							.valueOf(Integer.valueOf(cartData.proPropery
 									.get(position).proNum) + 1);
 
 					notifyDataSetChanged();
@@ -307,14 +314,14 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 			holder.pop_reduce.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (cartData.propery.get(position).proNum == "0")
+					if (cartData.proPropery.get(position).proNum == "0")
 						return;
 
 					int _id = position;
 
 					boolean selected = mSelectState.get(_id, false);
-					cartData.propery.get(position).proNum = String
-							.valueOf(Integer.valueOf(cartData.propery
+					cartData.proPropery.get(position).proNum = String
+							.valueOf(Integer.valueOf(cartData.proPropery
 									.get(position).proNum) - 1);
 					notifyDataSetChanged();
 
@@ -350,8 +357,8 @@ public class Popwindow implements OnDismissListener, OnClickListener {
 		MyApplication.getInstance().addToRequestQueue(req);
 	}
 
-	private void bindListItem(ViewHolder holder, Propery data, int position) {
-		holder.tv_size.setText(data.styleId);
+	private void bindListItem(ViewHolder holder, PropertyBean data, int position) {
+		holder.tv_size.setText(data.color + data.size);
 		holder.pop_num.setText(data.proNum + "");
 		holder.tv_money.setText("¥" + price * Integer.valueOf(data.proNum)
 				+ "元");

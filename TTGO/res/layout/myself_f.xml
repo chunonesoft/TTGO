@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="130dp"
                 android:background="@color/title"
                 android:orientation="vertical"
                 android:paddingTop="15dp" >
@@ -43,7 +43,7 @@
                         android:layout_centerVertical="true"
                         android:src="@drawable/arrow_expend_right" /> -->
                 </RelativeLayout>
-
+<!--  
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,6 +133,7 @@
                             android:textColor="@color/tv_White" />
                     </LinearLayout>
                 </LinearLayout>
+                -->
                 
             </LinearLayout>
             <View
@@ -240,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="个人资料"
+                    android:text="铺货账单"
                     android:textColor="@color/tv_Black" />
 
                 <ImageView

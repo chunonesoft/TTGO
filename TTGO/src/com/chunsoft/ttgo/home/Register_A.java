@@ -180,7 +180,7 @@ public class Register_A extends Activity implements OnClickListener {
 		URL = Constant.IP + Constant.requestPIN;
 		sendData = new JSONObject();
 		try {
-			sendData.put("phonenum", num);
+			sendData.put("mobile", num);
 			sendData.put("pinflag", "1");
 		} catch (JSONException e) {
 			e.printStackTrace();

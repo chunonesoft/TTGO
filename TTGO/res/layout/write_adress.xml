@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical" >
+    <include layout="@layout/top_menu_login" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/top_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+        <TextView
+            android:text="退货编号" 
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="#6f6f6f"
+            />
+        <EditText
+            android:id="@+id/et_num"
+            android:background="@null"
+            android:editable="false"
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:layout_weight="1"
+            android:inputType="phone"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="#dfdfdf"
+            android:textColor="@color/text_normal"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+
+    
+    
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/top_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+        <TextView
+            android:text="快递公司" 
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="#6f6f6f"
+            />
+        <EditText
+            android:id="@+id/et_company"
+            android:background="@null"
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent"
+            android:hint="快递公司"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="#dfdfdf"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/top_line" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+        <TextView
+            android:text="快递编号" 
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="#6f6f6f"
+            />
+        <EditText
+            android:id="@+id/et_kdbh"
+            android:background="@null"
+            android:layout_width="match_parent" 
+            android:layout_height="match_parent"
+            android:hint="快递编号"
+            android:textSize="16dp"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="#dfdfdf"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/top_line" />
+     <Button
+        android:id="@+id/btn_submit" 
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_style"
+        />
+</LinearLayout>
+

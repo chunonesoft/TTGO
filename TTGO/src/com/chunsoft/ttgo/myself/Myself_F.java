@@ -29,8 +29,8 @@ import com.chunsoft.adapter.CommonAdapter;
 import com.chunsoft.adapter.ViewHolder;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.OrderBean;
+import com.chunsoft.ttgo.home.BillData_A;
 import com.chunsoft.ttgo.home.Login_A;
-import com.chunsoft.ttgo.home.Notice_A;
 import com.chunsoft.ttgo.home.Wjmm_A;
 import com.chunsoft.ttgo.util.IntentUti;
 import com.chunsoft.ttgo.util.MyUtils;
@@ -119,7 +119,7 @@ public class Myself_F extends Fragment implements OnClickListener,
 			startActivity(intent);
 			break;
 		case R.id.ll_adress:
-			intent = new Intent(mContext, AdressList.class);
+			intent = new Intent(mContext, Add_Adress.class);
 			startActivity(intent);
 			break;
 		case R.id.ll_count:
@@ -127,7 +127,7 @@ public class Myself_F extends Fragment implements OnClickListener,
 			startActivity(intent);
 			break;
 		case R.id.ll_person:
-			IntentUti.IntentTo(getActivity(), Notice_A.class);
+			IntentUti.IntentTo(getActivity(), BillData_A.class);
 			break;
 		case R.id.iv_person:
 			showChoosePhotoDialog();
@@ -262,11 +262,8 @@ public class Myself_F extends Fragment implements OnClickListener,
 		case 0:
 		case 1:
 		case 2:
-			intent = new Intent(getActivity(), MyOrder.class);
-			startActivity(intent);
-			break;
 		case 3:
-			intent = new Intent(getActivity(), Ph_A.class);
+			intent = new Intent(getActivity(), MyOrder.class);
 			startActivity(intent);
 			break;
 		case 4:

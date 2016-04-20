@@ -5,6 +5,8 @@
     android:orientation="vertical" >
     <com.chunsoft.view.xListview.XListView
         android:id="@+id/xlv_all"
+        android:dividerHeight="5dp"
+        android:divider="#eeeeee"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

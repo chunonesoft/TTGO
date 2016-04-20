@@ -38,6 +38,11 @@
         <activity android:name="com.chunsoft.ttgo.home.Register_A"></activity>
         <activity android:name="com.chunsoft.ttgo.home.Wjmm_A"></activity>
         <activity android:name="com.chunsoft.ttgo.home.Notice_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.cart.Submit_Order_FA"></activity>
+        <activity android:name="com.chunsoft.ttgo.home.BillData_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.myself.OrderDetail_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.home.Bill_Detail_A"></activity>
+        <activity android:name="com.chunsoft.ttgo.myself.Write_Adress"></activity>
     </application>
     
 </manifest>
