@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.chunosft.utils.ToastUtil;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.cart.Cart_F_new1;
 import com.chunsoft.ttgo.group.Group_F;
@@ -20,6 +22,7 @@ import com.chunsoft.ttgo.util.PreferencesUtils;
 public class Main_FA extends FragmentActivity implements OnClickListener,
 		IBtnCallListener {
 
+	private long exitTime = 0;
 	// 底面菜单按钮
 	private ImageView[] bt_menu = new ImageView[4];
 	// 地面菜单按钮id
@@ -36,7 +39,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 			R.drawable.bt_menu_3_select };
 
 	/* 主页界面 */
-	private Home_F_new home_F;
+	private Home_Simple home_F;
 	/* 社区界面 */
 	private Group_F group_F;
 	/* 购物车界面 */
@@ -70,7 +73,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 
 		// 设置默认界面
 		if (home_F == null) {
-			home_F = new Home_F_new();
+			home_F = new Home_Simple();
 			addFragment(home_F);
 			showFragment(home_F);
 		} else {
@@ -88,7 +91,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 		// 主页界面
 		case R.id.iv_menu_0:
 			if (home_F == null) {
-				home_F = new Home_F_new();
+				home_F = new Home_Simple();
 				addFragment(home_F);
 				showFragment(home_F);
 			} else {
@@ -228,7 +231,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 	@Override
 	public void transferMsg() {
 		if (home_F == null) {
-			home_F = new Home_F_new();
+			home_F = new Home_Simple();
 			addFragment(home_F);
 			showFragment(home_F);
 		} else {
@@ -238,5 +241,24 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 		bt_menu[0].setImageResource(select_on[0]);
 
 		System.out.println("由Fragment中传送来的消息");
+	}
+
+	public void exit() {
+		if ((System.currentTimeMillis() - exitTime) > 2000) {
+			ToastUtil.showShortToast(mContext, "再按一次退出程序");
+			exitTime = System.currentTimeMillis();
+		} else {
+			finish();
+			System.exit(0);
+		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exit();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

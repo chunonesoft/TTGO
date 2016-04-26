@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        >
+     <include
+        	android:layout_width="match_parent"
+        	android:layout_height="45dp"
+        	layout="@layout/top_menu" />
+	</LinearLayout>
+	<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:scrollbars="none">
+     <LinearLayout 
+         android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:orientation="vertical">
+	<com.chunsoft.view.ImageCycleView
+        android:id="@+id/ad_view"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+         />
+	
+	<com.chunsoft.view.MyGridView
+                android:id="@+id/my_gridview_kind"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="10dp"
+                android:numColumns="5"
+                android:listSelector="@null"
+                android:focusable="false"
+                >
+    </com.chunsoft.view.MyGridView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/bg_Gray_light" />
+	<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:orientation="horizontal" >
+
+		<ImageView
+		    android:layout_width="0dp"
+		    android:layout_height="match_parent"
+		    android:layout_weight="0.7"
+		    android:scaleType="fitXY"
+		    android:src="@drawable/kind6" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/bg_Gray" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                      <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/menu_1_2" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/bg_Gray" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/menu_1_3" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bg_Gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/menu_1_2" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/bg_Gray" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/menu_1_3" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+             <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/bg_Gray_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" 
+                    >
+                    <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="新品速递"
+                    android:drawableLeft="@drawable/icon_piece_head"
+                    android:textColor="@color/tv_Black"
+                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/tv_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="更多"
+                    android:gravity="center"
+                    android:drawableRight="@drawable/icon_arrow_intent_p"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp" />
+                </LinearLayout>
+					
+                
+
+                <com.chunsoft.view.MyGridView
+                    android:id="@+id/my_gridview_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:horizontalSpacing="5dp"
+                    android:verticalSpacing="5dp"
+                    android:numColumns="2"
+                    android:focusable="false"
+                    android:background="@color/bg_Gray_light"
+                    android:padding="1dp"
+                    >
+                </com.chunsoft.view.MyGridView>
+            </LinearLayout>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

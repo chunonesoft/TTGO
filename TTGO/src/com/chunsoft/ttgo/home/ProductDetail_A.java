@@ -1,5 +1,6 @@
 package com.chunsoft.ttgo.home;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -27,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -62,9 +62,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	@Bind(R.id.tv_storenum)
 	TextView tv_storenum;
 
-	@Bind(R.id.iv_back)
-	ImageView iv_back;
-
 	@Bind(R.id.put_in)
 	ImageView put_in;
 
@@ -72,7 +69,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	ImageView buy_now;
 
 	@Bind(R.id.iv_kf)
-	ImageView iv_kf;
+	TextView iv_kf;
 
 	@Bind(R.id.iv_baby_collection)
 	ImageView iv_baby_collection;
@@ -98,9 +95,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 
 	/** 是否添加收藏 */
 	private static boolean isCollection = false;
-	private int[] resId = { R.drawable.detail_show_1, R.drawable.detail_show_2,
-			R.drawable.detail_show_3, R.drawable.detail_show_4,
-			R.drawable.detail_show_5, R.drawable.detail_show_6 };
 	private String proID;
 
 	@Override
@@ -225,7 +219,6 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 
 	/** 注册监听 */
 	private void Click() {
-		iv_back.setOnClickListener(this);
 		iv_baby_collection.setOnClickListener(this);
 		put_in.setOnClickListener(this);
 		buy_now.setOnClickListener(this);
@@ -235,22 +228,18 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.iv_back:
-			finish();
-			break;
 		case R.id.iv_baby_collection:
-			// 收藏
-			if (isCollection) {
-				// 提示是否取消收藏
-				cancelCollection();
-			} else {
-				isCollection = true;
-				setSaveCollection();
-				// 如果已经收藏，则显示收藏后的效果
-				iv_baby_collection
-						.setImageResource(R.drawable.second_2_collection);
-				Toast.makeText(this, "收藏成功", Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			File f = new File("file:///android_asset/logo.png");
+			if (f != null && f.exists() && f.isFile()) {
+				intent.setType("image/jpg");
+				Uri u = Uri.fromFile(f);
+				intent.putExtra(Intent.EXTRA_STREAM, u);
 			}
+			intent.putExtra(Intent.EXTRA_SUBJECT, "快时尚工厂");
+			intent.putExtra(Intent.EXTRA_TEXT, "B2B采购平台");
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(Intent.createChooser(intent, "分享"));
 			break;
 		case R.id.put_in:
 			if (PreferencesUtils.getSharePreStr(mContext, "Token").equals("")) {
@@ -431,20 +420,27 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 	}
 
 	public static int stringNumbers(String str) {
-		int counter = 1;
-		if (str.indexOf(",") == -1) {
-			return 1;
-		} else if (str.indexOf(",") != -1) {
-			counter++;
-			stringNumbers(str.substring(str.indexOf(",") + 1));
-			return counter;
+		// int counter = 1;
+		// if (str.indexOf(",") == -1) {
+		// return 1;
+		// } else if (str.indexOf(",") != -1) {
+		// counter++;
+		// stringNumbers(str.substring(str.indexOf(",") + 1));
+		// return counter;
+		// }
+		// return 1;
+		int count = 0;
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) == ',') {
+				count++;
+			}
 		}
-		return 1;
+		return count + 1;
 	}
 
 	public String[] getPicPath(String str) {
 		String[] strs = new String[stringNumbers(str)];
-		Log.e("[stringNumbers(str)", stringNumbers(str) + "");
+		Log.e("[stringNumbers(str)]", stringNumbers(str) + "");
 		int start = 0;
 		int end = str.indexOf(",");
 		if (strs.length == 1) {
@@ -454,8 +450,7 @@ public class ProductDetail_A extends Activity implements OnItemClickListener,
 			for (int i = 0; i < strs.length; i++) {
 				if (i != strs.length - 1) {
 					strs[i] = str.substring(start, end);
-					start = end + 1;
-					str = str.substring(start);
+					str = str.substring(end + 1);
 					end = str.indexOf(",");
 				} else {
 					strs[i] = str;

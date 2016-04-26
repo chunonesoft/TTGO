@@ -162,9 +162,14 @@ public class ShopcartExpandableListViewAdapter extends
 				childPosition);
 
 		if (product != null) {
-			ImageLoader.getInstance().displayImage(
-					Constant.ImageUri + product.proPath,
-					cholder.iv_adapter_list_pic);// 使用ImageLoader对图片进行加装！
+			cholder.iv_adapter_list_pic.setTag(product.proPath);
+			cholder.iv_adapter_list_pic.setImageResource(R.drawable.icon_empty);
+			if (product.proPath.equals(cholder.iv_adapter_list_pic.getTag())) {
+				ImageLoader.getInstance().displayImage(
+						Constant.ImageUri + product.proPath,
+						cholder.iv_adapter_list_pic);// 使用ImageLoader对图片进行加装！
+			}
+
 			cholder.tv_style.setText("颜色:" + product.color + ";尺码:"
 					+ product.size + ";");
 			cholder.tv_product_desc.setText(product.proName);

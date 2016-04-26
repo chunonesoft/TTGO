@@ -12,10 +12,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -42,6 +42,7 @@ public class Search_A extends Activity implements OnClickListener,
 	private ImageView iv_search;
 	private XListView lv;
 	private EditText et_searsh;
+	private ImageView ivDeleteText;
 	/**
 	 * variable statement
 	 */
@@ -66,6 +67,7 @@ public class Search_A extends Activity implements OnClickListener,
 
 	/* 对象实例化 */
 	private void findView() {
+		ivDeleteText = (ImageView) findViewById(R.id.ivDeleteText);
 		et_searsh = (EditText) findViewById(R.id.et_Search);
 		lv = (XListView) findViewById(R.id.lv);
 		iv_search = (ImageView) findViewById(R.id.iv_search);
@@ -84,6 +86,31 @@ public class Search_A extends Activity implements OnClickListener,
 	/* 事件监听 */
 	private void onClick() {
 		iv_search.setOnClickListener(this);
+		ivDeleteText.setOnClickListener(this);
+		et_searsh.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (s.length() == 0) {
+					ivDeleteText.setVisibility(View.GONE);
+				} else {
+					ivDeleteText.setVisibility(View.VISIBLE);
+				}
+			}
+		});
+
 	}
 
 	@Override
@@ -95,45 +122,52 @@ public class Search_A extends Activity implements OnClickListener,
 				ToastUtil.showShortToast(mContext, "搜索词不能为空");
 			} else {
 				page = 1;
-				getSearchData(searchWord, String.valueOf(page),
-						new VolleyDataCallback<ProBean>() {
-
-							@Override
-							public void onSuccess(final ProBean returnData) {
-								if (returnData.productList.size() == 0) {
-									ToastUtil
-											.showShortToast(mContext, "没有产品信息");
-								} else {
-									totalPage = Integer
-											.valueOf(returnData.totalpage);
-									datas = returnData.productList;
-									page++;
-									adapter = new SearchAdapter(mContext,
-											datas, R.layout.home_gv_item);
-									lv.setAdapter(adapter);
-									lv.setOnItemClickListener(new OnItemClickListener() {
-										@Override
-										public void onItemClick(
-												AdapterView<?> parent,
-												View view, int position, long id) {
-											Intent intent = new Intent();
-											intent.putExtra(
-													"proID",
-													returnData.productList
-															.get(position).proID);
-											intent.setClass(mContext,
-													ProductDetail_A.class);
-											startActivity(intent);
-										}
-									});
-								}
-
-							}
-						});
+				Intent intent = new Intent(Search_A.this, Show_All_Pro_FA.class);
+				intent.putExtra("name", searchWord);
+				intent.putExtra("type", 10);
+				startActivity(intent);
+				finish();
+				// getSearchData(searchWord, String.valueOf(page),
+				// new VolleyDataCallback<ProBean>() {
+				//
+				// @Override
+				// public void onSuccess(final ProBean returnData) {
+				// if (returnData.productList.size() == 0) {
+				// ToastUtil
+				// .showShortToast(mContext, "没有产品信息");
+				// } else {
+				// totalPage = Integer
+				// .valueOf(returnData.totalpage);
+				// datas = returnData.productList;
+				// page++;
+				// adapter = new SearchAdapter(mContext,
+				// datas, R.layout.home_gv_item);
+				// lv.setAdapter(adapter);
+				// lv.setOnItemClickListener(new OnItemClickListener() {
+				// @Override
+				// public void onItemClick(
+				// AdapterView<?> parent,
+				// View view, int position, long id) {
+				// Intent intent = new Intent();
+				// intent.putExtra(
+				// "proID",
+				// returnData.productList
+				// .get(position).proID);
+				// intent.setClass(mContext,
+				// ProductDetail_A.class);
+				// startActivity(intent);
+				// }
+				// });
+				// }
+				//
+				// }
+				// });
 
 			}
 			break;
-
+		case R.id.ivDeleteText:
+			et_searsh.setText("");
+			break;
 		default:
 			break;
 		}

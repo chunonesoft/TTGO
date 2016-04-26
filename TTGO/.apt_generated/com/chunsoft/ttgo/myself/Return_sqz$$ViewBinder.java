@@ -8,8 +8,8 @@ import butterknife.ButterKnife.ViewBinder;
 public class Return_sqz$$ViewBinder<T extends com.chunsoft.ttgo.myself.Return_sqz> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131099811, "field 'xlv_all'");
-    target.xlv_all = finder.castView(view, 2131099811, "field 'xlv_all'");
+    view = finder.findRequiredView(source, 2131099816, "field 'xlv_all'");
+    target.xlv_all = finder.castView(view, 2131099816, "field 'xlv_all'");
   }
 
   @Override public void unbind(T target) {

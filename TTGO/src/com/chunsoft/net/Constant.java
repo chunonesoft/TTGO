@@ -11,11 +11,11 @@ public class Constant {
 	/**
 	 * Image URL
 	 */
-	public static String ImageUri = "http://120.27.101.29:8080/TTGO/";
+	public static String ImageUri = "http://223.4.168.245:8080/TTGO/";
 	/**
 	 * IP address
 	 */
-	public static String IP = "http://120.27.101.29:8080/TTGO/admin/";
+	public static String IP = "http://223.4.168.245:8080/TTGO/admin/";
 	/**
 	 * Verify user
 	 */
@@ -120,5 +120,9 @@ public class Constant {
 	 * getPuDetail
 	 */
 	public static String getPuDetail = "user_getPuDetail.action";
+	/**
+	 * get New Pro
+	 */
+	public static String getNewPro = "product_newPro.action";
 
 }

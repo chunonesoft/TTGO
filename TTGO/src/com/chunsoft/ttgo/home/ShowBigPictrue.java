@@ -44,7 +44,6 @@ public class ShowBigPictrue extends FragmentActivity {
 		viewPager.setAdapter(adapter);
 		// 跳转到第几个界面
 		viewPager.setCurrentItem(position);
-
 	}
 
 	private class ViewPagerAdapter extends FragmentStatePagerAdapter {

@@ -16,13 +16,13 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -77,7 +77,6 @@ public class Home_F_new extends Fragment implements OnClickListener,
 				R.layout.home_f_new, null);
 		mContext = getActivity();
 		findView(view);
-
 		onClick();
 		initView();
 		return view;
@@ -420,13 +419,57 @@ public class Home_F_new extends Fragment implements OnClickListener,
 		holder.tv_price.setText("¥" + data.proPrice);
 		holder.tv_sale.setText(data.saleNum + "人付款");
 		holder.image.setTag(data.picPath);
-		String imageUri = data.picPath;
-		if (imageUri.equals(holder.image.getTag())) {
+		holder.image.setImageResource(R.drawable.icon_empty);
+		if (data.picPath.equals(holder.image.getTag())) {
 			ImageLoader.getInstance().displayImage(
-					Constant.ImageUri + data.picPath, holder.image);
+					Constant.ImageUri + getPicPath(data.picPath)[0],
+					holder.image);// 使用ImageLoader对图片进行加装！
 		} else {
 			holder.image.setImageResource(R.drawable.icon_empty);
 		}
 
+	}
+
+	public static int stringNumbers(String str) {
+		// char c[] = str.toCharArray();
+		int counter = 1;
+		// for (int i = 0; i < c.length; i++) {
+		// if (c[i] == ',') {
+		// counter++;
+		// }
+		// }
+		// return counter;
+		if (str.indexOf(",") == -1) {
+			return 1;
+		} else if (str.indexOf(",") != -1) {
+			counter++;
+			stringNumbers(str.substring(str.indexOf(",") + 1));
+			return counter;
+		}
+		return 1;
+
+	}
+
+	public String[] getPicPath(String str) {
+		String[] strs = new String[stringNumbers(str)];
+		Log.e("[stringNumbers(str)]首页", stringNumbers(str) + "");
+		int start = 0;
+		int end = str.indexOf(",");
+		if (strs.length == 1) {
+			strs[0] = str;
+			return strs;
+		} else {
+			for (int i = 0; i < strs.length; i++) {
+				if (i != strs.length - 1) {
+					strs[i] = str.substring(start, end);
+					start = end + 1;
+					str = str.substring(start);
+					end = str.indexOf(",");
+				} else {
+					strs[i] = str;
+				}
+			}
+			return strs;
+		}
 	}
 }

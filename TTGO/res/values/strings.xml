@@ -45,6 +45,8 @@
     <string name="notify">通知</string>
     <string name="firm_order">确认订单</string>
     <string name="return_pro">退款/售后</string>
+    <string name="pro_detail">产品详情</string>
+    
     
     <!-- 按钮文字 -->
     <string name="reminder">我要催单</string>
@@ -57,6 +59,11 @@
     <string name="modify_adress">编辑地址</string>
     <string name="add_kddh">填写快递单号</string>
     
-    
+    <!-- 首页分类名称 -->
+    <string name="kind1">棉衣</string>
+    <string name="kind2">羽绒</string>
+    <string name="kind3">内衣</string>
+    <string name="kind4">毛衣</string>
+    <string name="kind5">打底</string>
     
 </resources>

@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -33,7 +34,9 @@ import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
+import com.chunsoft.ttgo.home.Bill_Detail_A;
 import com.chunsoft.ttgo.home.MyApplication;
+import com.chunsoft.ttgo.util.IntentUti;
 import com.chunsoft.ttgo.util.PreferencesUtils;
 import com.chunsoft.view.xListview.XListView;
 import com.chunsoft.view.xListview.XListView.IXListViewListener;
@@ -196,8 +199,15 @@ public class MyOrder_dfk extends Fragment implements IXListViewListener {
 			int totalnum = 0;
 			Log.e("Order_Num + state--->", t.orderNo + t.statusName);
 			ImageView iv_image = holder.getView(R.id.iv_image);
-			ImageLoader.getInstance().displayImage(
-					Constant.ImageUri + t.productList.get(0).path, iv_image);
+			holder.getView(R.id.iv_image).setTag(t.productList.get(0).path);
+			iv_image.setImageResource(R.drawable.icon_empty);
+			if (t.productList.get(0).path.equals(holder.getView(R.id.iv_image)
+					.getTag())) {
+				ImageLoader.getInstance()
+						.displayImage(
+								Constant.ImageUri + t.productList.get(0).path,
+								iv_image);
+			}
 			holder.setText(R.id.tv_order_time, t.orderTime);
 			if (t.statusName.indexOf(",") != -1) {
 				String statusName = t.statusName.substring(0,
@@ -216,6 +226,12 @@ public class MyOrder_dfk extends Fragment implements IXListViewListener {
 			Button btn_x = holder.getView(R.id.btn_X);
 			btn_x.setVisibility(View.VISIBLE);
 			btn_x.setText(getResources().getText(R.string.bill_settlement));
+			btn_x.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					IntentUti.IntentTo(mContext, Bill_Detail_A.class);
+				}
+			});
 			holder.setText(R.id.tv_all_num, "共" + totalnum + "件商品");
 			holder.setText(R.id.tv_all_price, "合计：¥" + t.proTotalPrice);
 		}

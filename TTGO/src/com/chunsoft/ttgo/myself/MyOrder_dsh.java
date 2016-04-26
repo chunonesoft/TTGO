@@ -200,8 +200,15 @@ public class MyOrder_dsh extends Fragment implements IXListViewListener {
 			int totalnum = 0;
 			Log.e("Order_Num", t.orderNo);
 			ImageView iv_image = holder.getView(R.id.iv_image);
-			ImageLoader.getInstance().displayImage(
-					Constant.ImageUri + t.productList.get(0).path, iv_image);
+			holder.getView(R.id.iv_image).setTag(t.productList.get(0).path);
+			iv_image.setImageResource(R.drawable.icon_empty);
+			if (t.productList.get(0).path.equals(holder.getView(R.id.iv_image)
+					.getTag())) {
+				ImageLoader.getInstance()
+						.displayImage(
+								Constant.ImageUri + t.productList.get(0).path,
+								iv_image);
+			}
 			holder.setText(R.id.tv_order_time, t.orderTime);
 			holder.setText(R.id.tv_order_state, t.statusName);
 			holder.setText(R.id.tv_name, t.productList.get(0).proName + "等"
@@ -225,7 +232,52 @@ public class MyOrder_dsh extends Fragment implements IXListViewListener {
 
 									ToastUtil.showShortToast(getActivity(),
 											datas.retmsg);
+									currentPage = 1;
+									getOrderData(
+											currentPage,
+											userId,
+											typeID,
+											Token,
+											new VolleyDataCallback<OrderDataBean>() {
+												@Override
+												public void onSuccess(
+														final OrderDataBean datas) {
+													currentPage++;
+													totalPage = datas.totalPage;
+													Log.e("datas.totalCount---->",
+															datas.totalCount);
+													adapter = new OrderDataAdapter(
+															mContext,
+															datas.orderConList,
+															R.layout.order_item1);
+													xlv_all.setAdapter(adapter);
+													if (dialog != null
+															&& dialog
+																	.isShowing()) {
+														dialog.dismiss();
+														dialog = null;
+													}
+													xlv_all.setOnItemClickListener(new OnItemClickListener() {
 
+														@Override
+														public void onItemClick(
+																AdapterView<?> parent,
+																View view,
+																int position,
+																long id) {
+															Intent intent = new Intent();
+															intent.setClass(
+																	getActivity(),
+																	OrderDetail_A.class);
+															intent.putExtra(
+																	"detailData",
+																	(Serializable) datas.orderConList
+																			.get(position - 1));
+															startActivity(intent);
+														}
+													});
+												}
+											});
 								}
 							});
 				}
