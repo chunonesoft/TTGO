@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chunsoft.view.FlexiScrollView 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
     <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="150dp"
                 android:background="@color/title"
                 android:orientation="vertical"
                 android:paddingTop="15dp" >
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -23,7 +25,7 @@
                         android:background="@drawable/myself_user" />
 
                     <TextView
-                        android:id="@+id/textView1"
+                        android:id="@+id/tv_my_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -43,11 +45,11 @@
                         android:layout_centerVertical="true"
                         android:src="@drawable/arrow_expend_right" /> -->
                 </RelativeLayout>
-<!--  
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="40dp"
                     android:background="#20000000"
                     android:orientation="horizontal"
                     android:paddingBottom="5dp"
@@ -60,10 +62,11 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/tv_my_allnum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="180"
+                            android:text="180件"
                             android:textColor="@color/tv_White" />
 
                         <TextView
@@ -71,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:text="收藏的宝贝"
+                            android:text="总铺货数量"
                             android:textColor="@color/tv_White" />
                     </LinearLayout>
 
@@ -89,10 +92,11 @@
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/tv_my_allmoney"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="28"
+                            android:text="¥28"
                             android:textColor="@color/tv_White" />
 
                         <TextView
@@ -100,7 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:text="收藏的店铺"
+                            android:text="总铺货金额"
                             android:textColor="@color/tv_White" />
                     </LinearLayout>
 
@@ -111,17 +115,19 @@
                         android:layout_marginTop="7dp"
                         android:background="@color/bg_White" />
 
-                    <LinearLayout
+                    
+<LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical" >
 
                         <TextView
+                            android:id="@+id/tv_my_haveNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="58"
+                            android:text="180件"
                             android:textColor="@color/tv_White" />
 
                         <TextView
@@ -129,11 +135,39 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="5dp"
-                            android:text="我的足迹"
+                            android:text="剩余数量"
                             android:textColor="@color/tv_White" />
                     </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@color/bg_White" />
+					<LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/tv_my_havemoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="¥28"
+                            android:textColor="@color/tv_White" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:text="剩余金额"
+                            android:textColor="@color/tv_White" />
+                    </LinearLayout>
+                    
                 </LinearLayout>
-                -->
                 
             </LinearLayout>
             <View
@@ -350,3 +384,4 @@
                 android:background="@drawable/button_style"
                 />
 </LinearLayout>
+</com.chunsoft.view.FlexiScrollView>

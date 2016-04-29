@@ -34,7 +34,7 @@ import com.chunsoft.net.Constant;
 import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.VolleyDataCallback;
-import com.chunsoft.ttgo.home.Bill_Detail_A;
+import com.chunsoft.ttgo.home.BillData_A;
 import com.chunsoft.ttgo.home.MyApplication;
 import com.chunsoft.ttgo.util.IntentUti;
 import com.chunsoft.ttgo.util.PreferencesUtils;
@@ -197,7 +197,6 @@ public class MyOrder_dfk extends Fragment implements IXListViewListener {
 		@Override
 		public void convert(ViewHolder holder, OrderConListBean t) {
 			int totalnum = 0;
-			Log.e("Order_Num + state--->", t.orderNo + t.statusName);
 			ImageView iv_image = holder.getView(R.id.iv_image);
 			holder.getView(R.id.iv_image).setTag(t.productList.get(0).path);
 			iv_image.setImageResource(R.drawable.icon_empty);
@@ -229,7 +228,7 @@ public class MyOrder_dfk extends Fragment implements IXListViewListener {
 			btn_x.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					IntentUti.IntentTo(mContext, Bill_Detail_A.class);
+					IntentUti.IntentTo(mContext, BillData_A.class);
 				}
 			});
 			holder.setText(R.id.tv_all_num, "共" + totalnum + "件商品");

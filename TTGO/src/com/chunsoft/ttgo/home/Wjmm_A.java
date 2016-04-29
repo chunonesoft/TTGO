@@ -134,6 +134,7 @@ public class Wjmm_A extends Activity implements OnClickListener {
 								if (datas.retcode.toString().equals("1")) {
 									intent = new Intent(mContext, Login_A.class);
 									startActivity(intent);
+									finish();
 								} else
 									ToastUtil.showShortToast(mContext,
 											datas.retmsg.toString());

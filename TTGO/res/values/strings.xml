@@ -65,5 +65,24 @@
     <string name="kind3">内衣</string>
     <string name="kind4">毛衣</string>
     <string name="kind5">打底</string>
+    <string name="kind6">爆款</string>
+    <string name="kind7">上装</string>
+    <string name="kind8">连衣裙</string>
+    <string name="kind9">下装</string>
+    <string name="kind10">打底套装</string>
+    <string name="all_pro">所有宝贝</string>
+    
+    
+    
+    
+    
+    <!--软件更新模块-->
+    <string name="update_title">软件更新</string>
+    <string name="update_info">检测到新版本，立即更新吗？</string>
+    <string name="update_update">更新</string>
+    <string name="update_later">稍后更新</string>
+    <string name="update_updating">正在更新</string>
+    <string name="update_cancel">取消</string>
+    <string name="update_no">已经是最新版本</string>
     
 </resources>

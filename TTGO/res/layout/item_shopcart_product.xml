@@ -29,16 +29,25 @@
             android:minWidth="32dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="visible" />
-
+		<RelativeLayout
+		    android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="13dp" 
+		    >
+		    <ProgressBar
+                android:id="@+id/mian_listview_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
         <ImageView
             android:id="@+id/iv_adapter_list_pic"
             android:layout_width="85dp"
             android:layout_height="85dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="13dp"
             android:scaleType="centerCrop"
             />
-
+        </RelativeLayout>
+		
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

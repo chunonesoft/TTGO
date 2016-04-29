@@ -162,50 +162,20 @@ public class Show_All_Pro_FA extends FragmentActivity implements
 		type = getIntent().getIntExtra("type", 0);
 		name = getIntent().getStringExtra("name");
 
-		if (type != 10 && type != 11) {
+		if (type != 0 && type != 1) {
+			smallTypeId = type + "";
 			btn_search.setText("分类：" + name);
 			proname = "";
-		} else if (type == 10) {
+		} else if (type == 1) {
 			smallTypeId = "";
 			proname = name;
 			btn_search.setText(name);
-		} else if (type == 11) {
+		} else if (type == 0) {
 			smallTypeId = "";
 			proname = "";
 			btn_search.setText(name);
 		}
 
-		switch (type) {
-		case 0:
-			smallTypeId = "2";
-			break;
-		case 1:
-			smallTypeId = "3";
-			break;
-		case 2:
-			smallTypeId = "4";
-			break;
-		case 3:
-			smallTypeId = "5";
-			break;
-		case 4:
-			smallTypeId = "6";
-			break;
-		case 5:
-			smallTypeId = "7";
-			break;
-		case 6:
-			smallTypeId = "8";
-			break;
-		case 7:
-			smallTypeId = "9";
-			break;
-		case 8:
-			smallTypeId = "10";
-			break;
-		default:
-			break;
-		}
 		mPullRefreshList.setVisibility(View.GONE);
 
 		mPullRefresh.setMode(Mode.BOTH);
@@ -350,7 +320,7 @@ public class Show_All_Pro_FA extends FragmentActivity implements
 			holder.setText(R.id.tv_sale, t.saleNum + "人付款");
 			ImageView image = holder.getView(R.id.iv);
 			holder.getView(R.id.iv).setTag(t.picPath);
-			image.setImageResource(R.drawable.icon_empty);
+			image.setImageBitmap(null);
 			if (t.picPath.equals(holder.getView(R.id.iv).getTag())) {
 				ImageLoader
 						.getInstance()

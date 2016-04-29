@@ -163,7 +163,7 @@ public class ShopcartExpandableListViewAdapter extends
 
 		if (product != null) {
 			cholder.iv_adapter_list_pic.setTag(product.proPath);
-			cholder.iv_adapter_list_pic.setImageResource(R.drawable.icon_empty);
+			// cholder.iv_adapter_list_pic.setImageResource(R.drawable.icon_empty);
 			if (product.proPath.equals(cholder.iv_adapter_list_pic.getTag())) {
 				ImageLoader.getInstance().displayImage(
 						Constant.ImageUri + product.proPath,

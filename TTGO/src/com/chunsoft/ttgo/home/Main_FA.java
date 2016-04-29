@@ -18,6 +18,7 @@ import com.chunsoft.ttgo.group.Group_F;
 import com.chunsoft.ttgo.myself.Myself_F;
 import com.chunsoft.ttgo.util.IBtnCallListener;
 import com.chunsoft.ttgo.util.PreferencesUtils;
+import com.chunsoft.ttgo.util.UpdateManager;
 
 public class Main_FA extends FragmentActivity implements OnClickListener,
 		IBtnCallListener {
@@ -54,6 +55,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.main_fa);
+
 		initView();
 	}
 
@@ -66,6 +68,7 @@ public class Main_FA extends FragmentActivity implements OnClickListener,
 	// 初始化组件
 	private void initView() {
 		mContext = Main_FA.this;
+		UpdateManager manager = new UpdateManager(mContext);
 		for (int i = 0; i < 4; i++) {
 			bt_menu[i] = (ImageView) findViewById(bt_menu_id[i]);
 			bt_menu[i].setOnClickListener(this);

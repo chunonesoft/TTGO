@@ -2,14 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
     <LinearLayout 
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:orientation="vertical">
-    <LinearLayout
-        
+    <LinearLayout     
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:orientation="horizontal"
@@ -27,18 +26,18 @@
             android:textColor="@color/title_text"
             android:textSize="18sp" />    
     </LinearLayout>
-    
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/top_line" />
     </LinearLayout>
-    <ScrollView
-        android:layout_below="@id/top"
+    
+    <com.chunsoft.view.FlexiScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+         android:layout_marginBottom="50dp"
+        android:layout_marginTop="46dp"
         >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -215,7 +214,7 @@
             </com.chunsoft.view.MyListView>
             -->
         </LinearLayout>
-    </ScrollView>
+</com.chunsoft.view.FlexiScrollView>
 
     
     <RelativeLayout
@@ -268,6 +267,5 @@
         android:orientation="horizontal"
         android:visibility="gone"
         >
-        
     </LinearLayout>
 </RelativeLayout>

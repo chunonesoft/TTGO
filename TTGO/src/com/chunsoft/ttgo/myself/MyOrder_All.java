@@ -197,7 +197,7 @@ public class MyOrder_All extends Fragment implements IXListViewListener {
 			Log.e("Order_Num", t.orderNo);
 			ImageView iv_image = holder.getView(R.id.iv_image);
 			holder.getView(R.id.iv_image).setTag(t.productList.get(0).path);
-			iv_image.setImageResource(R.drawable.icon_empty);
+			iv_image.setImageBitmap(null);
 			if (t.productList.get(0).path.equals(holder.getView(R.id.iv_image)
 					.getTag())) {
 				ImageLoader.getInstance()

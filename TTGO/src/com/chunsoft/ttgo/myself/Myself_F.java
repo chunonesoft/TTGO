@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,13 +28,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
+import com.android.volley.Response;
 import com.chunsoft.adapter.CommonAdapter;
 import com.chunsoft.adapter.ViewHolder;
+import com.chunsoft.net.AbstractVolleyErrorListener;
+import com.chunsoft.net.Constant;
+import com.chunsoft.net.GsonRequest;
 import com.chunsoft.ttgo.R;
 import com.chunsoft.ttgo.bean.OrderBean;
+import com.chunsoft.ttgo.bean.UserBean;
+import com.chunsoft.ttgo.bean.VolleyDataCallback;
 import com.chunsoft.ttgo.home.BillData_A;
 import com.chunsoft.ttgo.home.Login_A;
+import com.chunsoft.ttgo.home.MyApplication;
 import com.chunsoft.ttgo.home.Wjmm_A;
 import com.chunsoft.ttgo.util.IntentUti;
 import com.chunsoft.ttgo.util.MyUtils;
@@ -49,12 +63,28 @@ public class Myself_F extends Fragment implements OnClickListener,
 	private Context mContext;
 	private RoundImageView iv_person;
 
+	@Bind(R.id.tv_my_allnum)
+	TextView tv_allnum;
+
+	@Bind(R.id.tv_my_allmoney)
+	TextView tv_allmoney;
+
+	@Bind(R.id.tv_my_haveNum)
+	TextView tv_haveNum;
+
+	@Bind(R.id.tv_my_havemoney)
+	TextView tv_havemoney;
+
+	@Bind(R.id.tv_my_name)
+	TextView tv_my_name;
+
+	private ProgressDialog dialog = null;
 	OrderBean bean;
 	List<OrderBean> datas = new ArrayList<>();
-	// ×ÊÔ´ÎÄ¼ş
-	private static final int FROMGARREY = 0; // ´ÓÍ¼¿âÖĞÑ¡ÔñÍ¼Æ¬
-	private static final int TAKE_PHOTO = 1; // ÓÃÏà»úÅÄÉãÕÕÆ¬
-	public static final int CROP_PHOTO = 2;// ¼ôÇĞÕÕÆ¬
+	// èµ„æºæ–‡ä»¶
+	private static final int FROMGARREY = 0; // ä»å›¾åº“ä¸­é€‰æ‹©å›¾ç‰‡
+	private static final int TAKE_PHOTO = 1; // ç”¨ç›¸æœºæ‹æ‘„ç…§ç‰‡
+	public static final int CROP_PHOTO = 2;// å‰ªåˆ‡ç…§ç‰‡
 	private Uri imageUri;
 	private int mainW = 45, mainH = 45;
 	private int[] pic_path = { R.drawable.user_3, R.drawable.user_4,
@@ -65,11 +95,35 @@ public class Myself_F extends Fragment implements OnClickListener,
 			Bundle savedInstanceState) {
 		View view = LayoutInflater.from(getActivity()).inflate(
 				R.layout.myself_f, null);
+		ButterKnife.bind(this, view);
 		FindView(view);
+
 		initview();
 		Click();
-
+		initData();
 		return view;
+	}
+
+	private void initData() {
+		getOrderData(new VolleyDataCallback<UserBean>() {
+			@Override
+			public void onSuccess(UserBean datas) {
+				tv_allnum.setText(datas.totalDisNum + "ä»¶");
+				tv_allmoney.setText("Â¥" + datas.totalDisPay);
+				tv_haveNum.setText(datas.disNum + "ä»¶");
+				tv_havemoney.setText("Â¥" + datas.disPay);
+				if (!datas.realName.equals("")) {
+					tv_my_name.setText(datas.realName);
+				} else {
+					tv_my_name.setText(datas.userName);
+				}
+
+				if (dialog != null && dialog.isShowing()) {
+					dialog.dismiss();
+					dialog = null;
+				}
+			}
+		});
 	}
 
 	private void initview() {
@@ -156,7 +210,7 @@ public class Myself_F extends Fragment implements OnClickListener,
 			switch (requestCode) {
 			case FROMGARREY:
 				if (data != null) {
-					imageUri = data.getData();// Í¼Æ¬µÄuri
+					imageUri = data.getData();// å›¾ç‰‡çš„uri
 					Intent intent = new Intent("com.android.camera.action.CROP");
 					intent.setDataAndType(imageUri, "image/*");
 					intent.putExtra("scale", true);
@@ -199,7 +253,7 @@ public class Myself_F extends Fragment implements OnClickListener,
 						opts.inSampleSize = scale;
 						Bitmap bitmap = BitmapFactory.decodeFile(url, opts);
 						iv_person.setImageBitmap(bitmap);
-						// ÔÚÕâÀï»ñÈ¡µ½Í¼Æ¬µÄfile
+						// åœ¨è¿™é‡Œè·å–åˆ°å›¾ç‰‡çš„file
 
 						// imageUri = null;
 					} catch (Exception e) {
@@ -214,12 +268,12 @@ public class Myself_F extends Fragment implements OnClickListener,
 	}
 
 	private void showChoosePhotoDialog() {
-		CharSequence[] items = { "Ïà²á", "Ïà»ú" };
+		CharSequence[] items = { "ç›¸å†Œ", "ç›¸æœº" };
 
 		CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
-		builder.setTitle("Ñ¡ÔñÍ¼Æ¬À´Ô´");
+		builder.setTitle("é€‰æ‹©å›¾ç‰‡æ¥æº");
 		builder.setMessage("");
-		builder.setPositiveButton("Ïà»ú", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("ç›¸æœº", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -241,7 +295,7 @@ public class Myself_F extends Fragment implements OnClickListener,
 				dialog.dismiss();
 			}
 		});
-		builder.setNegativeButton("Ïà²á", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton("ç›¸å†Œ", new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -273,5 +327,40 @@ public class Myself_F extends Fragment implements OnClickListener,
 		default:
 			break;
 		}
+	}
+
+	private void getOrderData(final VolleyDataCallback<UserBean> callback) {
+		String userId = PreferencesUtils
+				.getSharePreStr(getActivity(), "userId");
+		String token = PreferencesUtils.getSharePreStr(getActivity(), "Token");
+		if (dialog == null) {
+			dialog = ProgressDialog.show(getActivity(), "", "æ­£åœ¨åŠ è½½...");
+			dialog.show();
+		}
+		JSONObject sendData;
+		sendData = new JSONObject();
+		try {
+			sendData.put("userId", userId);
+			sendData.put("token", token);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		String URL = Constant.IP + Constant.getUserMessage;
+		GsonRequest<UserBean> req = new GsonRequest<UserBean>(URL,
+				sendData.toString(), new Response.Listener<UserBean>() {
+					@Override
+					public void onResponse(UserBean arg0) {
+						callback.onSuccess(arg0);
+					}
+				}, new AbstractVolleyErrorListener(getActivity()) {
+					@Override
+					public void onError() {
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+							dialog = null;
+						}
+					}
+				}, UserBean.class);
+		MyApplication.getInstance().addToRequestQueue(req);
 	}
 }

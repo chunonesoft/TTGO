@@ -58,6 +58,21 @@ public class Home_Simple extends Fragment implements OnClickListener {
 	@Bind(R.id.tv_more)
 	TextView tv_more;
 
+	@Bind(R.id.tv_kind6)
+	ImageView tv_kind6;
+
+	@Bind(R.id.tv_kind7)
+	ImageView tv_kind7;
+
+	@Bind(R.id.tv_kind8)
+	ImageView tv_kind8;
+
+	@Bind(R.id.tv_kind9)
+	ImageView tv_kind9;
+
+	@Bind(R.id.tv_kind10)
+	ImageView tv_kind10;
+
 	private Adapter_Kind kind_adapter;
 	private Adapter_New pro_adapter;
 
@@ -83,8 +98,7 @@ public class Home_Simple extends Fragment implements OnClickListener {
 
 	private void initView() {
 		mContext = getActivity();
-		ll_search.setOnClickListener(this);
-		tv_more.setOnClickListener(this);
+		Click();
 		kind_adapter = new Adapter_Kind(getActivity(), kindImage, kindString);
 		my_gridview_kind.setAdapter(kind_adapter);
 		my_gridview_kind.setOnItemClickListener(new OnItemClickListener() {
@@ -92,7 +106,7 @@ public class Home_Simple extends Fragment implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent intent = new Intent(getActivity(), Show_All_Pro_FA.class);
-				intent.putExtra("type", position);
+				intent.putExtra("type", position + 2);
 				intent.putExtra("name",
 						getResources().getText(kindString[position]));
 				startActivity(intent);
@@ -142,6 +156,16 @@ public class Home_Simple extends Fragment implements OnClickListener {
 						});
 			}
 		});
+	}
+
+	private void Click() {
+		ll_search.setOnClickListener(this);
+		tv_more.setOnClickListener(this);
+		tv_kind6.setOnClickListener(this);
+		tv_kind7.setOnClickListener(this);
+		tv_kind8.setOnClickListener(this);
+		tv_kind9.setOnClickListener(this);
+		tv_kind10.setOnClickListener(this);
 	}
 
 	/**
@@ -319,7 +343,7 @@ public class Home_Simple extends Fragment implements OnClickListener {
 		holder.tv_price.setText("¥" + data.proPrice);
 		holder.tv_sale.setText(data.saleNum + "人付款");
 		holder.image.setTag(data.picPath);
-		holder.image.setImageResource(R.drawable.icon_empty);
+		holder.image.setImageBitmap(null);
 		if (data.picPath.equals(holder.image.getTag())) {
 			ImageLoader.getInstance().displayImage(
 					Constant.ImageUri + getPicPath(data.picPath)[0],
@@ -394,9 +418,30 @@ public class Home_Simple extends Fragment implements OnClickListener {
 			break;
 		case R.id.tv_more:
 			Intent intent = new Intent(mContext, Show_All_Pro_FA.class);
-			intent.putExtra("name", "全部宝贝");
-			intent.putExtra("type", 11);
+			intent.putExtra("name", getResources().getText(R.string.all_pro)
+					.toString());
+			intent.putExtra("type", 0);
 			startActivity(intent);
+			break;
+		case R.id.tv_kind6:
+			IntentUti.IntentToH(mContext, Show_All_Pro_FA.class, getResources()
+					.getText(R.string.kind6).toString(), 38);
+			break;
+		case R.id.tv_kind7:
+			IntentUti.IntentToH(mContext, Show_All_Pro_FA.class, getResources()
+					.getText(R.string.kind7).toString(), 7);
+			break;
+		case R.id.tv_kind8:
+			IntentUti.IntentToH(mContext, Show_All_Pro_FA.class, getResources()
+					.getText(R.string.kind8).toString(), 8);
+			break;
+		case R.id.tv_kind9:
+			IntentUti.IntentToH(mContext, Show_All_Pro_FA.class, getResources()
+					.getText(R.string.kind9).toString(), 9);
+			break;
+		case R.id.tv_kind10:
+			IntentUti.IntentToH(mContext, Show_All_Pro_FA.class, getResources()
+					.getText(R.string.kind10).toString(), 10);
 			break;
 		default:
 			break;

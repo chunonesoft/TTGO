@@ -227,4 +227,12 @@ public class Add_Adress extends BaseActivity implements OnClickListener,
 				}, FeedbackBean.class);
 		MyApplication.getInstance().addToRequestQueue(request);
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(Add_Adress.this, Submit_Order_FA.class);
+		setResult(1, intent);
+		finish();
+	}
 }

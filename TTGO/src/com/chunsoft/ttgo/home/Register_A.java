@@ -160,6 +160,7 @@ public class Register_A extends Activity implements OnClickListener {
 									ToastUtil.showShortToast(mContext, "×¢²á³É¹¦");
 									intent = new Intent(mContext, Login_A.class);
 									startActivity(intent);
+									finish();
 								} else
 									ToastUtil.showShortToast(mContext,
 											datas.retmsg.toString());

@@ -107,14 +107,10 @@ public class Login_A extends Activity implements OnClickListener {
 							@Override
 							public void onSuccess(LoginBean datas) {
 								if (datas.retcode.equals("1")) {
-									ToastUtil.showShortToast(mContext,
-											datas.retmsg + datas.Token);
 									PreferencesUtils.putSharePre(mContext,
 											"userId", datas.userId);
-									Log.e("userId--------------", datas.userId);
 									PreferencesUtils.putSharePre(mContext,
 											"Token", datas.Token);
-									Log.e("Token--------------", datas.Token);
 									PreferencesUtils.putSharePre(mContext,
 											"phonenum", mobile);
 									Constant.userId = datas.userId;
@@ -170,7 +166,6 @@ public class Login_A extends Activity implements OnClickListener {
 					@Override
 					public void onError() {
 						loadDialog.cancel();
-						Log.e(NET_TAG, "----onError");
 					}
 				}, LoginBean.class);
 		MyApplication.getInstance().addToRequestQueue(request);

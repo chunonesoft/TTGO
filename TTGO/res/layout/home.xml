@@ -26,6 +26,7 @@
         android:id="@+id/ad_view"
         android:layout_width="match_parent"
         android:layout_height="160dp"
+        android:focusable="true"
          />
 	
 	<com.chunsoft.view.MyGridView
@@ -36,6 +37,7 @@
                 android:numColumns="5"
                 android:listSelector="@null"
                 android:focusable="false"
+                
                 >
     </com.chunsoft.view.MyGridView>
     <View
@@ -48,6 +50,7 @@
                 android:orientation="horizontal" >
 
 		<ImageView
+		    android:id="@+id/tv_kind6"
 		    android:layout_width="0dp"
 		    android:layout_height="match_parent"
 		    android:layout_weight="0.7"
@@ -72,11 +75,12 @@
                         android:orientation="horizontal" >
 
                         <ImageView
+                            android:id="@+id/tv_kind7"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:scaleType="fitXY"
-                            android:src="@drawable/menu_1_2" />
+                            android:src="@drawable/kind7" />
 
                         <View
                             android:layout_width="1dp"
@@ -84,11 +88,12 @@
                             android:background="@color/bg_Gray" />
 
                         <ImageView
+                            android:id="@+id/tv_kind8"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:scaleType="fitXY"
-                            android:src="@drawable/menu_1_3" />
+                            android:src="@drawable/kind8" />
                     </LinearLayout>
 
                     <View
@@ -103,11 +108,12 @@
                         android:orientation="horizontal" >
 
                         <ImageView
+                            android:id="@+id/tv_kind9" 
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:scaleType="fitXY"
-                            android:src="@drawable/menu_1_2" />
+                            android:src="@drawable/kind9" />
 
                         <View
                             android:layout_width="1dp"
@@ -115,11 +121,12 @@
                             android:background="@color/bg_Gray" />
 
                         <ImageView
+                            android:id="@+id/tv_kind10" 
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:scaleType="fitXY"
-                            android:src="@drawable/menu_1_3" />
+                            android:src="@drawable/kind10" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

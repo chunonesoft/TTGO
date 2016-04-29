@@ -124,7 +124,7 @@ public class Search_A extends Activity implements OnClickListener,
 				page = 1;
 				Intent intent = new Intent(Search_A.this, Show_All_Pro_FA.class);
 				intent.putExtra("name", searchWord);
-				intent.putExtra("type", 10);
+				intent.putExtra("type", 1);
 				startActivity(intent);
 				finish();
 				// getSearchData(searchWord, String.valueOf(page),
